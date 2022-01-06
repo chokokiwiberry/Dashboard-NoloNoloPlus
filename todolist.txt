@@ -1,0 +1,54 @@
+il formato delle immagini deve essere quadrato? 
+
+condizioni del prodotto devono essere aggiunte al prodotto
+
+cercare di capire meglio com'è fatto un benedetto listing e dove mettere le immagini
+
+/////
+per me il prodotto è composto
+idprod
+nome
+descrizione
+categoria
+quantita (non so se tenerlo)
+prezzo (magari metterlo in un altro posto)
+
+//noleggio
+idrental
+prezzototale
+prezzopagato
+idlisting
+idprodotto
+
+
+//listing - da capire meglio
+idlisting
+idprod 
+
+-----------------------
+aggiornamento del 1/12/2021 
+#è possibile vedere i dati dei noleggi completati
+#provare ad ottimizzare il codice
+#mettere la possibilità di filtare sia per gli employees
+sia in completed rentals
+
+---------------------
+aggiornamento del 2/12/2021 
+#per fare i grafici uso la libreria chart.js -> devo capire come funziona però almeno riesco a fare un po' di grafici
+
+---------------------
+aggiornamento del 3/12/2021 
+#i primi grafi iniziano a farsi vedere nel employee - non ho ancora i price (?) 
+fare in maniera analoga per i customers e penso anche per gli altri oggetti 
+va bene fare delle componenti singole di statistica per ogni pezzo, per semplificare 
+
+-----------------------------
+aggiornamento del 6/12/2021
+iniziato a fare i grafici, mancano i prezzi - che arriverà presto la funzione e poi fare i grafici dei noleggi dei dati
+
+----------------------------
+aggiornamento del 7/12/2021 
+aggiustare gli schemi ufficiali delle strutture - customers è stato fatto
+- aggiustare rentals
+-products 
+-simplehwman

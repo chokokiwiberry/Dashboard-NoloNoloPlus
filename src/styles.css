@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'nolostrap.css';
+
+.rental-item{
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    margin-left: 2px;
+    
+}

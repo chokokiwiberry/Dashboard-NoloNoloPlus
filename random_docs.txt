@@ -1,0 +1,13 @@
+//funzionari
+clienti
+
+//manager to funzionari 
+
+//info funzionario 
+
+rentals: futuri
+	 correnti
+	 completati 
+
+
+//navigationExtras is null - da capire perché e capire meglio come fare il reinderizzamento 

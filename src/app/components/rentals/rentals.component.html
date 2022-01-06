@@ -1,0 +1,7 @@
+<div class ="statistics_container d-flex justify-content-end">
+    <button (click)="showStatistics()"class ="btn nolonoloYellowBackground">Show Statistics</button>
+</div>
+<div class ="show_statistics" *ngIf="showstatistics">
+    <app-rentals-statistics [rentalsdata]="getRentals()"></app-rentals-statistics>
+</div>
+

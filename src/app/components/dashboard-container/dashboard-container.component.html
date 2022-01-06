@@ -1,0 +1,24 @@
+
+<div class ="dashboard_container">
+<div class ="show_employees" *ngIf="showemployees">
+    <app-employees ></app-employees>
+</div>
+ <div class ="show_customers" *ngIf="showcustomers">
+    <app-customers></app-customers>
+ </div>
+ <div class ="show_inventory" *ngIf="showinventory">
+     <app-inventory></app-inventory>
+ </div>
+ <div class ="show_rentals" *ngIf="showrentals">
+    <app-rentals></app-rentals>
+ </div>
+
+ <div class ="show_companies" *ngIf="showcompanies">
+     <app-company-handler></app-company-handler>
+ </div>
+ 
+</div>
+
+<div class ="employee_item" *ngIf="showemployeeitem">
+    <app-employee-item></app-employee-item>
+</div>

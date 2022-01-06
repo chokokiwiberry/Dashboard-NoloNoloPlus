@@ -1,0 +1,9 @@
+.leftsidebar{
+    width:20%;
+    height:auto;
+    float:left;
+}
+.maincontent{
+    width:80%;
+    float:right;
+}

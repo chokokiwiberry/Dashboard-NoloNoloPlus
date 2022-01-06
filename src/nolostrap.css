@@ -1,0 +1,23 @@
+
+
+.nolonoloBackground{
+   background-color: #84c0c6; 
+}
+.nolonoloBackgroundNav{
+    background-color: #172121;
+}
+.nolonoloWhiteText{
+    color:white;
+}
+.nolonoloYellowBackground{
+    background-color:#ff9b42;
+}
+.nolonoloYellowText{
+    color:#ff9b42;
+}
+.nolonoloNavLogo img{
+    width: 100px;
+}
+.nolonoloFullWidth{
+    width: 100%;
+}
