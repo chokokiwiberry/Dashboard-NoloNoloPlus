@@ -8,12 +8,14 @@ import { ServiceLogicService } from 'src/app/services/service-logic.service';
   styleUrls: ['./inventory.component.css']
 })
 export class InventoryComponent implements OnInit {
+  //inizializzazione delle variabli
+  
   showstatistics: boolean = false;
+  
   products = [] as any;
   tmpprods = [] as any;
-
-  rentals: any;
-  listings: any;
+  rentals = [] as any;
+  listings = [] as any; 
 
   countersRentals = [] as any; //conta i noleggi per ogni prodotto
 
@@ -78,19 +80,22 @@ export class InventoryComponent implements OnInit {
 
   }
   //funzione che ritorna una matrice per memorizzare quanti noleggi sono stati fatti sui prodotti
-  countRentalsForProducts(rentals: any, listings: any) {
+  countRentalsForProducts(rentals: any[], listings: any[]) {
     // array per contare i rental di un prodotto
     let countRentals: any[][] = [];
-    console.log('ma qui');
-    console.log('vez', listings);
+   
+
     //inizializzazione della matrice
+    console.log(listings.length);
     for (let i=0; i<listings.length; i=i+1){
-      console.log('ma qui 0');
+      countRentals[listings[i].id]=[];
+
       for (let j=0; j<listings[i].products.length; j=j+1){
         console.log('ma qui 1');
         console.log('eeeee', i, j);
         countRentals[listings[i].id][j] = 0;
       }
+      console.log(listings.length, 'sono fne');
     }
     console.log('sono dopo inizliazzione', countRentals);
     console.log('dopo inizliazzione lenght', countRentals.length);
