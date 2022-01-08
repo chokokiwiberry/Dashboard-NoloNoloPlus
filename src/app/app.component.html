@@ -1,24 +1,38 @@
-<!----- 
-  <div id="div_logreg" style="display:none" >
-  <div>
-    <app-register></app-register>
-   </div>
-   <br>
-   <hr>
-   <br>
-   <div>
-     <app-login></app-login>
-   </div>
-</div> 
--->
+<!----  <div id="div_logreg" style="display:none" >
+--->
 
-<!---quando è loggato vede sidebar con tasti e contenuto--
+<div id="welcomemanager">
+<h3> Welcome Manager!</h3>
+</div>
+    <div class ="row">
+      <div class="col-sm"> 
+        <h5>Register</h5>
+        <app-register></app-register>
+       </div>
+
+       
+
+       <div class="col-sm">
+         <h5>Login</h5>
+         <app-login></app-login>
+       </div>
+    </div>
+ 
+    <!----
+</div> 
+--- >
+
+-quando è loggato vede sidebar con tasti e contenuto--
 <div id="div_dash" style="display:none">
 -->
- <div>
+
+
+<!----
+   <div>
   <button style="float:right" class ="btn btn primary"(click)="Logout()">Logout</button>
   <app-sidebar class="leftsidebar nolonoloBackgroundNav"></app-sidebar>
   <app-dashboard-container class ="maincontent"></app-dashboard-container>
  </div> 
+ --->
  <!---</div> -->
 
