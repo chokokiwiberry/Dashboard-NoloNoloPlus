@@ -1,7 +1,7 @@
 import { Company } from "./Company";
 
 export interface simpleHWman{
-    id?: number;
+    id?: string;
     username: string;
     name: string;
     surname: string;

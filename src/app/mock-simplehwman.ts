@@ -2,7 +2,7 @@ import { simpleHWman } from './simpleHWman'
 
 export const simpleHWmen: simpleHWman[] = [
     {
-        id: 1,
+        id: '1',
         username: 'Superman',
         password: 'Alieno',
         name: 'Clark',
@@ -23,7 +23,7 @@ export const simpleHWmen: simpleHWman[] = [
 
     },
     {
-        id: 2,
+        id: '2',
         username: 'Spiderman',
         password: 'Alieno',
         name: 'Peter',
@@ -45,7 +45,7 @@ export const simpleHWmen: simpleHWman[] = [
 
     },
     {
-        id: 3,
+        id: '3',
         username: 'Batman',
         password: 'Alieno',
         name: 'Bruce',
@@ -68,7 +68,7 @@ export const simpleHWmen: simpleHWman[] = [
 
     },
     {
-        id: 4,
+        id: '4',
         username: 'Penguin',
         password: 'Alieno',
         name: 'Pingo',

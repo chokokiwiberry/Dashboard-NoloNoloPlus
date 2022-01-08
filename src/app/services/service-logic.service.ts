@@ -40,7 +40,26 @@ company_toggle: boolean = false; //shows the company stuff
 
 
 /////manager obj
-managerObj :any = {};
+managerObj :simpleHWman = {
+  id: '1',
+  username: 'mock-alpaca-manager',
+  name:'mock-alpaca',
+  surname: 'mock-alpaca',
+  role: 'manager',
+  password:'ciao',
+  companies:[{
+    id:'1',
+    name: 'alpaca',
+    password: 'alpaca',
+  },
+  {
+    id:'2',
+    name: 'mucca',
+    password: 'mucca'
+  }],
+  rentals: []
+
+};
 
 //logic sidebar buttons
 private employee_clicked = new Subject();
