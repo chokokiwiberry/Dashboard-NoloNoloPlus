@@ -7,7 +7,7 @@ export const RENTALS: Rental[] = [
         simpleHWman_id: '1',
         products:  [{
             listing: '1',
-            product: 1
+            product: 0
         }],
         dateStart: '10/10/2021',
         rejected: false,
@@ -41,7 +41,7 @@ export const RENTALS: Rental[] = [
         simpleHWman_id: '2',
         products:  [{
             listing: '2',
-            product: 4
+            product: 1
         }],
         dateStart: '10/10/2021',
         rejected: false,
@@ -76,7 +76,7 @@ export const RENTALS: Rental[] = [
         customer_id: '1',
         products:  [{
             listing: '3',
-            product: 7
+            product: 0
         }],
         dateStart: '10/10/2021',
         rejected: false,
@@ -110,7 +110,7 @@ export const RENTALS: Rental[] = [
         customer_id: '3',
         products:  [{
             listing: '1',
-            product: 2
+            product: 1
         }],
         dateStart: '10/10/2021',
         rejected: false,
@@ -144,7 +144,7 @@ export const RENTALS: Rental[] = [
         customer_id: '2',
         products:  [{
             listing: '1',
-            product: 3
+            product: 2
         }],
         dateStart: '10/10/2021',
         rejected: false,
@@ -177,7 +177,7 @@ export const RENTALS: Rental[] = [
         customer_id: '2',
         products:  [{
             listing: '2',
-            product: 5
+            product: 1
         }],
         dateStart: '10/10/2021',
         rejected: false,
@@ -210,7 +210,7 @@ export const RENTALS: Rental[] = [
         customer_id: '2',
         products:  [{
             listing: '2',
-            product: 6
+            product: 0
         }],
         dateStart: '10/10/2021',
         rejected: false,
@@ -243,7 +243,7 @@ export const RENTALS: Rental[] = [
         simpleHWman_id: '1',
         products:  [{
             listing: '3',
-            product: 8
+            product: 2
         }],
         dateStart: '10/10/2021',
         rejected: false,

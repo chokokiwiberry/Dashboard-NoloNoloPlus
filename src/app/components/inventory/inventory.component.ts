@@ -9,13 +9,13 @@ import { ServiceLogicService } from 'src/app/services/service-logic.service';
 })
 export class InventoryComponent implements OnInit {
   //inizializzazione delle variabli
-  
+
   showstatistics: boolean = false;
-  
+
   products = [] as any;
   tmpprods = [] as any;
   rentals = [] as any;
-  listings = [] as any; 
+  listings = [] as any;
 
   countersRentals = [] as any; //conta i noleggi per ogni prodotto
 
@@ -25,7 +25,7 @@ export class InventoryComponent implements OnInit {
     this.rentals = this.getRentals();
     this.listings = this.getListing();
 
-    this.products = this.setCards();
+    this.products = this.setCards(this.rentals, this.listings);
 
   }
   showStatistics() {
@@ -40,35 +40,34 @@ export class InventoryComponent implements OnInit {
     return this.serviceLogic.getListing();
   }
 
-  setCards() {
+  setCards(rentals: any[], listings: any[]) {
     //? - 
 
     let countRentals: any[][] = [];
     countRentals = this.countRentalsForProducts(this.rentals, this.listings);
-    console.log('sono countRentals', countRentals);
-
-    console.log('sono listings', this.listings);
-    console.log('sono listings', this.listings[0].products.length);
 
 
 
     let index = 0;
     let prods = [];
     let tmpfound: any;
-    for (let i = 0; i < this.rentals.length; i = i + 1) {
-      for (let j = 0; j < this.listings.length; j = j + 1) {
+    for (let i = 0; i < rentals.length; i = i + 1) {
+      for (let j = 0; j < listings.length; j = j + 1) {
         //products[0] perché non sono nel caso bundle
-        if (this.rentals[i].products[0].listing === this.listings[j].id) {
-          tmpfound = this.findProduct(this.listings[j], this.rentals[i].products[0].product)
+        if (rentals[i].products[0].listing === this.listings[j].id) {
+          tmpfound = this.findProduct(listings[j], rentals[i].products[0].product)
+          console.log('3')
           if (tmpfound) {
+            console.log('4')
             console.log('sisssssss');
 
             prods[index] = {
-              name: this.listings[j].name,
-              category: this.listings[j].type,
-              brand: this.listings[j].brand,
+              name: listings[j].name,
+              category: listings[j].type,
+              brand: listings[j].brand,
               img: this.transform(tmpfound.imgs[0]),
-              condition: tmpfound.condition
+              condition: tmpfound.condition,
+              nRentals: countRentals[listings[j].id][rentals[i].products[0].product]
             }
             index = index + 1;
           }
@@ -83,26 +82,22 @@ export class InventoryComponent implements OnInit {
   countRentalsForProducts(rentals: any[], listings: any[]) {
     // array per contare i rental di un prodotto
     let countRentals: any[][] = [];
-   
+
 
     //inizializzazione della matrice
     console.log(listings.length);
-    for (let i=0; i<listings.length; i=i+1){
-      countRentals[listings[i].id]=[];
+    for (let i = 0; i < listings.length; i = i + 1) {
+      countRentals[listings[i].id] = [];
 
-      for (let j=0; j<listings[i].products.length; j=j+1){
+      for (let j = 0; j < listings[i].products.length; j = j + 1) {
         console.log('ma qui 1');
         console.log('eeeee', i, j);
         countRentals[listings[i].id][j] = 0;
       }
-      console.log(listings.length, 'sono fne');
     }
-    console.log('sono dopo inizliazzione', countRentals);
-    console.log('dopo inizliazzione lenght', countRentals.length);
-
 
     //scorro tutti i rentals
-
+    //scorro tutti i listing 
 
     for (let i = 0; i < rentals.length; i = i + 1) {
 
@@ -136,8 +131,8 @@ export class InventoryComponent implements OnInit {
   //funzione che restituisce l'oggetto prodotto in base al listing e all'indice prodotto
   findProduct(listings: any, prodid: any) {
     if (listings.products.length > 0) {
-      for (let i = 0; i < listings.products.lenght; i = i + 1) {
-        if (listings.products[i] === prodid) {
+      for (let i = 0; i < listings.products.length; i = i + 1) {
+        if (i === prodid) {
           return listings.products[i];
         }
       }
