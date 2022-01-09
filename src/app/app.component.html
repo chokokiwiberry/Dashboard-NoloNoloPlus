@@ -1,24 +1,35 @@
-<div id="div_logreg" style="display:none">
+<!---<div id="div_logreg" style="display:none">
+-->
 
-  <div id="welcomemanager" style="justify-content: center;  display: flex;">
+
+
+<!----NAVBAR CON LOGO -->
+<nav class="navbar nolonoloBackgroundNav">
+     <img src="../assets/images/logo.png" width="45" height="45" class="d-inline-block align-top" alt="">
+  </nav>
+
+  <!---MESSAGGIO BENVENUTO-->
+  <div id="welcomemanager" class ="component-logreg">
     <h3> Welcome Manager!</h3>
   </div>
+
+<!----CLASSE CONTENITORE DELLE COMPONENTI REGISTER E LOGIN -->  
   <div class="row">
-    <div class="col-sm border-right" style="justify-content: center; display: flex;">
-      <h5>Register</h5>
-      <app-register></app-register>
+
+    <!--REGISTER -->
+    <div class="col-sm border-right" >
+      <app-register class ="component-logreg"></app-register>
     </div>
 
-
-
-    <div class="col-sm" style="justify-content: center; display: flex;">
-      <h5>Login</h5>
-      <app-login></app-login>
+    <!--LOGIN-->
+    <div class="col-sm">
+      <app-login class ="component-logreg"></app-login>
     </div>
+    
   </div>
 
-
-</div>
+<!---
+</div> 
 
 
 <div id="div_dash" style="display:none">
@@ -30,5 +41,5 @@
     <app-sidebar class="leftsidebar nolonoloBackgroundNav"></app-sidebar>
     <app-dashboard-container class="maincontent"></app-dashboard-container>
   </div>
-
 </div>
+-->

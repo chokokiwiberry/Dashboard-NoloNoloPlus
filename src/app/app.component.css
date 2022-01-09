@@ -11,3 +11,7 @@
 .border-right {
     border-right: 1px solid black;
 }
+.component-logreg{
+    justify-content: center; 
+    display: flex;
+}
