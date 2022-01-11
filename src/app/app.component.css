@@ -1,10 +1,11 @@
+
 .leftsidebar{
-    width:20%;
-    height:auto;
+    width:15%;
     float:left;
+ 
 }
 .maincontent{
-    width:80%;
+    width:85%;
     float:right;
 }
 
@@ -15,3 +16,6 @@
     justify-content: center; 
     display: flex;
 }
+
+
+.containerstuff{}

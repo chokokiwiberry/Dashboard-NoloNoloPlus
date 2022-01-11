@@ -1,7 +1,7 @@
-import { analyzeAndValidateNgModules } from '@angular/compiler';
+
 import { Component, OnInit } from '@angular/core';
-import { setClassMetadata } from '@angular/core/src/r3_symbols';
 import { MatDialog } from '@angular/material/dialog';
+import { MAT_MENU_SCROLL_STRATEGY_FACTORY_PROVIDER } from '@angular/material/menu/menu-trigger';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { NavigationExtras, Router } from '@angular/router';
@@ -42,8 +42,7 @@ export class EmployeesComponent {
   myDate = new Date();
 
 
-  constructor(private serviceLogic: ServiceLogicService,
-    public dialog: MatDialog, private router: Router) { }
+  constructor(private serviceLogic: ServiceLogicService, public dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
     this.tmp = this.serviceLogic.getEmployees();
@@ -59,58 +58,33 @@ export class EmployeesComponent {
     this.showstatistics = !this.showstatistics;
   }
 
+
   setData(employees: any) {
-    let tmp = [];
+    let tmp = [] as any;
+    let tmpEmp;
     let index = 0;
     for (let i = 0; i < employees.length; i = i + 1) {
-      for (let k = 0; k < employees[i].companies.length; k = k + 1) {
-        for (let j = 0; j < this.serviceLogic.managerObj.companies.length; j = j + 1) {
-          if (this.checkSameCompanies(employees[i].companies, this.serviceLogic.managerObj.companies)) {
-            tmp[index] = {
-              id: employees[i].id,
-              name: employees[i].name,
-              surname: employees[i].surname,
-              username: employees[i].username,
-              password: employees[i].password,
-              role: employees[i].role,
-              rentals: employees[i].rentals,
-              companies: employees[i].companies
-            }
-          }
-        }
+      tmpEmp = this.checkSameCompanies(employees[i], this.serviceLogic.managerObj)
+      if (tmpEmp !== -1) {
+        tmp[index] = tmpEmp;
+        index = index + 1;
       }
-
     }
     return tmp;
   }
 
-  checkSameCompanies(empCompanies: any[], manCompanies: any[]){
-    for (let i = 0; i < empCompanies.length; i = i + 1) {
-      for (let j = 0; j < manCompanies.length; j = j + 1) {
-        if (empCompanies[i].id === manCompanies[j].id) {
-          return true;
+  checkSameCompanies(employee: any, manager: any) {
+    for (let i = 0; i < employee.companies.length; i = i + 1) {
+      for (let j = 0; j < manager.companies.length; j = j + 1) {
+        if (employee.companies[i].id === manager.companies[j].id) {
+          return employee;
         }
       }
     }
-    return false;
+    return -1;
   }
-  setData2(employees: any) {
-    let tmp = [];
-    for (var i = 0; i < employees.length; i = i + 1) {
-      tmp[i] = {
-        id: employees[i].id,
-        name: employees[i].name,
-        surname: employees[i].surname,
-        username: employees[i].username,
-        password: employees[i].password,
-        role: employees[i].role,
-        rentals: employees[i].rentals,
-        companies: this.showCompanies(employees[i].companies)
-      }
-    }
-    console.log('sono alla fine di setData', tmp);
-    return tmp;
-  }
+
+
 
   //funzione che controlla che al manager vengano mostrati solo i dipendenti che sono della sua azienda
   //se il manager è proprietario dell'azienda alpace e mucca, il manager potrà vedere i dipendenti che lavorano in quelle aziende
@@ -129,39 +103,7 @@ export class EmployeesComponent {
     }
     return mycompanies;
   }
-  setData1(employees: any, companies: any) {
-    let ind = 0; // indice dei nuovi oggetti che contengono employees + companies
-    let indc = 0; // indice usato per indicizzare l'oggetto company
-    let tempEmp = []; //vettore usato per creare l'oggetto employee + company
-    let comTmp = []; //vettore che contiene le aziende di un employee
-    for (var i = 0; i < employees.length; i = i + 1) {
-      indc = 0;
-      comTmp = [];
-      for (var j = 0; j < employees[i].companies.length; j = j + 1) {
-        if (employees[i].companies.length > 0) {
-          for (var k = 0; k < companies.length; k = k + 1) {
-            if (companies[k].id == employees[i].companies[j]) {
-              comTmp[indc] = companies[k];
-              indc = indc + 1;
-            }
-          }
-        }
-      }
-      tempEmp[ind] = {
-        id: employees[i].id,
-        name: employees[i].name,
-        surname: employees[i].surname,
-        username: employees[i].username,
-        password: employees[i].password,
-        role: employees[i].role,
-        rentals: employees[i].rentals,
-        companies: comTmp
-      }
-      ind = ind + 1;
 
-    }
-    return tempEmp;
-  }
 
 
   showDetails(element: any) {

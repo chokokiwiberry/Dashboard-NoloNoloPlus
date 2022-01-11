@@ -1,45 +1,52 @@
-<!---<div id="div_logreg" style="display:none">
--->
+<!----<div id="div_logreg" style="display:none">
 
 
 
-<!----NAVBAR CON LOGO -->
-<nav class="navbar nolonoloBackgroundNav">
-     <img src="../assets/images/logo.png" width="45" height="45" class="d-inline-block align-top" alt="">
-  </nav>
+--NAVBAR CON LOGO -
+<nav class="navbar nolonoloBackgroundNav" width="100%">
+  <div>
+    <div style="justify-content: left;display: flex;">
+      <img src="assets/images/logo.png" width="45" height="45" alt="">
+    </div>
+  </div>
+</nav>
 
-  <!---MESSAGGIO BENVENUTO-->
-  <div id="welcomemanager" class ="component-logreg">
-    <h3> Welcome Manager!</h3>
+---MESSAGGIO BENVENUTO-
+<div id="welcomemanager" style="justify-content: center;display: flex; text-align:  center;">
+  <h3> Welcome Manager!</h3>
+</div>
+
+
+---CLASSE CONTENITORE DELLE COMPONENTI REGISTER E LOGIN -
+<div class="row">
+
+  -REGISTER -
+  <div class="col-sm border-right">
+    <app-register class="component-logreg"></app-register>
   </div>
 
-<!----CLASSE CONTENITORE DELLE COMPONENTI REGISTER E LOGIN -->  
-  <div class="row">
-
-    <!--REGISTER -->
-    <div class="col-sm border-right" >
-      <app-register class ="component-logreg"></app-register>
-    </div>
-
-    <!--LOGIN-->
-    <div class="col-sm">
-      <app-login class ="component-logreg"></app-login>
-    </div>
-    
+  --LOGIN-
+  <div class="col-sm">
+    <app-login class="component-logreg"></app-login>
   </div>
+</div>
 
-<!---
+
 </div> 
 
 
 <div id="div_dash" style="display:none">
-
+--->
 
 
   <div>
     <button style="float:right" class="btn btn primary" (click)="Logout()">Logout</button>
-    <app-sidebar class="leftsidebar nolonoloBackgroundNav"></app-sidebar>
-    <app-dashboard-container class="maincontent"></app-dashboard-container>
+    <div class ="containerstuff">
+      <app-sidebar class="leftsidebar nolonoloBackgroundNav"></app-sidebar>
+      <app-dashboard-container class="maincontent"></app-dashboard-container>
+    </div> 
+     
   </div>
+  <!---
 </div>
 -->

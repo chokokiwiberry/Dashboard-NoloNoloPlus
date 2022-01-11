@@ -15,7 +15,7 @@ export class AppComponent implements AfterViewInit {
   constructor(public serviceLogic: ServiceLogicService) { }
   ngAfterViewInit() {
     let ans;
-     /* this.serviceLogic.getManager().subscribe(res => {
+      this.serviceLogic.getManager().subscribe(res => {
         ans = this.serviceLogic.handle(res);
         if(ans.command === 'displayErr'){
           alert('Your customr account is banned');
@@ -36,7 +36,7 @@ export class AppComponent implements AfterViewInit {
         err => {
           console.log(err)
         },
-      )  */
+      ) 
   }
 
   Logout(){
