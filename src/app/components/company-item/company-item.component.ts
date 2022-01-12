@@ -17,8 +17,18 @@ export class CompanyItemComponent implements OnInit {
   ngOnInit(): void {
 
     console.log('sono gnola, di companies', this.companies);
+    this.mycompanies = this.showMyCompanies();
 
-
+  }
+  showMyCompanies(){
+    let tmpcomp = this.companies;
+    var filteredArray  = this.serviceLogic.managerObj.companies.filter(function(array_el){
+        return tmpcomp.filter(function(anotherOne_el){
+            return anotherOne_el.id == array_el.id;
+        }).length !== 0
+    });
+    return filteredArray;
+    
   }
 
 

@@ -70,6 +70,7 @@ export class EmployeesComponent {
         index = index + 1;
       }
     }
+    console.log('setData', tmp);
     return tmp;
   }
 
