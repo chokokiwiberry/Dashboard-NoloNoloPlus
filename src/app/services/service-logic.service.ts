@@ -85,11 +85,8 @@ employee_element: any;
 
 //rentals
 
-futurerentals!: any; //bookedrentals
 
-currentrentals!:any; //ongoingrentals
-
-pastrentals: any; //completedrentals
+employeerentals: any; //completedrentals
 
   constructor(private http: HttpClient) { }
 

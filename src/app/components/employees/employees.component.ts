@@ -77,7 +77,7 @@ export class EmployeesComponent {
   checkSameCompanies(employee: any, manager: any) {
     for (let i = 0; i < employee.companies.length; i = i + 1) {
       for (let j = 0; j < manager.companies.length; j = j + 1) {
-        if (employee.companies[i].id === manager.companies[j].id) {
+        if (employee.companies[i].name === manager.companies[j].name) {
           return employee;
         }
       }
@@ -94,7 +94,7 @@ export class EmployeesComponent {
     let index = 0;
     for (let i = 0; i < companies.length; i = i + 1) {
       for (let j = 0; j < this.serviceLogic.managerObj.companies.length; j = j + 1) {
-        if (companies[i].id === this.serviceLogic.managerObj.companies[j].id) {
+        if (companies[i].name === this.serviceLogic.managerObj.companies[j].name) {
           mycompanies[index] = {
             objcompany: this.companies[i]
           }
@@ -112,32 +112,21 @@ export class EmployeesComponent {
     this.serviceLogic.employee_item_btn_clicked(element);
     console.log("visualizza di un funzionario completo", this.navigationExtras);
 
-    this.getPastRentals();
+    this.getEmployeeRentals();
     //this.router.navigateByUrl('/employee', {state:this.navigationExtras});
   }
 
 
-  //per passare future rentals a rental-item
-  getFutureRentals(): any {
-
-  }
-
-  getCurrentRentals(): any {
-
-
-  }
-  getPastRentals() {
+  getEmployeeRentals() {
     if (this.rentals != null) {
       for (var i = 0; i < this.rentals.length; i = i + 1) {
         if (this.rentals[i].simpleHWman_id == this.serviceLogic.employee_element.id) {
-          //controllare le date e prendere solo quelli che hanno la data di scadenza 
-          //prima quella di oggi
           this.tmppastrental.push(this.rentals[i]);
         }
       }
     }
-    this.serviceLogic.pastrentals = this.tmppastrental;
-    return this.serviceLogic.pastrentals;
+    this.serviceLogic.employeerentals = this.tmppastrental;
+    return this.serviceLogic.employeerentals;
   }
 
 

@@ -27,17 +27,17 @@ export class AllRentalsComponent implements OnInit {
   ngOnInit(): void {
 
     //received completed rentals of a single employee
-    this.rentals = this.serviceLogic.pastrentals;
+    this.rentals = this.serviceLogic.employeerentals;
 
     //get listings and products 
 
     this.listing = this.serviceLogic.getListing();
 
 
-    console.log('sono rental item', this.serviceLogic.pastrentals);
-    if (this.serviceLogic.pastrentals != null) {
+    console.log('sono rental item', this.serviceLogic.employeerentals);
+    if (this.serviceLogic.employeerentals != null) {
       console.log('ma is here?');
-      if (this.serviceLogic.pastrentals.length > 0) {
+      if (this.serviceLogic.employeerentals.length > 0) {
         console.log('ma bohhhh');
         this.completedrentals = true;
       }
@@ -55,9 +55,17 @@ export class AllRentalsComponent implements OnInit {
     }
   }
 
+
   showRentals(rentals: any) {
     //oggetto prodotto dal server
     //listing con il prodotto
+    //cerco il listing del rental
+    let tmprentals = this.rentals;
+   
+
+
+
+
     let index = 0;
     try{
       for (let i = 0; rentals.length; i++) {

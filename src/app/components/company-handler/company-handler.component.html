@@ -1,35 +1,40 @@
-<form id="company-form">
-    <h3>Create a company</h3>
-    <div>
-        <label>
-            Company name
-        </label>
-        <input name= "name"type="text" placeholder="Company's name"/>
-    </div>
-  <div>
-    <label>
-        Company Code
-    </label> 
-    <input name="password" type="password" placeholder="Company's code"/>
-  </div>
- <button (click)="Create()">Create</button>  
-</form>
-
+<h3 style="justify-content: center; display:flex">Manage your companies</h3>
 <br>
-<hr>
-<br>
-<h3> Add in your companies</h3>
-
-<form id="add-company">
-    <div>
-        <label>Company's name</label>
-        <input name ="name" type="text" placeholder="Company's name"/>
+<div class="row">
+    <div class="col-sm border-right">
+        <form id="company-form">
+            <h5>Create a company</h5>
+            <div class ="form-group">
+                <label>
+                    Company's name
+                </label>
+                <input class="form-control w-75" name="name" type="text" placeholder="Company's name" />
+            </div>
+            <div>
+                <label>
+                    Company's code
+                </label>
+                <input class="form-control w-75" name="password" type="password" placeholder="Company's code" />
+            </div>
+            <button class="btn nolonoloYellowBackground"(click)="Create()">Create</button>
+        </form>
     </div>
-    <div>
-        <label>Company's code</label>
-        <input name ="password" type="text" placeholder="Company's code"/>
-    </div>
-    
-    <button (click)="Add()">Add</button>
-</form>
 
+
+    <div class="col-sm">
+        <h5> Add in your companies</h5>
+
+        <form id="add-company">
+            <div>
+                <label>Company's name</label>
+                <input  class="form-control w-75"name="name" type="text" placeholder="Company's name" />
+            </div>
+            <div>
+                <label>Company's code</label>
+                <input  class="form-control w-75"name="password" type="text" placeholder="Company's code" />
+            </div>
+
+            <button class="btn nolonoloYellowBackground"(click)="Add()">Add</button>
+        </form>
+    </div>
+</div>
