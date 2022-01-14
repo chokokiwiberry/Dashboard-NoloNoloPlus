@@ -19,7 +19,7 @@ export class DashboardContainerComponent implements OnInit {
 
   ngOnInit(): void {
     this.serviceLogic.employee_observable.subscribe(() => {
-      console.log(this.serviceLogic.employees_toggle, "sono in dashboard");
+      console.log(this.serviceLogic.employees_toggle, "sono in employee");
       if (this.serviceLogic.employees_toggle) {
         if (this.showcustomers || this.showinventory || this.showrentals || this.showemployeeitem || this.showcompanies) {
           this.showcustomers = false;
@@ -76,14 +76,18 @@ export class DashboardContainerComponent implements OnInit {
 
     //show single employee item
     this.serviceLogic.employee_item_observable.subscribe(() => {
-      console.log(this.serviceLogic.employee_item_toggle, "sono in dashboard");
+      console.log(this.serviceLogic.employee_item_toggle, "sono in employee item");
       if (this.serviceLogic.employee_item_toggle) {
-        this.showemployeeitem = true;
+        console.log('sono employee item di dashboard')
+        if (this.showemployees || this.showcustomers || this.showinventory || this.showcompanies || this.showrentals)
         this.showemployees = false;
         this.showcustomers = false;
         this.showinventory = false;
         this.showrentals = false;
+        this.showcompanies = false;
       }
+      console.log('sto andando avanti')
+      this.showemployeeitem = true;
     })
 
 

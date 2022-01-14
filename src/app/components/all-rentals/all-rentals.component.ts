@@ -10,7 +10,7 @@ import { ServiceLogicService } from 'src/app/services/service-logic.service';
 })
 export class AllRentalsComponent implements OnInit {
 
-  completedrentals: boolean = false; //variabile che controlla se ci sono dei noleggi prenotati
+  boolrentals: boolean = false; //variabile che controlla se ci sono dei noleggi prenotati
   products!: any;
   imagePath: any;
 
@@ -32,20 +32,20 @@ export class AllRentalsComponent implements OnInit {
     //get listings and products 
 
     this.listing = this.serviceLogic.getListing();
-
+    console.log('sono qaaaaaaaaaaaaaaui')
 
     console.log('sono rental item', this.serviceLogic.employeerentals);
     if (this.serviceLogic.employeerentals != null) {
       console.log('ma is here?');
       if (this.serviceLogic.employeerentals.length > 0) {
         console.log('ma bohhhh');
-        this.completedrentals = true;
+        this.boolrentals = true;
       }
     } else {
-      this.completedrentals = false;
+      this.boolrentals = false;
     }
 
-    if (this.completedrentals) {
+    if (this.boolrentals) {
       //ci sono delle prenotazioni - visualizzarle
       console.log('c è roba da viusalizzare');
       this.showRentals(this.rentals);
@@ -55,36 +55,56 @@ export class AllRentalsComponent implements OnInit {
     }
   }
 
+  //restituisce il listing dell'oggetto rentato
+  findListing(rental: any) {
+    let obj = this.listing.find(function (element: any) {
+      element.id === rental.products[0].listing
+    })
+    if (obj !== 'undefined') {
+      return obj;
+    } else {
+      return -1;
+    }
+  }
 
   showRentals(rentals: any) {
     //oggetto prodotto dal server
     //listing con il prodotto
     //cerco il listing del rental
     let tmprentals = this.rentals;
-   
+
+    let foundListing;
 
 
 
 
     let index = 0;
-    try{
+    try {
       for (let i = 0; rentals.length; i++) {
-        this.tmpdatasource[index] = {
-          id_rental: rentals[i].id,
-          img: this.transform(rentals[i].products[0].products[0].imgs[0]),
-          name: rentals[i].products[0].name,
-          category: rentals[i].products[0].type,
-          condition: rentals[i].products[0].condition,
-          starting_date: rentals[i].dateStart,
-          ending_date: rentals[i].dateEnd,
-          price: rentals[i].price
+        foundListing = this.findListing(rentals[i]);
+        console.log('sono qui 0')
+        if (foundListing !== -1) {
+          console.log('sono qui 1')
+
+          this.tmpdatasource[index] = {
+            id_rental: rentals[i].id,
+            img: this.transform(foundListing[rentals[i].products[0].product]),
+            name: foundListing.name,
+            category: foundListing.type,
+            condition: foundListing[rentals[i].products[0].product].condition,
+            starting_date: rentals[i].dateStart,
+            ending_date: rentals[i].dateEnd,
+            price: rentals[i].price
+          }
+          index = index + 1;
         }
-        index = index + 1;
-    } 
-    }catch(error){
+        console.log('sono qui 3')
+
+      }
+    } catch (error) {
       console.log(error, 'Something bad happened');
     };
-    
+
     this.dataSource = this.tmpdatasource;
   }
 
