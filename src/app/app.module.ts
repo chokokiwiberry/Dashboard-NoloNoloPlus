@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http'
-
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 //I keep the new line
 import { AppRoutingModule } from './app-routing.module';
@@ -83,7 +83,8 @@ const appRoutes: Routes = [
     MatExpansionModule,
     MatFormFieldModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSidenavModule
  
    
   ],

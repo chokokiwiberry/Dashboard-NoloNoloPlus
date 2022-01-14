@@ -15,12 +15,11 @@ export class CompanyItemComponent implements OnInit {
   constructor(private serviceLogic: ServiceLogicService) { }
 
   ngOnInit(): void {
-
-    console.log('sono gnola, di companies', this.companies);
     this.mycompanies = this.showMyCompanies();
-
   }
+
   showMyCompanies(){
+    //shows only the companies that belong to employee and manager
     let tmpcomp = this.companies;
     var filteredArray  = this.serviceLogic.managerObj.companies.filter(function(array_el){
         return tmpcomp.filter(function(anotherOne_el){
