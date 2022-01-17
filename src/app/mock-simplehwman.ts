@@ -8,17 +8,7 @@ export const simpleHWmen: simpleHWman[] = [
         name: 'Clark',
         surname: 'Kent',
         role: 'funzionario',
-        companies: [
-            {
-                id: '1',
-                name: 'alpaca',
-                password: 'alpaca'
-            },
-            {
-                id: '2',
-                name: 'mucca',
-                password: 'mucca'
-            }],
+        companies: ['alpaca', 'mucca'],
         rentals: ['1', '3']
 
     },
@@ -29,17 +19,7 @@ export const simpleHWmen: simpleHWman[] = [
         name: 'Peter',
         surname: 'Parker',
         role: 'funzionario',
-        companies: [{
-            id: '5',
-            name: 'Pinco',
-            password: 'Pallo'
-        },
-        {
-            id: '6',
-            name: 'Blu',
-            password: 'Mare'
-        }
-        ],
+        companies:['pinco', 'blu'],
         rentals: ['1', '3']
 
 
@@ -52,17 +32,7 @@ export const simpleHWmen: simpleHWman[] = [
         surname: 'Wayne',
         role: 'funzionario',
         companies: [
-            {
-                id: '5',
-                name: 'fuxia',
-                password: 'fuxia'
-            }
-            ,
-            {
-                id: '1',
-                name: 'alpaca',
-                password: 'alpaca'
-            }
+           'alpaca', 'fuxia'
         ],
         rentals: ['1', '3']
 
@@ -74,15 +44,7 @@ export const simpleHWmen: simpleHWman[] = [
         name: 'Pingo',
         surname: 'Polo',
         role: 'funzionario',
-        companies: [{
-            id: '1',
-            name: 'alpaca',
-            password: 'alpaca'
-        }, {
-            id: '2',
-            name: 'mucca', 
-            password: 'mucca'
-        }],
+        companies: ['alpaca', 'mucca'],
         rentals: ['1', '3']
 
     }

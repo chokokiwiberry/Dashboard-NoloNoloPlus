@@ -19,14 +19,30 @@ export class InventoryComponent implements OnInit {
 
   countersRentals = [] as any; //conta i noleggi per ogni prodotto
 
+  myprods = [] as any; // variabile nella quale si salvano i listing appartenenti all'azienda del manager
+
   constructor(private serviceLogic: ServiceLogicService, private _sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.rentals = this.getRentals();
     this.listings = this.getListing();
+    this.myprods = this.showMyProds(this.listings);
+    console.log(this.myprods);
+    this.products = this.setCards(this.rentals, this.myprods);
 
-    this.products = this.setCards(this.rentals, this.listings);
-
+  }
+  showMyProds(listing: any) {
+    let tmprod = [] as any;
+    let index = 0;
+    for (let i = 0; i < listing.length; i = i + 1) {
+      for (let j = 0; j < this.serviceLogic.managerObj.companies.length; j = j + 1) {
+        if (listing[i].company === this.serviceLogic.managerObj.companies[j]) {
+          tmprod[index] = listing[i];
+          index = index + 1;
+        }
+      }
+    }
+    return tmprod;
   }
   showStatistics() {
     this.showstatistics = !this.showstatistics;
@@ -44,7 +60,7 @@ export class InventoryComponent implements OnInit {
     //? - 
 
     let countRentals: any[][] = [];
-    countRentals = this.countRentalsForProducts(this.rentals, this.listings);
+    countRentals = this.countRentalsForProducts(this.rentals, this.myprods);
 
 
 
@@ -58,8 +74,8 @@ export class InventoryComponent implements OnInit {
           tmpfound = this.findProduct(listings[j], rentals[i].products[0].product)
           console.log('3')
           if (tmpfound) {
-            console.log('4')
-            console.log('sisssssss');
+            // console.log('4')
+            // console.log('sisssssss');
 
             prods[index] = {
               name: listings[j].name,
@@ -145,48 +161,48 @@ export class InventoryComponent implements OnInit {
 
   }
 
-  setCards1() {
-    console.log('set cards()');
-    let index = 0;
-    //inizializzazione di counterRentals
-    for (var i = 0; i < this.tmpprods.length; i = i + 1) {
-      this.countersRentals[i] = 0;
+  // setCards1() {
+  //   console.log('set cards()');
+  //   let index = 0;
+  //   //inizializzazione di counterRentals
+  //   for (var i = 0; i < this.tmpprods.length; i = i + 1) {
+  //     this.countersRentals[i] = 0;
 
-    }
+  //   }
 
-    for (var i = 0; i < this.rentals.length; i = i + 1) {
-      for (var j = 0; j < this.tmpprods.length; j = j + 1) {
-        if (this.rentals[i].products.length == 1) {
-          if (this.rentals[i].products[0] == this.tmpprods[j].id) {
-            this.countersRentals[this.tmpprods[j].id] = this.countersRentals[this.tmpprods[j].id] + 1;
-          }
-        }
-        for (var k = 0; k < this.listings.length; k = k + 1) {
+  //   for (var i = 0; i < this.rentals.length; i = i + 1) {
+  //     for (var j = 0; j < this.tmpprods.length; j = j + 1) {
+  //       if (this.rentals[i].products.length == 1) {
+  //         if (this.rentals[i].products[0] == this.tmpprods[j].id) {
+  //           this.countersRentals[this.tmpprods[j].id] = this.countersRentals[this.tmpprods[j].id] + 1;
+  //         }
+  //       }
+  //       for (var k = 0; k < this.listings.length; k = k + 1) {
 
-        }
-      }
-    }
+  //       }
+  //     }
+  //   }
 
-    for (var i = 0; i < this.tmpprods.length; i = i + 1) {
-      for (var j = 0; j < this.listings.length; j = j + 1) {
-        if (this.tmpprods[i].listing_id == this.listings[j].id) {
-          //creo un vettore temporaneo e uso questo vettore da dare alle cards
-          this.products[index] = {
-            img: this.transform(this.tmpprods[i].imgs[0]),
-            name: this.listings[j].name,
-            category: this.listings[j].type,
-            condition: this.tmpprods[i].conditions,
-            numberRentals: this.countersRentals[this.tmpprods[i].id]
-          }
+  //   for (var i = 0; i < this.tmpprods.length; i = i + 1) {
+  //     for (var j = 0; j < this.listings.length; j = j + 1) {
+  //       if (this.tmpprods[i].listing_id == this.listings[j].id) {
+  //         //creo un vettore temporaneo e uso questo vettore da dare alle cards
+  //         this.products[index] = {
+  //           img: this.transform(this.tmpprods[i].imgs[0]),
+  //           name: this.listings[j].name,
+  //           category: this.listings[j].type,
+  //           condition: this.tmpprods[i].conditions,
+  //           numberRentals: this.countersRentals[this.tmpprods[i].id]
+  //         }
 
-          index = index + 1; //update the index
-        }
-      }
-    }
-    console.log('sto setttttttttttttcard', this.products);
-    return this.products;
+  //         index = index + 1; //update the index
+  //       }
+  //     }
+  //   }
+  //   console.log('sto setttttttttttttcard', this.products);
+  //   return this.products;
 
-  }
+  // }
 
   //function that cleans the base64 image 
   transform(elementimg: any) {

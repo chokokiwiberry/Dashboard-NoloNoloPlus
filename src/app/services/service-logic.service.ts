@@ -47,16 +47,7 @@ managerObj :simpleHWman = {
   surname: 'mock-alpaca',
   role: 'manager',
   password:'ciao',
-  companies:[{
-    id:'1',
-    name: 'alpaca',
-    password: 'alpaca',
-  },
-  {
-    id:'2',
-    name: 'mucca',
-    password: 'mucca'
-  }],
+  companies:['alpaca', 'mucca'],
   rentals: []
 
 };

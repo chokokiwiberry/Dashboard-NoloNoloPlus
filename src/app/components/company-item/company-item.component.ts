@@ -23,7 +23,7 @@ export class CompanyItemComponent implements OnInit {
     let tmpcomp = this.companies;
     var filteredArray  = this.serviceLogic.managerObj.companies.filter(function(array_el){
         return tmpcomp.filter(function(anotherOne_el){
-            return anotherOne_el.id == array_el.id;
+            return anotherOne_el === array_el;
         }).length !== 0
     });
     return filteredArray;

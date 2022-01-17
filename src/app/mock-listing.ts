@@ -65,7 +65,7 @@ export const LISTINGS: Listing[] = [
         description: 'lovely car',
         type: 'car',
         brand: 'panda',
-        company: 'fiat'
+        company: 'alpaca'
     },
     {
         id: '2',
@@ -132,7 +132,7 @@ export const LISTINGS: Listing[] = [
         description: 'lovely book',
         type: 'book',
         brand: 'book',
-        company: 'fiat'
+        company: 'alpaca'
 
     },
     {

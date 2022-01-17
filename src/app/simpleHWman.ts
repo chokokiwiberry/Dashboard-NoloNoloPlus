@@ -7,7 +7,7 @@ export interface simpleHWman{
     surname: string;
     role: string;
     password: string;
-    companies: Company[];
+    companies: string[];
     rentals: string[]
 
 

@@ -32,13 +32,9 @@ export class AllRentalsComponent implements OnInit {
     //get listings and products 
 
     this.listing = this.serviceLogic.getListing();
-    console.log('sono qaaaaaaaaaaaaaaui')
 
-    console.log('sono rental item', this.serviceLogic.employeerentals);
     if (this.serviceLogic.employeerentals != null) {
-      console.log('ma is here?');
       if (this.serviceLogic.employeerentals.length > 0) {
-        console.log('ma bohhhh');
         this.boolrentals = true;
       }
     } else {
@@ -47,7 +43,6 @@ export class AllRentalsComponent implements OnInit {
 
     if (this.boolrentals) {
       //ci sono delle prenotazioni - visualizzarle
-      console.log('c è roba da viusalizzare');
       this.showRentals(this.rentals);
     } else {
       //messaggio che non sono presenti
@@ -57,14 +52,15 @@ export class AllRentalsComponent implements OnInit {
 
   //restituisce il listing dell'oggetto rentato
   findListing(rental: any) {
-    let obj = this.listing.find(function (element: any) {
-      element.id === rental.products[0].listing
-    })
-    if (obj !== 'undefined') {
-      return obj;
-    } else {
-      return -1;
+    let obj;
+    for (var i = 0; i < this.listing.length; i++) {
+      if (rental.products[0].listing === this.listing[i].id) {
+        obj = this.listing[i];
+        return obj;
+      }
     }
+    return -1;
+
   }
 
   showRentals(rentals: any) {
@@ -76,22 +72,23 @@ export class AllRentalsComponent implements OnInit {
     let foundListing;
 
 
-
+    let tmpprod;
 
     let index = 0;
     try {
       for (let i = 0; rentals.length; i++) {
         foundListing = this.findListing(rentals[i]);
+        console.log('sono appena stato chiamato e trovato', foundListing)
         console.log('sono qui 0')
         if (foundListing !== -1) {
-          console.log('sono qui 1')
+          tmpprod = foundListing.products[rentals[i].products[0].product];
 
           this.tmpdatasource[index] = {
             id_rental: rentals[i].id,
             img: this.transform(foundListing[rentals[i].products[0].product]),
             name: foundListing.name,
             category: foundListing.type,
-            condition: foundListing[rentals[i].products[0].product].condition,
+            condition: tmpprod.condition,
             starting_date: rentals[i].dateStart,
             ending_date: rentals[i].dateEnd,
             price: rentals[i].price

@@ -77,7 +77,7 @@ export class EmployeesComponent {
   checkSameCompanies(employee: any, manager: any) {
     for (let i = 0; i < employee.companies.length; i = i + 1) {
       for (let j = 0; j < manager.companies.length; j = j + 1) {
-        if (employee.companies[i].name === manager.companies[j].name) {
+        if (employee.companies[i] === manager.companies[j]) {
           return employee;
         }
       }
@@ -94,7 +94,7 @@ export class EmployeesComponent {
     let index = 0;
     for (let i = 0; i < companies.length; i = i + 1) {
       for (let j = 0; j < this.serviceLogic.managerObj.companies.length; j = j + 1) {
-        if (companies[i].name === this.serviceLogic.managerObj.companies[j].name) {
+        if (companies[i] === this.serviceLogic.managerObj.companies[j]) {
           mycompanies[index] = {
             objcompany: this.companies[i]
           }

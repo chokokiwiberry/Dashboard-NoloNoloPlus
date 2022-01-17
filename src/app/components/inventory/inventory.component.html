@@ -6,19 +6,16 @@
 </div>
 
 <!---Showing the products-->
+
 <div class="row">
-  <div *ngFor="let prod of products; let i = index"  style="display:inline-block" class="cardsize">
-   
-    <div class="card">
-      <p>{{i}}</p>
-      <img class="resize_img" [src]=prod.img />
+  <div class="col" *ngFor="let prod of products; let i = index" style="margin-bottom: 5px;">
+    <div class="card cardsize" style="width: 18rem;">
+      <img class="card-img-top resize_img" [src]=prod.img>
       <div class="card-body">
         <h5 class="card-title">{{prod.name}}</h5>
         <p class="card-text">{{prod.category}}</p>
-        <p>Number of rentals: {{prod.numberRentals}}</p>
-        <button class="btn btn-primary">Go somewhere</button>
+        <p class="card-text">Number of rentals: {{prod.numberRentals}}</p>
       </div>
     </div>
   </div>
-
 </div>
