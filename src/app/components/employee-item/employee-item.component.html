@@ -1,20 +1,20 @@
-<div class="d-flex justify-content-center employee_details">
-
-    <div>
-        <h5>Rentals managed by:</h5>
-    </div>
-    <div>
-        <h6>{{employee.name}} {{employee.surname}}</h6>
-    </div>
-    <div>
-        <p>{{employee.role}}</p>
+<div class = "d-flex justify-content-center">
+    <div  style="display:inline;">
+        <div>
+            <h5>Rentals managed by:</h5>
+        </div>
+        <div>
+            <h5>{{employee.name}} {{employee.surname}}</h5>
+        </div>
+        <div>
+            <p>Role: {{employee.role}}</p>
+        </div>
     </div>
 </div>
-<!----Qui si possono vedere i noleggi fatti da un funzionario-->
 
+<!----Qui si possono vedere i noleggi fatti da un funzionario-->
 
  <div>
     <h5> RENTALS</h5>
-    
     <app-all-rentals></app-all-rentals>
 </div> 

@@ -47,6 +47,50 @@ export const simpleHWmen: simpleHWman[] = [
         companies: ['alpaca', 'mucca'],
         rentals: ['1', '3']
 
+    },
+    {
+        id: '5',
+        username: 'pollon',
+        password: 'Alieno',
+        name: 'Pingo',
+        surname: 'Polo',
+        role: 'funzionario',
+        companies: ['mucca'],
+        rentals: ['1', '3']
+
+    },
+    {
+        id: '6',
+        username: 'alpha',
+        password: 'Alieno',
+        name: 'Pingo',
+        surname: 'Polo',
+        role: 'funzionario',
+        companies: ['mucca'],
+        rentals: ['1', '3']
+
+    },
+    {
+        id: '7',
+        username: 'beta',
+        password: 'Alieno',
+        name: 'Pingo',
+        surname: 'Polo',
+        role: 'funzionario',
+        companies: ['mucca'],
+        rentals: ['1', '3']
+
+    },
+    {
+        id: '8',
+        username: 'gamma',
+        password: 'Alieno',
+        name: 'Pingo',
+        surname: 'Polo',
+        role: 'funzionario',
+        companies: ['alpaca'],
+        rentals: ['1', '3']
+
     }
 
 ]

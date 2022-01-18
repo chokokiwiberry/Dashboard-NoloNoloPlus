@@ -47,7 +47,7 @@ export class EmployeesComponent {
   ngOnInit(): void {
     this.tmp = this.serviceLogic.getEmployees();
     this.rentals = this.serviceLogic.getRentals();
-    this.companies = this.serviceLogic.getCompanies();
+    this.companies = this.serviceLogic.managerObj.companies;
     this.employees = this.serviceLogic.getEmployees();
     this.dataSource.data = this.setData(this.employees);
   }
@@ -140,6 +140,9 @@ export class EmployeesComponent {
     return this.serviceLogic.getRentals();
   }
 
+  filterCompany(event: any){
+    console.log('sono stato clicccato dalle opzioni');
+  }
 
   //function that receives the input from the search-filter component
   applyFilter(event: any) {
