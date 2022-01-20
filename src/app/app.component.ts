@@ -31,6 +31,7 @@ export class AppComponent implements AfterViewInit {
           $('#div_dash').css('display', 'block');
           this.serviceLogic.managerObj = ans;
           console.log('sei loggato');
+          console.log(this.serviceLogic.managerObj, 'sono oggetto man obj dopo tutto')
         }
       },
         err => {

@@ -10,7 +10,7 @@
 <div class="row">
   <div class="col" *ngFor="let prod of products; let i = index" style="margin-bottom: 5px;">
     <div class="card cardsize" style="width: 18rem;">
-      <img class="card-img-top resize_img" [src]=prod.img>
+      <img class="card-img-top resize_img" src="../uploads/{{prod.img}}">
       <div class="card-body">
         <h5 class="card-title">{{prod.name}}</h5>
         <p class="card-text">{{prod.category}}</p>

@@ -132,9 +132,11 @@ getRentals(): Rental[]{
   return RENTALS;
 }
 
+getListing():Observable<any>{
+  return this.http.get<any>('/api/listing/allForThisSimpleHWMan');
+}
 
-
-getListing(): Listing[]{
+getListing1(): Listing[]{
   return LISTINGS; //qui invece ci sarà una chiamata http
 }
 
@@ -174,6 +176,11 @@ handle(stuff: any){
   }
 }
 
+// MOCK FUNCTION CALCULATE PRICE FOR RENTALS
+calculatePrice(rental: any){
+  let totPrice;
+  
+}
 
 
 

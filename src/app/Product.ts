@@ -1,16 +1,14 @@
+import { modifiers } from "./Modifiers";
+
 export interface Product{
     imgs: string[],
     price: {
         base: number,
-        modifiers: {
-            reason: string,
-            sign: string,
-            quantity: number,
-            apply: string
-        },
+        modifiers: modifiers[],
         fidelity: number
     }
     condition: string;
-    pDisabled: boolean;
-    maintaince: string;
+    disabled: boolean;
+    maintenance: null;
+    _id: string
 }

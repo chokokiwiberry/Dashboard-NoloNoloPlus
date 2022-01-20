@@ -2,12 +2,15 @@ import { Product } from "./Product";
 
 
 export interface Listing{
-    id?: string;
+    _id?: string;
     products: Product[];
-    lDisabled: boolean;
+    disabled: boolean;
     name: string;
     description: string;
     type: string;
     brand: string;
     company: string;
+    createdAt: string,
+    updatedAt: string,
+    __v: number
 }

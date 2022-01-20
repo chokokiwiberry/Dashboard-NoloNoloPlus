@@ -53,16 +53,45 @@ export class InventoryComponent implements OnInit {
   }
 
   getListing() {
-    return this.serviceLogic.getListing();
+    //return this.serviceLogic.getListing();
+    console.log(this.serviceLogic.managerObj, 'sono in inventory e voglio vedere mana obj');
+    let ans;
+    this.serviceLogic.getListing().subscribe(
+      res =>{
+       ans = this.serviceLogic.handle(res);
+       if (ans.command === 'displayErr'){
+        if (ans.msg === 'mustBeLoggedAsSimpleHWMan'){
+          alert('Please login to access to data');
+        }
+        if (ans.msg === 'mustHaveCompanies'){
+          alert('Data accessible only to the company members');
+        }
+       } else{
+         if (typeof ans === 'object'){
+           console.log('sono qui finalmente e stai funzionando e macarenza prezzemolo');
+           console.log(ans, 'sono ans e sto consolando l oggetto ricevuto dal server');
+           this.listings = ans;
+         }
+       }
+      
+       
+
+        console.log('chiamata http ',res);
+      }
+    )
+    return this.serviceLogic.getListing1();
   }
 
   setCards(rentals: any[], listings: any[]) {
     //? - 
 
     let countRentals: any[][] = [];
-    countRentals = this.countRentalsForProducts(this.rentals, this.myprods);
+   // countRentals = this.countRentalsForProducts(this.rentals, this.myprods); perché mancano i rentals ufficiali e 
+   //bisogna aggiustare un po' gli id quindi rimane un po' in sospeso
 
+   //mostrare come immagine il prodotto meno costoso
 
+   //attenzione che nel json ufficiale id è _id
 
     let index = 0;
     let prods = [];
@@ -70,7 +99,7 @@ export class InventoryComponent implements OnInit {
     for (let i = 0; i < rentals.length; i = i + 1) {
       for (let j = 0; j < listings.length; j = j + 1) {
         //products[0] perché non sono nel caso bundle
-        if (rentals[i].products[0].listing === this.listings[j].id) {
+        if (rentals[i].products[0].listing === this.listings[j]._id) {
           tmpfound = this.findProduct(listings[j], rentals[i].products[0].product)
           console.log('3')
           if (tmpfound) {
@@ -81,9 +110,9 @@ export class InventoryComponent implements OnInit {
               name: listings[j].name,
               category: listings[j].type,
               brand: listings[j].brand,
-              img: this.transform(tmpfound.imgs[0]),
+              img: tmpfound.imgs[0],
               condition: tmpfound.condition,
-              nRentals: countRentals[listings[j].id][rentals[i].products[0].product]
+             // nRentals: countRentals[listings[j].id][rentals[i].products[0].product]
             }
             index = index + 1;
           }

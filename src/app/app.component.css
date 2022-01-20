@@ -1,13 +1,4 @@
 
-.leftsidebar{
-    width:15%;
-    float:left;
- 
-}
-.maincontent{
-    width:85%;
-    float:right;
-}
 
 .border-right {
     border-right: 1px solid black;
@@ -20,6 +11,41 @@
 
 
 
+  
+.wrapper{
+    display: flex;
+    position: relative;
+  }
+  
+ 
+  
+  .wrapper .main_content{
+    width: 100%;
+    margin-left: 200px;
+  }
+  
+  .wrapper .main_content .header{
+    padding: 20px;
+    background: #fff;
+    color: #717171;
+    border-bottom: 1px solid #e0e4e8;
+  }
+  
+  .wrapper .main_content .info{
+    margin: 20px;
+    color: #717171;
+    line-height: 25px;
+  }
+  
+  .wrapper .main_content .info div{
+    margin-bottom: 20px;
+  }
+  
+  @media (max-height: 500px){
+    .social_media{
+      display: none !important;
+    }
+  }
 
 
 

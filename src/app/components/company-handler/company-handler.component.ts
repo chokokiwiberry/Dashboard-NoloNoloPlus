@@ -28,13 +28,14 @@ export class CompanyHandlerComponent implements OnInit {
         if(ans.msg === "companyNotFound"){
           alert("Company not found");
         }
+      } else{
+        if (typeof ans === 'object'){
+          //update manager object - and update everything else -rentals, inventory, listing...
+          alert("Added the company");
+          this.serviceLogic.managerObj = ans;
+        }
       }
-      if (typeof ans === 'object'){
-        //update manager object - and update everything else -rentals, inventory, listing...
-        alert("Added the company");
-        this.serviceLogic.managerObj = ans;
-
-      }
+     
     },
     err => {
       console.log(err);
@@ -59,10 +60,12 @@ export class CompanyHandlerComponent implements OnInit {
           alert("Please choose another name");
         }
       }
-      if (typeof ans === 'object'){
-        //salva oggetto manager e aggiorna i dati della pagina
-        alert("Company created");
-        console.log('funzia', ans);
+      else{
+       if (typeof ans === 'object'){
+          //salva oggetto manager e aggiorna i dati della pagina
+          alert("Company created");
+          console.log('funzia', ans);
+        }
       }
     },
     err => {
