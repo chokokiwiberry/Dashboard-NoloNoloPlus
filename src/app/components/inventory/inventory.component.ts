@@ -51,31 +51,36 @@ export class InventoryComponent implements OnInit {
     return this.serviceLogic.getRentals();
   }
 
+  getListing(){
+    let ans;
+    this.serviceLogic.getListing().subscribe(
+      success =>{
+       ans = this.serviceLogic.handle(success);
+       if (ans.command === 'displayErr'){
+        if (ans.msg === 'mustBeLoggedAsSimpleHWMan'){
+          alert('Please login to access to data');
+        }
+        if (ans.msg === 'mustHaveCompanies'){
+          alert('Data accessible only to the company members');
+        }
+       } else{
+         if (typeof ans === 'object'){
+           console.log('sono qui finalmente e stai funzionando e macarenza prezzemolo');
+           console.log(ans, 'sono ans e sto consolando l oggetto ricevuto dal server');
+           this.listings = ans;
+           this.myprods = this.showMyProds(this.listings);
+           console.log(this.myprods);
+           this.products = this.setCards(this.rentals, this.myprods);
 
-  async getListing() {
-    let res = await this.serviceLogic.getListing();
-    let ans = this.serviceLogic.handle(res);
-    console.log(ans, 'sono component all rentals e sono vlaue dopo chiamata ');
-    if (ans.command === 'displayErr') {
-      if (ans.msg === 'mustBeLoggedAsSimpleHWMan') {
-        alert('Please login to access to data');
+         }
+       }
+      }, error =>{
+        console.log(error);
       }
-      if (ans.msg === 'mustHaveCompanies') {
-        alert('Data accessible only to the company members');
-      }
-    } else {
-      if (typeof ans === 'object') {
-        console.log('sono qui finalmente e stai funzionando e macarenza prezzemolo');
-        console.log(ans, 'sono ans e sto consolando l oggetto ricevuto dal server');
-        this.listings = ans;
-        this.myprods = this.showMyProds(this.listings);
-         console.log(this.myprods);
-         this.products = this.setCards(this.rentals, this.myprods);
-
-      }
-    }
-
+    )
   }
+
+
 
   setCards(rentals: any[], listings: any[]) {
     //? - 
