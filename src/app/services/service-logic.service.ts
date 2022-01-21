@@ -132,8 +132,11 @@ getRentals(): Rental[]{
   return RENTALS;
 }
 
-getListing():Observable<any>{
-  return this.http.get<any>('/api/listing/allForThisSimpleHWMan');
+async getListing(){
+  let listing;
+  let ans;
+  listing = await this.http.get('/api/listing/allForThisSimpleHWMan').toPromise()
+  return listing;
 }
 
 getListing1(): Listing[]{

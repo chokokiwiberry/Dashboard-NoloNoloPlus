@@ -40,11 +40,6 @@ export class AppComponent implements AfterViewInit {
       ) 
   }
 
-  Logout(){
-    let ans;
-    this.serviceLogic.Logout().subscribe(res =>{
-      ans = this.serviceLogic.handle(res);
-    });
-  }
+  
 
 }

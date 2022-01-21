@@ -32,5 +32,11 @@ export class SidebarComponent implements OnInit {
   showAccount(){
     this.serviceLogic.account_btn_clicked();
   }
+  Logout(){
+    let ans;
+    this.serviceLogic.Logout().subscribe(res =>{
+      ans = this.serviceLogic.handle(res);
+    });
+  }
 
 }

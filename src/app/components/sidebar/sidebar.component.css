@@ -7,6 +7,10 @@
     color:#fff;
     cursor:pointer;
 }
+.btn_sidebar:hover{
+    background-color: #2f4454;
+    border: orange 1px solid;
+}
 
 .middlebtn{
     position:relative;

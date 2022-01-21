@@ -8,8 +8,11 @@ import { ServiceLogicService } from 'src/app/services/service-logic.service';
   styleUrls: ['./inventory-statistics.component.css']
 })
 export class InventoryStatisticsComponent implements OnInit {
-  @Input() rentalsdata!: any[];
-  @Input() listingdata!: any[];
+rentalsdata!: any[];
+listingdata!: any[];
+
+
+  //fare chiamate get per rentals e listings
 
   chart: any = [];
 

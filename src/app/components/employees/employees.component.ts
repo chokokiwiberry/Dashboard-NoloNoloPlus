@@ -120,7 +120,7 @@ export class EmployeesComponent {
   getEmployeeRentals() {
     if (this.rentals != null) {
       for (var i = 0; i < this.rentals.length; i = i + 1) {
-        if (this.rentals[i].simpleHWman_id == this.serviceLogic.employee_element.id) {
+        if (this.rentals[i].simpleHWman_id === this.serviceLogic.employee_element.id) {
           this.tmppastrental.push(this.rentals[i]);
         }
       }

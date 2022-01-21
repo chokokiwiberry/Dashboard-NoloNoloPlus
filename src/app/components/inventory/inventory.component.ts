@@ -25,13 +25,12 @@ export class InventoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.rentals = this.getRentals();
-    this.listings = this.getListing();
-    this.myprods = this.showMyProds(this.listings);
-    console.log(this.myprods);
-    this.products = this.setCards(this.rentals, this.myprods);
+     this.getListing();
+    
 
   }
   showMyProds(listing: any) {
+    console.log(20);
     let tmprod = [] as any;
     let index = 0;
     for (let i = 0; i < listing.length; i = i + 1) {
@@ -52,46 +51,42 @@ export class InventoryComponent implements OnInit {
     return this.serviceLogic.getRentals();
   }
 
-  getListing() {
-    //return this.serviceLogic.getListing();
-    console.log(this.serviceLogic.managerObj, 'sono in inventory e voglio vedere mana obj');
-    let ans;
-    this.serviceLogic.getListing().subscribe(
-      res =>{
-       ans = this.serviceLogic.handle(res);
-       if (ans.command === 'displayErr'){
-        if (ans.msg === 'mustBeLoggedAsSimpleHWMan'){
-          alert('Please login to access to data');
-        }
-        if (ans.msg === 'mustHaveCompanies'){
-          alert('Data accessible only to the company members');
-        }
-       } else{
-         if (typeof ans === 'object'){
-           console.log('sono qui finalmente e stai funzionando e macarenza prezzemolo');
-           console.log(ans, 'sono ans e sto consolando l oggetto ricevuto dal server');
-           this.listings = ans;
-         }
-       }
-      
-       
 
-        console.log('chiamata http ',res);
+  async getListing() {
+    let res = await this.serviceLogic.getListing();
+    let ans = this.serviceLogic.handle(res);
+    console.log(ans, 'sono component all rentals e sono vlaue dopo chiamata ');
+    if (ans.command === 'displayErr') {
+      if (ans.msg === 'mustBeLoggedAsSimpleHWMan') {
+        alert('Please login to access to data');
       }
-    )
-    return this.serviceLogic.getListing1();
+      if (ans.msg === 'mustHaveCompanies') {
+        alert('Data accessible only to the company members');
+      }
+    } else {
+      if (typeof ans === 'object') {
+        console.log('sono qui finalmente e stai funzionando e macarenza prezzemolo');
+        console.log(ans, 'sono ans e sto consolando l oggetto ricevuto dal server');
+        this.listings = ans;
+        this.myprods = this.showMyProds(this.listings);
+         console.log(this.myprods);
+         this.products = this.setCards(this.rentals, this.myprods);
+
+      }
+    }
+
   }
 
   setCards(rentals: any[], listings: any[]) {
     //? - 
 
     let countRentals: any[][] = [];
-   // countRentals = this.countRentalsForProducts(this.rentals, this.myprods); perché mancano i rentals ufficiali e 
-   //bisogna aggiustare un po' gli id quindi rimane un po' in sospeso
+    // countRentals = this.countRentalsForProducts(this.rentals, this.myprods); perché mancano i rentals ufficiali e 
+    //bisogna aggiustare un po' gli id quindi rimane un po' in sospeso
 
-   //mostrare come immagine il prodotto meno costoso
+    //mostrare come immagine il prodotto meno costoso
 
-   //attenzione che nel json ufficiale id è _id
+    //attenzione che nel json ufficiale id è _id
 
     let index = 0;
     let prods = [];
@@ -112,7 +107,7 @@ export class InventoryComponent implements OnInit {
               brand: listings[j].brand,
               img: tmpfound.imgs[0],
               condition: tmpfound.condition,
-             // nRentals: countRentals[listings[j].id][rentals[i].products[0].product]
+              // nRentals: countRentals[listings[j].id][rentals[i].products[0].product]
             }
             index = index + 1;
           }
