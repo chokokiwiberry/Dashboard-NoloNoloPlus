@@ -1,7 +1,9 @@
 
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Chart, registerables } from 'chart.js';
+import { ServiceLogicService } from 'src/app/services/service-logic.service';
 
 @Component({
   selector: 'app-statistics',
@@ -13,9 +15,11 @@ export class StatisticsComponent implements OnInit {
 
   chart1: any = [];
 
-  @Input() employeesdata!: any[];
-  @Input() rentalsdata!: any[];
-  
+ //employees
+ //rentals
+
+ employees: any = [];
+ rentals : any = [];
 
 
 
@@ -25,7 +29,7 @@ export class StatisticsComponent implements OnInit {
 
   colors: string[] = [];
 
-  constructor() {
+  constructor(private serviceLogic: ServiceLogicService) {
     Chart.register(...registerables);
   }
 
@@ -54,12 +58,44 @@ export class StatisticsComponent implements OnInit {
     });
 
   }
+  getRentals(){
+    this. rentals = this.serviceLogic.getRentals();
+  }
+  setData(employees: any) {
+    let tmp = [] as any;
+    let tmpEmp;
+    let index = 0;
+    for (let i = 0; i < employees.length; i = i + 1) {
+      tmpEmp = this.checkSameCompanies(employees[i], this.serviceLogic.managerObj)
+      if (tmpEmp !== -1) {
+        tmp[index] = tmpEmp;
+        index = index + 1;
+      }
+    }
+    console.log('setData', tmp);
+    return tmp;
+  }
+  getEmployees(){
+    return this.serviceLogic.getEmployees();
 
+  }
+
+  checkSameCompanies(employee: any, manager: any) {
+    for (let i = 0; i < employee.companies.length; i = i + 1) {
+      for (let j = 0; j < manager.companies.length; j = j + 1) {
+        if (employee.companies[i] === manager.companies[j]) {
+          return employee;
+        }
+      }
+    }
+    return -1;
+  }
 
   getLabels() {
-    if (this.employeesdata != null) {
-      for (var i = 0; i < this.employeesdata.length; i = i + 1) {
-        this.labels.push(this.employeesdata[i].username);
+    let tmp = this.setData(this.getEmployees());
+    if (tmp != null) {
+      for (var i = 0; i <tmp.length; i = i + 1) {
+        this.labels.push(tmp[i].username);
       }
     }
     return this.labels;
@@ -70,14 +106,16 @@ export class StatisticsComponent implements OnInit {
     var data;
     var datasets;
 
+    let tmp = this.setData(this.getEmployees());
+
     //inizializzazione 
-    for (var i = 0; i < this.employeesdata.length; i = i + 1) {
+    for (var i = 0; i < tmp.length; i = i + 1) {
       this.counters[i] = 0;
     }
 
-    for (var i = 0; i < this.employeesdata.length; i = i + 1) {
-      for (var j = 0; j < this.rentalsdata.length; j = j + 1) {
-        if (this.employeesdata[i].id == this.rentalsdata[j].simpleHWman_id) {
+    for (var i = 0; i < tmp.length; i = i + 1) {
+      for (var j = 0; j < this.rentals.length; j = j + 1) {
+        if (tmp[i].id == this.rentals[j].simpleHWman_id) {
           this.counters[i] = this.counters[i] + 1;
         }
       }
@@ -95,11 +133,13 @@ export class StatisticsComponent implements OnInit {
   }
 
   settingColors() {
-    for (var i = 0; i < this.employeesdata.length; i = i + 1) {
+    let tmp = this.setData(this.getEmployees());
+
+    for (var i = 0; i < tmp.length; i = i + 1) {
       this.counters[i] = 0;
     }
 
-    for (var i = 0; i < this.employeesdata.length; i = i + 1) {
+    for (var i = 0; i < tmp.length; i = i + 1) {
       this.colors[i] = this.getRandomRgb();
     }
     console.log('siaiiaiaiaia ', this.colors);

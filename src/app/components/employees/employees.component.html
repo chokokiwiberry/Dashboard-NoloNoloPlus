@@ -2,11 +2,10 @@
   <button (click)="showStatistics()"class ="btn nolonoloYellowBackground">Show Statistics</button>
 </div>
 <div class ="show_statistics" *ngIf="showstatistics">
-  <app-statistics [employeesdata]="getEmployees()" [rentalsdata]="getRentals()"></app-statistics>
+  <app-statistics></app-statistics>
 </div>
 <div>
 
-<app-search-filter (inputsearched)="applyFilter($event)"></app-search-filter>
 <!-- select option that allows to filter through companies -->
 <div class ="filtercompany">
   <h5>Filter through a company</h5>
