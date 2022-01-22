@@ -1,5 +1,5 @@
-
-<div *ngIf="boolrentals">
+<div id ="employee-item-rentals">
+  <div *ngIf="boolrentals">
 
 
     <table mat-table [dataSource]="dataSource" class ="table_completed_rentals">
@@ -59,3 +59,18 @@
       </table>
 
 </div>
+</div>
+
+
+<div id = "spinner">
+<div class ="center">
+  <div class="spinner-border" role="status">
+  </div>
+  <div>
+    <p>Loading...</p>
+  </div>
+ 
+</div>
+</div>
+
+

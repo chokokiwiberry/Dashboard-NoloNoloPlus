@@ -5,6 +5,14 @@
     max-height: 100px;
 }
 
+.table_completed_rentals{
+    width: 100%;
+    table-layout: fixed;
+}
 table {
     width: 100%;
-  }
+}
+
+.center{
+        margin:0 auto; text-align:center;
+}

@@ -25,6 +25,7 @@ export class InventoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.rentals = this.getRentals();
+    this.Loading();
      this.getListing();
     
 
@@ -55,6 +56,7 @@ export class InventoryComponent implements OnInit {
     let ans;
     this.serviceLogic.getListing().subscribe(
       success =>{
+      this.stopLoading();
        ans = this.serviceLogic.handle(success);
        if (ans.command === 'displayErr'){
         if (ans.msg === 'mustBeLoggedAsSimpleHWMan'){
@@ -236,5 +238,15 @@ export class InventoryComponent implements OnInit {
   //function that cleans the base64 image 
   transform(elementimg: any) {
     return this._sanitizer.bypassSecurityTrustResourceUrl(elementimg);
+  }
+
+  Loading(){
+    $('#inventory_component').css('display', 'none');
+    $('#spinner_i').css('display', 'flex');
+  }
+  stopLoading(){
+    $('#inventory_component').css('display', 'flex');
+    $('#spinner_i').css('display', 'none');
+
   }
 }

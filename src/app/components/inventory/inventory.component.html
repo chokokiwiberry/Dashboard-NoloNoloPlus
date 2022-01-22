@@ -1,21 +1,40 @@
-<div class="statistics_container d-flex justify-content-end">
-  <button (click)="showStatistics()" class="btn nolonoloYellowBackground">Show Statistics</button>
-</div>
-<div class="show_statistics" *ngIf="showstatistics">
-  <app-inventory-statistics  ></app-inventory-statistics>
-</div>
 
-<!---Showing the products-->
-
-<div class="row">
-  <div class="col" *ngFor="let prod of products; let i = index" style="margin-bottom: 5px;">
-    <div class="card cardsize" style="width: 18rem;">
-      <img class="card-img-top resize_img" src="../uploads/{{prod.img}}">
-      <div class="card-body">
-        <h5 class="card-title">{{prod.name}}</h5>
-        <p class="card-text">{{prod.category}}</p>
-        <p class="card-text">Number of rentals: {{prod.numberRentals}}</p>
+<div id ="inventory_component">
+  <div class ="container">
+    <div class="statistics_container d-flex justify-content-end">
+      <button (click)="showStatistics()" class="btn nolonoloYellowBackground">Show Statistics</button>
+    </div>
+    <div class="show_statistics" *ngIf="showstatistics">
+      <app-inventory-statistics  ></app-inventory-statistics>
+    </div>
+  </div>
+  
+  
+  <!---Showing the products-->
+  
+  <div class="row">
+    <div class="col" *ngFor="let prod of products; let i = index" style="margin-bottom: 5px;">
+      <div class="card cardsize" style="width: 18rem;">
+        <img class="card-img-top resize_img" src="../uploads/{{prod.img}}">
+        <div class="card-body">
+          <h5 class="card-title">{{prod.name}}</h5>
+          <p class="card-text">{{prod.category}}</p>
+          <p class="card-text">Number of rentals: {{prod.numberRentals}}</p>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+
+<div id = "spinner_i">
+  <div class ="center">
+    <div class="spinner-border" role="status">
+    </div>
+    <div>
+      <p>Loading...</p>
+    </div>
+   
+  </div>
+  </div>
+

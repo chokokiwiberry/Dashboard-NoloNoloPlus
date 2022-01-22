@@ -49,6 +49,7 @@ export class AllRentalsComponent implements OnInit {
     if (this.boolrentals) {
       //ci sono delle prenotazioni - visualizzarle
      // this.showRentals(this.rentals);
+     this.Loading();
      this.getListing();
     } else {
       //messaggio che non sono presenti
@@ -125,6 +126,7 @@ export class AllRentalsComponent implements OnInit {
     let ans;
     this.serviceLogic.getListing().subscribe(
       success =>{
+        this.stopLoading();
        ans = this.serviceLogic.handle(success);
        if (ans.command === 'displayErr'){
         if (ans.msg === 'mustBeLoggedAsSimpleHWMan'){
@@ -143,12 +145,20 @@ export class AllRentalsComponent implements OnInit {
          }
        }
       }, error =>{
-        console.log(error);
+        console.log(this.serviceLogic.handle(error.responseJSON));
       }
     )
   }
  
+  Loading(){
+    $('#employee-item-rentals').css('display', 'none');
+    $('#spinner').css('display', 'flex');
+  }
+  stopLoading(){
+    $('#employee-item-rentals').css('display', 'flex');
+    $('#spinner').css('display', 'none');
 
+  }
   
 
   //function that cleans the base64 image 

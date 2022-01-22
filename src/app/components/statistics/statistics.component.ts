@@ -59,7 +59,7 @@ export class StatisticsComponent implements OnInit {
 
   }
   getRentals(){
-    this. rentals = this.serviceLogic.getRentals();
+    return  this.serviceLogic.getRentals();
   }
   setData(employees: any) {
     let tmp = [] as any;
@@ -107,6 +107,7 @@ export class StatisticsComponent implements OnInit {
     var datasets;
 
     let tmp = this.setData(this.getEmployees());
+    this.rentals = this.getRentals();
 
     //inizializzazione 
     for (var i = 0; i < tmp.length; i = i + 1) {
