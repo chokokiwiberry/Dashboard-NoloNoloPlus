@@ -19,3 +19,175 @@
   }
   
  
+
+  .resize_img{
+    height: auto; 
+    width: auto; 
+    max-width: 100px; 
+    max-height: 100px;
+}
+.resize_img_rental{
+    max-width: 50px; 
+    max-height: 50px; 
+   
+}
+
+.table_completed_rentals{
+    width: 100%;
+    table-layout: fixed;
+}
+table {
+    width: 100%;
+}
+
+
+.border-right {
+    border-right: 1px solid black;
+}
+.table_customers{
+    width: 100%;
+}
+
+
+
+.btn_sidebar{
+    display:block;
+    margin-bottom:.5rem;
+    text-align:center;
+    border: none;
+    color:#fff;
+    cursor:pointer;
+}
+.btn_sidebar:hover{
+    background-color: #2f4454;
+    border: orange 1px solid;
+    color: white;
+}
+
+.middlebtn{
+    position:relative;
+    display:flex;
+    flex-direction: column;
+    flex-wrap:wrap;
+} 
+
+
+.sidebar {
+    width: 200px;
+    height: 100%;
+    position: fixed;
+}
+
+.cardsize{
+    width: 150px;
+    height: 250px;
+}
+
+
+
+
+.card {
+    display:inline-block;
+}
+
+
+.cardscontainer{
+    display: flex;
+    flex-direction: row;
+}
+
+.center{
+    margin:0 auto; text-align:center;
+}
+
+
+
+.table_employees{
+    width: 100%;
+}
+
+.rental-item{
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+
+::ng-deep .mat-expansion-panel-body{
+    background-color: white;
+}
+
+.employee_details{
+    display: flex;
+
+}
+
+
+
+.show_employees{
+    margin-top: 20px;
+}
+.show_customers{
+    margin-top: 20px;
+}
+.show_inventory{
+    margin-top: 20px; 
+}
+.show_rentals{
+    margin-top: 20px;
+}
+
+
+.border-right {
+    border-right: 1px solid black;
+}
+.component-logreg{
+    justify-content: center; 
+    display: flex;
+}
+
+
+  
+.wrapper{
+    display: flex;
+    position: relative;
+  }
+  .wrapper .main_content{
+    width: 100%;
+    margin-left: 200px;
+  }
+
+
+
+
+/*-CSS per i pill badge delle cards - per indicare se un prodotto è nuovo o meno-*/
+.includer{
+    position: relative
+}
+
+.badge.badge-newcond{
+    background-color: rgb(7, 179, 7);
+    position: absolute; 
+    top: -5px;
+    right: -5px;
+   }
+
+   .badge.badge-goodcond{
+    background-color: rgb(101, 176, 185);
+    position: absolute; 
+    top: -5px;
+    right: -5px;
+   }
+
+   .badge.badge-decentcond{
+    background-color: rgb(255, 241, 42);
+    position: absolute; 
+    top: -5px;
+    right: -5px;
+   }
+   .badge.badge-damagedcond{
+    background-color: rgb(255, 172, 17);
+    position: absolute; 
+    top: -5px;
+    right: -5px;
+   }

@@ -1,4 +1,5 @@
 import { Listing } from "./Listing";
+import { modifiers } from "./Modifiers";
 
 
 export interface Rental{
@@ -13,23 +14,19 @@ export interface Rental{
     rejected: boolean;
     neverApproved: boolean;
     dateEnd: string;
-    price:{
+    price:[{
         base: number,
-        modifiers:{
-            reason: string,
-            sign: string,
-            quantity: number,
-            apply: string
-        },
         fidelity: number,
-    }
+        modifiers:modifiers[],
+        
+    }],
     notes: [{
         note: string,
         simpleHwMan_id: string
     }]
   
     neverShowedUp: boolean;
-    unPaid: boolean;
+    paid: boolean;
     damagedProduct: boolean;
     
 }

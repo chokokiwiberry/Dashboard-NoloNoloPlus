@@ -1,6 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ServiceLogicService } from 'src/app/services/service-logic.service';
+import { ModalComponent } from '../modal/modal.component';
 declare var $ : any;
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ username: any;
 name!: any;
 surname: any; 
 password: any;
-  constructor(public serviceLogic: ServiceLogicService, private http: HttpClient) { }
+  constructor(public serviceLogic: ServiceLogicService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -29,20 +30,29 @@ password: any;
         window.location.href = '../customer/'; //forse da cambiare il percorso
       }
       if (ans.msg === "alreadyLogged"){
-        alert("Log out to create a new account");
+        this.openDialog("Log out to create a new account", false)
+     
       }
       if(ans.msg === "usernameAlreadyInUse"){
-        alert("Use another username, the one chosen is taken");
+        this.openDialog("Use another username, the one chosen is taken", false)
       }
     }
     if(ans === "regged"){
-      alert("Registration is successful, you can login now");
+      this.openDialog("Registration is successful, you can login now", true)
     }
-    console.log('reseee', res);
   })
-
-
     
+  }
+
+  openDialog(msg: any, regged: boolean) {
+    const dialogRef  = this.dialog.open(ModalComponent, {
+      width: '450px',
+      data: {msg: msg, regged: regged},
+
+     
+    });
+    dialogRef.afterClosed();
+
   }
 
 

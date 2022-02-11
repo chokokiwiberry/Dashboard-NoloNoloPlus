@@ -6,17 +6,7 @@
 </div>
 <div>
 
-<!-- select option that allows to filter through companies -->
-<div class ="filtercompany">
-  <h5>Filter through a company</h5>
-  <select>
-    <option >No company</option>
-    <option *ngFor="let c of companies" 
-            [ngValue]="c"
-            click="filterCompany($event)">{{c}}</option>
-  </select>
 
-</div>
 
     <!---Table with the employeees-->
     <table mat-table [dataSource]="dataSource" class ="table_employees">
@@ -73,7 +63,7 @@
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let element">
              
-            <button class="btn nolonoloYellowBackground" (click)="showDetails(element)">Show Details</button>
+            <button class="btn nolonoloBackgroundNavSecond" style="color: white;" (click)="showDetails(element)">Show Details</button>
            </td>
         </ng-container>
       

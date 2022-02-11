@@ -25,6 +25,12 @@ const httpOptions = {
       'Content-Type': 'application/x-www-form-urlencoded',
   })
 }
+
+const httpOptionsJson = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json; charset=utf-8',
+  })
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -37,6 +43,7 @@ customers_toggle: boolean = false;
 inventory_toggle: boolean = false;
 rental_toggle: boolean = false;
 company_toggle: boolean = false; //shows the company stuff
+customer_item_toggle: boolean = false;
 
 
 /////manager obj
@@ -67,6 +74,9 @@ rental_observable = this.rental_clicked.asObservable();
 
 private company_clicked = new Subject();
 company_observable = this.company_clicked.asObservable();
+
+private customer_item_clicked = new Subject();
+customer_item_observable = this.customer_item_clicked.asObservable();
 
 //logic for single employee
 employee_item_toggle: boolean = false;
@@ -106,8 +116,6 @@ employeerentals: any; //completedrentals
     this.company_clicked.next(this.company_toggle);
   }
 
-  
-
 
 private employee_item_clicked = new Subject();
 employee_item_observable = this.employee_item_clicked.asObservable();
@@ -119,6 +127,31 @@ employee_item_btn_clicked(element: any){
 }
 
 
+customer_item_btn_clicked(element: any){
+  this.customer_item_toggle = true;
+  this.customer_item_clicked.next(this.customer_item_toggle);
+
+}
+//// funzioni per il loading della gif e stop loading
+Loading(){
+  $('#maincontent').css('display', 'none');
+  $('#loading').css('display', 'block');
+}
+stopLoading(){
+  $('#maincontent').css('display', 'block');
+  $('#loading').css('display', 'none');
+
+}
+
+LoadingRentals(){
+  $('.hideshowstats').css('display', 'none');
+  $('#loading_cat').css('display', 'block');
+}
+
+stopLoadingRentals(){
+  $('.hideshowstats').css('display', 'block');
+  $('#loading_cat').css('display', 'none');
+}
 //GET CALLS
 
 getEmployees(): simpleHWman[]{
@@ -179,12 +212,45 @@ handle(stuff: any){
   }
 }
 
-// MOCK FUNCTION CALCULATE PRICE FOR RENTALS
-calculatePrice(rental: any){
-  let totPrice;
-  
+async calculatePrice(rental: any) {
+  // Default options are marked with *
+  let pstdata = {priceObj: rental.price, dateStart:rental.dateStart, dateEnd:rental.dateEnd}
+  const response = await fetch('/api/price/calc', {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
+  });  
+  return response.json(); // parses JSON response into native JavaScript objects
 }
 
+///////LOGIN STUFF
+allCalc(rentals: any): Observable<any>{
+  let pstdata = [] as any;
+  for (let i = 0; i<rentals.length; i++){
+     pstdata[i] = {priceObj: rentals[i].price[0], dateStart :rentals[i].dateStart, dateEnd:rentals[i].dateEnd}
+  }
+  return this.http.post<any>('/api/manager/login', pstdata, httpOptionsJson);
+}
+
+async allCalc1(rentals: any){
+  let pstdata = [] as any;
+  for (let i = 0; i<rentals.length; i++){
+     pstdata[i] = {priceObj: rentals[i].price[0], dateStart :rentals[i].dateStart, dateEnd:rentals[i].dateEnd}
+  }
+  console.log('sono pstdata da service', pstdata);
+  const response = await fetch('/api/price/calcAll', {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
+  });  
+  return response.json();
+}
 
 
 //////REGISTER STUFF 

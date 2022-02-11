@@ -1,26 +1,5 @@
 
 
-.border-right {
-    border-right: 1px solid black;
-}
-.component-logreg{
-    justify-content: center; 
-    display: flex;
-}
-
-
-  
-.wrapper{
-    display: flex;
-    position: relative;
-  }
-  
- 
-  
-  .wrapper .main_content{
-    width: 100%;
-    margin-left: 200px;
-  }
   
  
 

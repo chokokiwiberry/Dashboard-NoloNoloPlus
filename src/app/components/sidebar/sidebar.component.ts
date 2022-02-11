@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter} from '@angular/core';
+import { Router } from '@angular/router';
 import { ServiceLogicService } from 'src/app/services/service-logic.service';
 
 @Component({
@@ -27,7 +28,7 @@ export class SidebarComponent implements OnInit {
     this.serviceLogic.rental_btn_clicked();
   }
   goToBakOffice(){
-    console.log("to direct to the backoffice board");
+    window.location.href = '../employee';
   }
   showAccount(){
     this.serviceLogic.account_btn_clicked();

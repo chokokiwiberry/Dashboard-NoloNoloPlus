@@ -1,50 +1,50 @@
 <div id="div_logreg" style="display:none">
 
-<nav class="navbar nolonoloBackgroundNavSecond" width="100%">
-  <div>
-    <div style="justify-content: left;display: flex;">
-      <img src="assets/images/logo.png" width="45" height="45" alt="">
+  <nav class="navbar sticky-top navbar-dark nolonoloFullWidth nolonoloBackgroundNavSecond p-2">
+    <div class="col-1">
+      <!--NAVBAR LOGO-->
+      <a class="navbar-brand nolonoloNavLogo" href="#">
+        <img src="assets/images/logo.png" alt="nolonoloplus logo" class="p-0">
+      </a>
+    </div>  
+  </nav>
+ 
+  <div class="row nolonoloFullWidth mb-5 mt-3">
+    <div class="col-12 d-flex justify-content-center">
+        <h2>Welcome to the NoloNolo+ Dashboard</h2>
+    </div>
+    <div class="col-12 d-flex justify-content-center">
+        <p> If you are already part of our team please log in, otherwise you can register using the form below</p>
+    </div>
+</div>
+
+ 
+
+  <div class="row">
+    <div class="col-sm border-right">
+      <app-register class="component-logreg"></app-register>
+    </div>
+
+    <div class="col-sm">
+      <app-login class="component-logreg"></app-login>
     </div>
   </div>
-</nav>
 
 
-<div id="welcomemanager" style="justify-content: center;display: flex; text-align:  center;">
-  <h3> Welcome Manager!</h3>
 </div>
-<div class="row">
-
-
-  <div class="col-sm border-right">
-    <app-register class="component-logreg"></app-register>
-  </div>
-
-
-  <div class="col-sm">
-    <app-login class="component-logreg"></app-login>
-  </div>
-</div>
-
-
-</div> 
 
 
 <div id="div_dash" style="display:none">
 
 
- <div class = "wrapper">
-   <div class = "sidebar">
-    
-    <app-sidebar></app-sidebar>
-  </div>
-  <div class ="main_content">
-    <app-dashboard-container></app-dashboard-container>
+  <div class="wrapper">
+    <div class="sidebar">
+
+      <app-sidebar></app-sidebar>
+    </div>
+    <div id="maincontent" class="main_content">
+      <app-dashboard-container></app-dashboard-container>
+
+    </div>
   </div>
 </div>
- </div> 
-
-
-
-
-
-

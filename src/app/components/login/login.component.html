@@ -5,17 +5,19 @@
   <div>
     <form id="logForm">
       <div class="form-group">
-        <label for="username">Your unique and identifying nick name</label>
-        <input type="text" class="form-control w-75" placeholder="Enter username" id="username_log" name="username"
+        <label for="username">Username</label>
+        <input type="text" class="form-control" placeholder="Enter username" id="username_log" name="username"
           required>
       </div>
       <div>
-        <label for="password">A complex password, not easily crackable (don't use "password")</label>
-        <input type="password" class="form-control w-75 " placeholder="Enter password" id="password_log" name="password"
+        <label for="password">Password</label>
+        <input type="password" class="form-control " placeholder="Enter password" id="password_log" name="password"
           required>
       </div>
       <br>
-      <button class="btn nolonoloYellowBackground" (click)="Login()">Login</button>
+      <button class="btn nolonoloYellowBackground" (click)="Login()"  >Login</button>
     </form>
   </div>
 </div>
+
+

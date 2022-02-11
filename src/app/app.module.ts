@@ -17,7 +17,6 @@ import { AppComponent } from './app.component';
 import { EmployeesComponent } from './components/employees/employees.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LogoComponent } from './components/logo/logo.component';
-import { SettingsComponent } from './components/settings/settings.component';
 import { CustomersComponent } from './components/customers/customers.component';
 import { DashboardContainerComponent } from './components/dashboard-container/dashboard-container.component';
 
@@ -30,16 +29,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { RentalItemComponent } from './components/rental-item/rental-item.component';
 
 
-import { FilterComponent } from './components/filter/filter.component';
 import { CustomersStatisticsComponent } from './components/customers-statistics/customers-statistics.component';
 import { InventoryStatisticsComponent } from './components/inventory-statistics/inventory-statistics.component';
 import { RentalsStatisticsComponent } from './components/rentals-statistics/rentals-statistics.component';
-import { SearchFilterComponent } from './components/search-filter/search-filter.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CompanyHandlerComponent } from './components/company-handler/company-handler.component';
 import { AllRentalsComponent } from './components/all-rentals/all-rentals.component';
-
+import { ModalComponent } from './components/modal/modal.component';
+import { CustomerItemComponent } from './components/customer-item/customer-item.component';
 
 
 
@@ -52,7 +50,6 @@ const appRoutes: Routes = [
     EmployeesComponent,
     SidebarComponent,
     LogoComponent,
-    SettingsComponent,
     CustomersComponent,
     DashboardContainerComponent,
     RentalsComponent,
@@ -61,15 +58,15 @@ const appRoutes: Routes = [
     EmployeeItemComponent,
     CompanyItemComponent,
     RentalItemComponent,
-    FilterComponent,
     CustomersStatisticsComponent,
     InventoryStatisticsComponent,
     RentalsStatisticsComponent,
-    SearchFilterComponent,
     LoginComponent,
     RegisterComponent,
     CompanyHandlerComponent,
-    AllRentalsComponent
+    AllRentalsComponent,
+    ModalComponent,
+    CustomerItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,13 +81,15 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     FormsModule,
     HttpClientModule,
-    MatSidenavModule
+    MatSidenavModule,
+    
  
    
   ],
 
   providers: [],
   bootstrap: [AppComponent],
+  entryComponents: [ModalComponent]
 })
 export class AppModule {
 }

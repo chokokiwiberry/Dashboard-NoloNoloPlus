@@ -1,8 +1,8 @@
 
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Chart, registerables } from 'chart.js';
+
 import { ServiceLogicService } from 'src/app/services/service-logic.service';
 
 @Component({
@@ -27,14 +27,20 @@ export class StatisticsComponent implements OnInit {
 
   counters: number[] = []; //array of counters that count rentals for each employee
 
-  colors: string[] = [];
+  colors: any[] = [];
+
+
+  
 
   constructor(private serviceLogic: ServiceLogicService) {
     Chart.register(...registerables);
   }
 
+
+
+
   ngOnInit(): void {
-    this.chart = new Chart('canvas', {
+    this.chart = new Chart('canvas_emp1', {
       type: 'bar',
 
       data: {
@@ -45,22 +51,72 @@ export class StatisticsComponent implements OnInit {
           {
             data: this.settingData(),
             borderColor: '#3e95cd',
-            label: 'Rentals done',
-            backgroundColor: this.getRandomRgb(),
+            label: 'Rentals managed',
+            backgroundColor: this.settingColors(),
             
           },
         ],
 
       },
       options: {
-        responsive: false
+        hover: {
+          // Overrides the global setting
+          mode: 'index'
+      },
+      maintainAspectRatio: false,
+      scales: {
+        yAxes: {
+            title: {
+                display: true,
+                text: 'Number of reantals for each employee',
+                font: {
+                    size: 15
+                }
+            },
+            ticks: {
+                precision: 0
+            }
+        },
+        xAxes: {
+            title: {
+                display: true,
+                text: 'Employee',
+                font: {
+                    size: 15
+                }
+            }
+        }
+    },
+      plugins:{
+        legend: {
+          position: "right",
+            align: "center",
+            labels: {
+              usePointStyle: false,
+            },
+          
+        },
+        title:{
+          text: "Rentals managed by each employee",
+          position: 'top',
+          display: true
+        }
+      },
+        
       }
+  
     });
 
   }
   getRentals(){
     return  this.serviceLogic.getRentals();
   }
+
+  setOptions(){
+  
+  }
+
+  //function that filters the employees and returns only the employees of the same companies of the manager
   setData(employees: any) {
     let tmp = [] as any;
     let tmpEmp;
@@ -116,8 +172,9 @@ export class StatisticsComponent implements OnInit {
 
     for (var i = 0; i < tmp.length; i = i + 1) {
       for (var j = 0; j < this.rentals.length; j = j + 1) {
-        if (tmp[i].id == this.rentals[j].simpleHWman_id) {
+        if (tmp[i].id === this.rentals[j].simpleHWman_id) {
           this.counters[i] = this.counters[i] + 1;
+          console.log('emp', this.counters[tmp[i].id]);
         }
       }
     }
@@ -137,7 +194,7 @@ export class StatisticsComponent implements OnInit {
     let tmp = this.setData(this.getEmployees());
 
     for (var i = 0; i < tmp.length; i = i + 1) {
-      this.counters[i] = 0;
+      this.colors[i] = 0;
     }
 
     for (var i = 0; i < tmp.length; i = i + 1) {

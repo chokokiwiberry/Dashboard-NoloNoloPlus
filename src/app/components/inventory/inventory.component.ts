@@ -21,17 +21,25 @@ export class InventoryComponent implements OnInit {
 
   myprods = [] as any; // variabile nella quale si salvano i listing appartenenti all'azienda del manager
 
+  provatmp = [] as any;
+
+  //variabili che vengono passate alla componente child
+  listingsdata : any;
+  rentalsdata: any;
+
+
   constructor(private serviceLogic: ServiceLogicService, private _sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.rentals = this.getRentals();
-    this.Loading();
-     this.getListing();
-    
+    this.serviceLogic.Loading();
+    this.getListing();
+
 
   }
+
+  //funzione che filtra i listing e mostra solo i listing che appartengono al manager corrente
   showMyProds(listing: any) {
-    console.log(20);
     let tmprod = [] as any;
     let index = 0;
     for (let i = 0; i < listing.length; i = i + 1) {
@@ -52,32 +60,34 @@ export class InventoryComponent implements OnInit {
     return this.serviceLogic.getRentals();
   }
 
-  getListing(){
+  getListing() {
     let ans;
     this.serviceLogic.getListing().subscribe(
-      success =>{
-      this.stopLoading();
-       ans = this.serviceLogic.handle(success);
-       if (ans.command === 'displayErr'){
-        if (ans.msg === 'mustBeLoggedAsSimpleHWMan'){
-          alert('Please login to access to data');
-        }
-        if (ans.msg === 'mustHaveCompanies'){
-          alert('Data accessible only to the company members');
-        }
-       } else{
-         if (typeof ans === 'object'){
-           console.log('sono qui finalmente e stai funzionando e macarenza prezzemolo');
-           console.log(ans, 'sono ans e sto consolando l oggetto ricevuto dal server');
-           this.listings = ans;
-           this.myprods = this.showMyProds(this.listings);
-           console.log(this.myprods);
-           this.products = this.setCards(this.rentals, this.myprods);
+      success => {
+        this.serviceLogic.stopLoading();
+        ans = this.serviceLogic.handle(success);
+        if (ans.command === 'displayErr') {
+          if (ans.msg === 'mustBeLoggedAsSimpleHWMan') {
+            alert('Please login to access to data');
+          }
+          if (ans.msg === 'mustHaveCompanies') {
+            alert('Data accessible only to the company members');
+          }
+        } else {
+          if (typeof ans === 'object') {
+    
+            this.listings = ans;
+            this.provatmp = ans;
+            this.listingsdata = ans;
+            this.rentalsdata = this.serviceLogic.getRentals();
+            this.myprods = this.showMyProds(this.listings);
+            this.products = this.setCards(this.rentals, this.myprods);
 
-         }
-       }
-      }, error =>{
-        console.log(error);
+
+          }
+        }
+      }, error => {
+        this.serviceLogic.handle(error.responseJSON)
       }
     )
   }
@@ -85,10 +95,8 @@ export class InventoryComponent implements OnInit {
 
 
   setCards(rentals: any[], listings: any[]) {
-    //? - 
-
     let countRentals: any[][] = [];
-    // countRentals = this.countRentalsForProducts(this.rentals, this.myprods); perché mancano i rentals ufficiali e 
+    countRentals = this.countRentalsForProducts(this.rentals, this.myprods); //perché mancano i rentals ufficiali e 
     //bisogna aggiustare un po' gli id quindi rimane un po' in sospeso
 
     //mostrare come immagine il prodotto meno costoso
@@ -103,18 +111,16 @@ export class InventoryComponent implements OnInit {
         //products[0] perché non sono nel caso bundle
         if (rentals[i].products[0].listing === this.listings[j]._id) {
           tmpfound = this.findProduct(listings[j], rentals[i].products[0].product)
-          console.log('3')
           if (tmpfound) {
-            // console.log('4')
-            // console.log('sisssssss');
-
             prods[index] = {
+             // idProd: JSON.stringify({listingid: listings[j]._id, productNumber: rentals[i].products[0].product}),
               name: listings[j].name,
               category: listings[j].type,
               brand: listings[j].brand,
+              description : listings[j].description,
               img: tmpfound.imgs[0],
               condition: tmpfound.condition,
-              // nRentals: countRentals[listings[j].id][rentals[i].products[0].product]
+              nRentals: countRentals[listings[j]._id][rentals[i].products[0].product]
             }
             index = index + 1;
           }
@@ -123,6 +129,11 @@ export class InventoryComponent implements OnInit {
     }
 
     return prods;
+
+  }
+
+  //funzione che mostra il prodotto più economico
+  showCheapestImage(){
 
   }
   //funzione che ritorna una matrice per memorizzare quanti noleggi sono stati fatti sui prodotti
@@ -134,12 +145,10 @@ export class InventoryComponent implements OnInit {
     //inizializzazione della matrice
     console.log(listings.length);
     for (let i = 0; i < listings.length; i = i + 1) {
-      countRentals[listings[i].id] = [];
+      countRentals[listings[i]._id] = [];
 
       for (let j = 0; j < listings[i].products.length; j = j + 1) {
-        console.log('ma qui 1');
-        console.log('eeeee', i, j);
-        countRentals[listings[i].id][j] = 0;
+        countRentals[listings[i]._id][j] = 0;
       }
     }
 
@@ -151,8 +160,8 @@ export class InventoryComponent implements OnInit {
       for (let j = 0; j < listings.length; j = j + 1) {
 
         // non caso bundle
-        if (rentals[i].products.length == 1) {
-          if (rentals[i].products[0].listing === listings[j].id) {
+        if (rentals[i].products.length === 1) {
+          if (rentals[i].products[0].listing === listings[j]._id) {
 
             if (listings[j].products.length > 0) {
 
@@ -160,8 +169,8 @@ export class InventoryComponent implements OnInit {
                 if (rentals[i].products[0].product === k) {
 
                   //uso una matrice
-                  countRentals[listings[j].id][rentals[i].products[0].product] =
-                    countRentals[listings[j].id][rentals[i].products[0].product] + 1;
+                  countRentals[listings[j]._id][rentals[i].products[0].product] =
+                    countRentals[listings[j]._id][rentals[i].products[0].product] + 1;
                 }
               }
             } else {
@@ -187,66 +196,12 @@ export class InventoryComponent implements OnInit {
     return false;
   }
 
-  //function that return the index
-  getIndex(listings: any) {
 
-  }
-
-  // setCards1() {
-  //   console.log('set cards()');
-  //   let index = 0;
-  //   //inizializzazione di counterRentals
-  //   for (var i = 0; i < this.tmpprods.length; i = i + 1) {
-  //     this.countersRentals[i] = 0;
-
-  //   }
-
-  //   for (var i = 0; i < this.rentals.length; i = i + 1) {
-  //     for (var j = 0; j < this.tmpprods.length; j = j + 1) {
-  //       if (this.rentals[i].products.length == 1) {
-  //         if (this.rentals[i].products[0] == this.tmpprods[j].id) {
-  //           this.countersRentals[this.tmpprods[j].id] = this.countersRentals[this.tmpprods[j].id] + 1;
-  //         }
-  //       }
-  //       for (var k = 0; k < this.listings.length; k = k + 1) {
-
-  //       }
-  //     }
-  //   }
-
-  //   for (var i = 0; i < this.tmpprods.length; i = i + 1) {
-  //     for (var j = 0; j < this.listings.length; j = j + 1) {
-  //       if (this.tmpprods[i].listing_id == this.listings[j].id) {
-  //         //creo un vettore temporaneo e uso questo vettore da dare alle cards
-  //         this.products[index] = {
-  //           img: this.transform(this.tmpprods[i].imgs[0]),
-  //           name: this.listings[j].name,
-  //           category: this.listings[j].type,
-  //           condition: this.tmpprods[i].conditions,
-  //           numberRentals: this.countersRentals[this.tmpprods[i].id]
-  //         }
-
-  //         index = index + 1; //update the index
-  //       }
-  //     }
-  //   }
-  //   console.log('sto setttttttttttttcard', this.products);
-  //   return this.products;
-
-  // }
 
   //function that cleans the base64 image 
   transform(elementimg: any) {
     return this._sanitizer.bypassSecurityTrustResourceUrl(elementimg);
   }
 
-  Loading(){
-    $('#inventory_component').css('display', 'none');
-    $('#spinner_i').css('display', 'flex');
-  }
-  stopLoading(){
-    $('#inventory_component').css('display', 'flex');
-    $('#spinner_i').css('display', 'none');
 
-  }
 }

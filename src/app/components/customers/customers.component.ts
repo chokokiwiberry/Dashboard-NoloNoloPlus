@@ -16,7 +16,7 @@ rentals: any;
 
 chart: any = [];
 
-displayedColumns: string[] = ['id', 'username', 'name', 'surname', 'rentals', 'broken', 'delayed'];
+displayedColumns: string[] = ['id', 'username', 'name', 'surname', 'broken', 'delayed', 'actions'];
 dataSource = new MatTableDataSource();
 
 
@@ -42,6 +42,7 @@ dataSource = new MatTableDataSource();
   }
 
 showDetails(element: any){
+  this.serviceLogic.customer_item_btn_clicked(element);
 
 }
 

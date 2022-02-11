@@ -1,7 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MAT_MENU_SCROLL_STRATEGY_FACTORY_PROVIDER } from '@angular/material/menu/menu-trigger';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { NavigationExtras, Router } from '@angular/router';
@@ -140,28 +139,8 @@ export class EmployeesComponent {
     return this.serviceLogic.getRentals();
   }
 
-  filterCompany(event: any){
-    console.log('sono stato clicccato dalle opzioni');
-  }
 
-  //function that receives the input from the search-filter component
-  applyFilter(event: any) {
 
-    // this.transform(this.dataSource.data, event);
 
-  }
-
-  /* transform(value: any, searchText: any): any {
-     if(!searchText) {
-       return value;
-     }
-     return value.filter((data: any) => this.matchValue(data,searchText)); 
-   }
- 
-   matchValue(data: any, value: any) {
-     return Object.keys(data).map((key) => {
-        return new RegExp(value, 'gi').test(data[key]);
-     }).some(result => result);
-   } */
 
 }

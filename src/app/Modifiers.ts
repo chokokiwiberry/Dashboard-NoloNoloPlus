@@ -1,7 +1,7 @@
 export interface modifiers{
-    reason: string,
-    sign: string,
-    quantity: number,
-    apply: string
-    _id: string,
+    reason: any,
+    sign: any,
+    quantity: any,
+    apply: any,
+    _id: any,
 }

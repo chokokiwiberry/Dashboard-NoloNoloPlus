@@ -1,16 +1,17 @@
-import { HttpClient } from '@angular/common/http';
-import { Statement } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Subject } from 'rxjs';
 import { ServiceLogicService } from 'src/app/services/service-logic.service';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-all-rentals',
   templateUrl: './all-rentals.component.html',
   styleUrls: ['./all-rentals.component.css']
 })
-export class AllRentalsComponent implements OnInit {
+export class AllRentalsComponent implements OnInit, OnDestroy {
 
   boolrentals: boolean = false; //variabile che controlla se ci sono dei noleggi prenotati
   products!: any;
@@ -24,7 +25,8 @@ export class AllRentalsComponent implements OnInit {
   listing: any;
 
   tmpdatasource = [] as any;
-  constructor(public serviceLogic: ServiceLogicService, private _sanitizer: DomSanitizer) { }
+  private ngUnsubscribe = new Subject();
+  constructor(public serviceLogic: ServiceLogicService, private _sanitizer: DomSanitizer, public dialog: MatDialog) { }
 
   ngOnInit(): void {
 
@@ -33,133 +35,155 @@ export class AllRentalsComponent implements OnInit {
 
     //get listings and products 
 
-     //this.getListing();
-
     if (this.serviceLogic.employeerentals != null) {
       if (this.serviceLogic.employeerentals.length > 0) {
-        // console.log('c e qualcosa che e arrivato ')
-        // console.log('voglio vedere cosa arriva', this.serviceLogic.employeerentals)
         this.boolrentals = true;
       }
     } else {
-      // console.log('eeehhhhhhhhhhhhhhhhhh no')
       this.boolrentals = false;
     }
 
     if (this.boolrentals) {
-      //ci sono delle prenotazioni - visualizzarle
-     // this.showRentals(this.rentals);
-     this.Loading();
-     this.getListing();
+      this.serviceLogic.Loading();
+      this.getListing();
     } else {
       //messaggio che non sono presenti
+      this.openDialog('There are no rentals managed by this employee', false)
       console.log('messaggio, non ci sono robe da visualizzare');
     }
   }
 
   //restituisce il listing dell'oggetto rentato
-   findListing(rental: any, listings : any) {
-    console.log('statement 3')
-    console.log(200);
-    let obj;
-    //let tmplisting = this.getListing();
-     console.log('sono dentro findlisting e sto provando a stampare listing', this.listing)
-
+  findListing(rental: any, listings: any) {
+    let obj : any;
     for (var i = 0; i < listings.length; i++) {
-       console.log('sono in findlisting')
       if (rental.products[0].listing === listings[i]._id) {
         obj = this.listing[i];
         return obj;
       }
- 
-
     }
     return -1;
+  }
+
+  openDialog(msg: any, regged: boolean) {
+    const dialogRef = this.dialog.open(ModalComponent, {
+      width: '450px',
+      data: { msg: msg, regged: regged },
+
+
+    });
+    dialogRef.afterClosed();
 
   }
 
-  showRentals(rentals: any, listings :any) {
+
+  showRentals(rentals: any, listings: any, responsedata: any) {
     //oggetto prodotto dal server
     //listing con il prodotto
     //cerco il listing del rental
-    console.log('statement 2')
     let tmprentals = this.rentals;
-
-    let foundListing;
-
-
-    let tmpprod;
-
+    let foundListing: any;
+    let tmpprod: any;
     let index = 0;
-    try {
-      for (let i = 0; rentals.length; i++) {
+
+    
+      for (let i = 0; i< rentals.length; i++) {
         foundListing = this.findListing(rentals[i], listings);
-        console.log('sono appena stato chiamato e trovato', foundListing)
-        console.log('sono qui 0')
         if (foundListing !== -1) {
           tmpprod = foundListing.products[rentals[i].products[0].product];
-
-          this.tmpdatasource[index] = {
-            id_rental: rentals[i].id,
-            img: this.transform(foundListing[rentals[i].products[0].product]),
-            name: foundListing.name,
-            category: foundListing.type,
-            condition: tmpprod.condition,
-            starting_date: rentals[i].dateStart,
-            ending_date: rentals[i].dateEnd,
-            price: rentals[i].price
-          }
-          index = index + 1;
+            this.tmpdatasource[index] = {
+              id_rental: rentals[i].id,
+              img: tmpprod.imgs[0],
+              name: foundListing.name,
+              category: foundListing.type,
+              condition: tmpprod.condition,
+              starting_date: rentals[i].dateStart,
+              ending_date: rentals[i].dateEnd,
+              price: responsedata[i]
+            }
+            index = index + 1;
+          
+     
         }
-        console.log('sono qui 3')
-
       }
-    } catch (error) {
-      console.log(error, 'Something bad happened');
-    };
+    
 
     this.dataSource = this.tmpdatasource;
-     
   }
 
-  getListing(){
-    let ans;
-    this.serviceLogic.getListing().subscribe(
-      success =>{
-        this.stopLoading();
-       ans = this.serviceLogic.handle(success);
-       if (ans.command === 'displayErr'){
-        if (ans.msg === 'mustBeLoggedAsSimpleHWMan'){
-          alert('Please login to access to data');
-        }
-        if (ans.msg === 'mustHaveCompanies'){
-          alert('Data accessible only to the company members');
-        }
-       } else{
-         if (typeof ans === 'object'){
-           console.log('sono qui finalmente e stai funzionando e macarenza prezzemolo');
-           console.log(ans, 'sono ans e sto consolando l oggetto ricevuto dal server');
-           this.listing = ans;
-           this.showRentals(this.rentals, this.listing);
 
-         }
-       }
-      }, error =>{
-        console.log(this.serviceLogic.handle(error.responseJSON));
+  asyncPostCall = async (rentals: any) => {
+    let pstdata = [] as any;
+    for (let i = 0; i < rentals.length; i++) {
+      pstdata[i] = { priceObj: rentals[i].price[0], dateStart: rentals[i].dateStart, dateEnd: rentals[i].dateEnd }
+    }
+    try {
+      console.log('sono pstdata da service', pstdata);
+      const response = await fetch('/api/price/calcAll', {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
+      })
+      const data = await response.json();
+      // enter you logic when the fetch is successful
+      // this.serviceLogic.stopLoadingRentals();
+      let ans = this.serviceLogic.handle(data);
+      if (ans.command === 'displayErr') {
+        console.log('Something went wrong')
+      }
+      if (typeof ans === 'object') {
+        return ans;
+      }
+    } catch (error) {
+      // enter your logic for when there is an error (ex. error toast)
+      console.log(error)
+    }
+  }
+
+
+
+  //bisogna fare le get a cascata
+  getListing() {
+    let ans;
+    let responsedata = [] as any;
+    let tmpans;
+    this.serviceLogic.getListing().subscribe(
+      async success => {
+        this.serviceLogic.stopLoading();
+        ans = this.serviceLogic.handle(success);
+        if (ans.command === 'displayErr') {
+          if (ans.msg === 'mustBeLoggedAsSimpleHWMan') {
+            alert('Please login to access to data');
+          }
+          if (ans.msg === 'mustHaveCompanies') {
+            alert('Data accessible only to the company members');
+          }
+        } else {
+          if (typeof ans === 'object') {
+            this.listing = ans;
+
+            //seconda chiamata 
+            responsedata = await this.asyncPostCall(this.rentals)
+            this.showRentals(this.rentals, this.listing, responsedata);
+            console.log(responsedata, 'sono allrentals e sto facendo chiamate due')
+
+          }
+        }
+      }, error => {
+        this.serviceLogic.handle(error.responseJSON);
       }
     )
   }
- 
-  Loading(){
-    $('#employee-item-rentals').css('display', 'none');
-    $('#spinner').css('display', 'flex');
-  }
-  stopLoading(){
-    $('#employee-item-rentals').css('display', 'flex');
-    $('#spinner').css('display', 'none');
+
+  ngOnDestroy() {
+
 
   }
-  
+
+
 
   //function that cleans the base64 image 
   transform(elementimg: any) {

@@ -1,6 +1,26 @@
-<div width="200" height="200">
-    <canvas width="200" height="200"id="canvas">{{chart}}</canvas>
+<div id ="loading_cat"
+style="width: 25%; height: 25%;  margin-top: 20vh; margin-left: 50vh;">
+<img src="../clientUtil/loadingCat.gif" alt="">
+</div>
+<div class ="hideshowstats">
+  <div width="500" height="500">
+    <h5> <b> Rentals for each customer </b></h5>
+    <div style="border:1px solid black; height: 100px; width:400px">
+      <p>X Axes: Customers</p>
+      <p>Y Axes: Number of rentals for each customer</p>
+    </div>
+    <canvas class="chart" width="750" height="350"id="canvas">{{chart}}</canvas>
   </div>
 
+  <hr>
 
+  <div width="500" height="500">
+    <h5> <b>Revenues for each customer </b></h5>
+    <div style="border:1px solid black; height: 100px; width:400px">
+      <p> Revenues for each customer</p>
+    </div>
+    <canvas width="750" height="350"id="canvas1">{{chart1}}</canvas>
+  </div>
+
+</div>
  
