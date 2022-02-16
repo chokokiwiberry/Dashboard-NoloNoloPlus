@@ -14,7 +14,7 @@ export class RentalsStatisticsComponent implements OnInit {
 
   chart: any = [];
   chart1: any = [];
-
+  chart2: any = [];
 
 
   counters: number[] = []; //array of counters that count rentals for each employee
@@ -32,7 +32,6 @@ export class RentalsStatisticsComponent implements OnInit {
     let chartDateRentals = new DatesRentals();
     chartDateRentals.RentalsPerMonth(this.rentalsdata)
 
-    //this.RentalsPerMonth();
 
 
   }
@@ -63,6 +62,7 @@ export class RentalsStatisticsComponent implements OnInit {
       } 
       if (typeof ans === 'object'){
         chartRevenuesRentals.RentalsRev(this.rentalsdata, ans);
+        chartRevenuesRentals.setClosedRentals(this.rentalsdata);       
       }
        
        } catch(error) {
@@ -77,6 +77,7 @@ export class RentalsStatisticsComponent implements OnInit {
 //classe che gestisce i grafici e le funzioni inerenti al grafico dei noleggi per fatturato
 export class RevenuesRentals {
   chart: any = [];
+  chart2: any = []
   color = new Colors();
   constructor(private serviceLogic: ServiceLogicService) { }
 
@@ -112,7 +113,30 @@ export class RevenuesRentals {
 
       },
       options: {
-        responsive: false
+        responsive: false,
+        scales: {
+          yAxes: {
+              title: {
+                  display: true,
+                  text: 'Revenues for each rental',
+                  font: {
+                      size: 15
+                  }
+              },
+              ticks: {
+                  precision: 0
+              }
+          },
+          xAxes: {
+              title: {
+                  display: true,
+                  text: 'Rentals',
+                  font: {
+                      size: 15
+                  }
+              }
+          }
+      }
       }
     });
   }
@@ -129,6 +153,80 @@ export class RevenuesRentals {
           pricerentals[i] = pricerentals[i] + tmp[i];        
       }
     return pricerentals;  
+    }
+
+    //funzione che imposta il grafico per vedere la situazione dei noleggi conclusi
+    setClosedRentals(rentals: any) {
+      let labels = ['Paid', 'NeverShowedUp', 'Damaged']
+      this.chart2 = new Chart('canvas_closed', {
+        type: 'bar',
+  
+        data: {
+          labels:
+            labels
+          ,
+          datasets: [
+            {
+              data:  this.closedRentals(rentals),
+              borderColor: '#3e95cd',
+              label: 'Closed rentals',
+              backgroundColor: this.color.settingColors(labels),
+              barThickness: 50,
+  
+            },
+          ],
+  
+        },
+        options: {
+          responsive: false,
+          scales: {
+            yAxes: {
+                title: {
+                    display: true,
+                    text: 'Condition for each rental',
+                    font: {
+                        size: 15
+                    }
+                },
+                ticks: {
+                    precision: 0
+                }
+            },
+            xAxes: {
+                title: {
+                    display: true,
+                    text: 'Number of rentals',
+                    font: {
+                        size: 15
+                    }
+                }
+            }
+        }
+      
+        }
+      });
+    }
+    closedRentals(rentals: any){
+      let closedRentals = {Paid: 0, NeverShowedUp:0, Damaged: 0}
+      let currentdate = new Date().toISOString().slice(0, 10);
+      console.log('sono date di closed rentals', currentdate)
+
+      for (let i=0; i<rentals.length; i++){
+        //se la data odierna è maggiore della data di conclusione, il noleggio è concluso
+        if (currentdate > rentals[i].dateEnd){
+          //controllo se il noleggio non è pagato - se fosse pagato, il valore sarebbe una data
+          if (rentals[i].paid === '0'){
+            closedRentals.Paid = closedRentals.Paid + 1
+            //controllo se il noleggio è effettivamente partito - cioè se il cliente è venuto a ritirare il bene
+          } else if (rentals[i].neverShowedUp === true){
+            closedRentals.NeverShowedUp = closedRentals.NeverShowedUp + 1
+            //controllo se il prodotto è danneggiato 
+          } else if (rentals[i].damagedProduct === true){
+            closedRentals.Damaged = closedRentals.Damaged + 1
+          }
+        }
+      }
+      return closedRentals;
     }
 
 }
@@ -177,12 +275,34 @@ export class DatesRentals {
             borderColor: '#3e95cd',
             label: 'Rentals done',
             backgroundColor: this.color.getRandomRgb(),
-
           },
         ],
       },
       options: {
         responsive: false,
+        scales: {
+          yAxes: {
+              title: {
+                  display: true,
+                  text: 'Number of rentals',
+                  font: {
+                      size: 15
+                  }
+              },
+              ticks: {
+                  precision: 0
+              }
+          },
+          xAxes: {
+              title: {
+                  display: true,
+                  text: 'Months',
+                  font: {
+                      size: 15
+                  }
+              }
+          }
+      }
       }
     });
   }

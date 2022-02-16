@@ -18,7 +18,7 @@ export class RentalsComponent implements OnInit {
   imagePath: any;
 
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['image', 'id', 'category', 'product_name', 'starting_date', 'ending_date', 'price', 'condition', 'rejected', 'neverApproved', 'paid', 'damagedProduct'];
+  displayedColumns: string[] = ['image', 'id', 'category', 'product_name', 'starting_date', 'ending_date', 'price', 'condition', 'rejected', 'closed', 'paid', 'damagedProduct'];
 
   rentals: any;
 
@@ -87,9 +87,9 @@ export class RentalsComponent implements OnInit {
               condition: tmpprod.condition,
               starting_date: rentals[i].dateStart,
               ending_date: rentals[i].dateEnd,
-              price: responsedata[i],
+              price: responsedata[i]+'$',
               rejected: rentals[i].rejected,
-              neverApproved: rentals[i].neverApproved,
+              closed: rentals[i].closed,
               paid: rentals[i].paid,
               damagedProduct: rentals[i].damagedProduct
             }

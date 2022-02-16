@@ -1,11 +1,84 @@
-<p>customer-item works!</p>
-<div class="form-group">
-    <label for="name">Name</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+<div class="d-flex justify-content-center">
+  <h5>Details about: {{tmpcust.name}} {{tmpcust.surname}}</h5>
+</div>
+
+
+<hr>
+<h4>Notes about the customer</h4>
+<div *ngFor="let item of tmpcust.notes" style="display:inline">
+  <div>
+  <label for="employee_id">Written from employee id: {{item.simpleHWman_id}}</label>
   </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Surname</label>
-    <input type="Surname" class="form-control" id="exampleInputPassword1" placeholder="Surname">
+  <div style="width:200px; height: 150px;">
+  <textarea readonly>
+    {{item.note}}
+  </textarea>
+  </div>
   </div>
 
+<hr>
+<h4>Other info about the customer</h4>
+<div style="width:300px; height:300px">
+<ul class="list-group">
+  <li class="list-group-item">Broken items: {{tmpcust.broken}}</li>
+  <li class="list-group-item">Late payments: {{tmpcust.late_Pays}}</li>
+  <li class="list-group-item">Banned: {{tmpcust.banned ? 'Yes' : 'No'}} </li>
+</ul>
+</div>
+
+<div>
+  <div class="d-flex justify-content-center">
+    <h5>Rentals of the customer</h5>
+  </div>
+  <table mat-table [dataSource]="dataSource" class ="table_completed_rentals">
+      
+    <!-- Position Column -->
+    <ng-container matColumnDef="image">
+        <th mat-header-cell *matHeaderCellDef> Image </th>
+        <td mat-cell *matCellDef="let element"> 
+          <img class ="resize_img_rental"  src="/api/imgs/{{element.img}}">
+        </td>
+      </ng-container>
+    <!-- id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.id_rental}} </td>
+    </ng-container>
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef> Category </th>
+      <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+    </ng-container>
   
+    <!-- Name Column -->
+    <ng-container matColumnDef="product_name">
+      <th mat-header-cell *matHeaderCellDef> Product name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="starting_date">
+      <th mat-header-cell *matHeaderCellDef> Starting date </th>
+      <td mat-cell *matCellDef="let element"> {{element.starting_date}} </td>
+    </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="ending_date">
+      <th mat-header-cell *matHeaderCellDef> Ending date </th>
+      <td mat-cell *matCellDef="let element"> {{element.ending_date}} </td>
+    </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef> Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="condition">
+      <th mat-header-cell *matHeaderCellDef> Condition </th>
+        <td mat-cell *matCellDef="let element"> {{element.condition}} </td>
+     
+    </ng-container>
+ 
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

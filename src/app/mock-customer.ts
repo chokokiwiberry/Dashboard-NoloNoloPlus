@@ -10,9 +10,14 @@ export const CUSTOMERS: Customer[] = [
        "password": "beh",
        "notes": [
           {
-             "note": "",
-             "simpleHWman_id": "3"
-          }
+            "note": "User that breaks stuff",
+            "simpleHWman_id": "3"
+          },
+          {
+            "note": "User that pays with card",
+            "simpleHWman_id": "3"
+          },
+
        ],
        "rentals": [
           "1",

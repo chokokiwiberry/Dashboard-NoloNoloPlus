@@ -1,3 +1,4 @@
+import { notes } from "./Notes";
 
 
 export interface Customer{
@@ -8,10 +9,7 @@ export interface Customer{
     surname: string;
     password: string;
     rentals: string[];
-    notes:[{
-        note: string,
-        simpleHWman_id: string
-    }]
+    notes: notes[];
     broken: number;
     late_Pays: number;
     banned: boolean;

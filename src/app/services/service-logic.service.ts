@@ -10,9 +10,7 @@ import { LISTINGS } from '../mock-listing';
 import { RENTALS } from '../mock-rentals';
 import { Product } from '../Product';
 import { Rental } from '../Rental';
-import { Category } from '../Category';
 
-import { CATEGORIES } from '../mock-category';
 import { COMPANIES } from '../mock-companies';
 import { Company } from '../Company';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -83,6 +81,8 @@ employee_item_toggle: boolean = false;
 
 employee_element: any;
 
+customer_element: any; // per passare il singolo elemento da una componente all'altra
+
 
 //rentals
 
@@ -130,6 +130,7 @@ employee_item_btn_clicked(element: any){
 customer_item_btn_clicked(element: any){
   this.customer_item_toggle = true;
   this.customer_item_clicked.next(this.customer_item_toggle);
+  this.customer_element = element;
 
 }
 //// funzioni per il loading della gif e stop loading
@@ -157,8 +158,8 @@ stopLoadingRentals(){
 getEmployees(): simpleHWman[]{
   return simpleHWmen; // qui invece ci sarà una chiamata http
 }
-getCustomers(): Customer[]{
-  return CUSTOMERS; // qui invece ci sarà una chiamata http
+getCustomers(): Observable<any>{
+  return this.http.get<any>('/api/customer/all');    // qui invece ci sarà una chiamata http
 }
 
 getRentals(): Rental[]{
@@ -176,9 +177,7 @@ getListing1(): Listing[]{
   return LISTINGS; //qui invece ci sarà una chiamata http
 }
 
-getCategory(): Category[]{
-  return CATEGORIES; // qui invece ci sarà una chiamata http
-}
+
 
 
 ///////forse questa chiamata non verrà mai fatta 

@@ -17,16 +17,13 @@ const httpOptionsJson = {
 
 
 export class CustomersStatisticsComponent implements OnInit {
+  //dati riceuvti dalle componenti genitori
   @Input() customersdata!: any[];
   @Input() rentalsdata!: any[];
 
 
   chart: any = [];
   chart1: any = [];
-
-
-
-
 
   colors: any[] = [];
 
@@ -44,7 +41,7 @@ export class CustomersStatisticsComponent implements OnInit {
 
     this.asyncPostCall(this.rentalsdata)
     
-    let chartCustomersRentals = new CustomerRentals(this.customersdata);
+    let chartCustomersRentals = new CustomerRentals(this.customersdata, this.rentalsdata);
     chartCustomersRentals.RentalsForEachCustomerChart()
  
   }
@@ -200,31 +197,32 @@ export class CustomerRevenues {
     // tmp = success
     //inizializzazione 
     for (var i = 0; i < customers.length; i = i + 1) {
-      result[customers[i].id] = 0;
+      result[i] = 0;
     }
     for (let i = 0; i < rentals.length; i++) {
       for (let j = 0; j < customers.length; j++) {
-        if (rentals[i].customer_id === customers[j].id) {
+        if (rentals[i].customer_id === customers[j]._id) {
           // tmp = await this.serviceLogic.calculatePrice(rentals[i])
-          result[customers[j].id] = result[customers[j].id] + ans[i];
+          result[j] = result[j] + ans[i];
         }
       }
     }
-    console.log('inside success', result) //array that needs to given to the chart
-    // this.RevenuesForEachCustomerChart(result);
-    console.log('sono await di customer', tmp);
-    console.log('outside success', result)
+
+    console.log('calcolo di rental', tmp);
+    console.log('result', result)
     return result;
   }
 }
 
 export class CustomerRentals {
   customersdata = [] as any;
+  rentalsdata = [] as any;
   chart: any = [];
   counters: number[] = []; //array of counters that counts rentals for each employee
   color = new Colors(this.customersdata)
-  constructor(customersdata: any) {
+  constructor(customersdata: any, rentalsdata: any) {
     this.customersdata = customersdata;
+    this.rentalsdata = rentalsdata
   }
 
 
@@ -320,19 +318,30 @@ export class CustomerRentals {
     for (var i = 0; i < this.customersdata.length; i = i + 1) {
       console.log('sono inizliazzazione', i);
       this.counters[i] = 0;
-      console.log('sono maremma', this.counters[this.customersdata[i].id]);
+      console.log('sono maremma', this.counters[this.customersdata[i]._id]);
 
     }
 
+    //ho rental vuoti dei customers 
+    // for (var i = 0; i < this.customersdata.length; i = i + 1) {
+    //   for (var j = 0; j < this.customersdata[i].rentals.length; j = j + 1) {
+    //     console.log(this.customersdata[i]._id, 'sono id');
+    //     this.counters[i] = this.counters[i] + 1; //fa un conteggio per quanti noleggi ha un cliente
+    //     console.log('sono oreo', this.counters[this.customersdata[i]._id]);
+
+
+    //   }
+    // }
+
+    //incrocio i dati
     for (var i = 0; i < this.customersdata.length; i = i + 1) {
-      for (var j = 0; j < this.customersdata[i].rentals.length; j = j + 1) {
-        console.log(this.customersdata[i].id, 'sono id');
-        this.counters[i] = this.counters[i] + 1; //fa un conteggio per quanti noleggi ha un cliente
-        console.log('sono oreo', this.counters[this.customersdata[i].id]);
-
-
+      for (var j=0; j<this.rentalsdata.length; j++){
+        if (this.customersdata[i]._id === this.rentalsdata[j].customer_id){
+          this.counters[i] =  this.counters[i] + 1
+        }
       }
     }
+
     return this.counters;
   }
 }

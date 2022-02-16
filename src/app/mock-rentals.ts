@@ -3,7 +3,7 @@ import { Rental } from "./Rental";
 export const RENTALS: Rental[] = [
     {
        "id": "1",
-       "customer_id": "2",
+       "customer_id": "61e9347bb84d9adb248a1a37",
        "simpleHWman_id": "1",
        "products": [
           {
@@ -13,7 +13,7 @@ export const RENTALS: Rental[] = [
        ],
        "dateStart": "2021-05-02",
        "rejected": false,
-       "neverApproved": false,
+       "closed": "0",
        "dateEnd": "2021-06-02",
        "price": [{
          "base": 10,
@@ -49,19 +49,28 @@ export const RENTALS: Rental[] = [
              }
          ]
        }],
+       
        "notes": [
           {
-             "note": "",
-             "simpleHwMan_id": "0"
-          }
+             "note": "User that damages products",
+             "simpleHWman_id": "0"
+          },
+          {
+            "note": "User that is not regular with payments",
+            "simpleHWman_id": "0"
+         },
+
+
        ],
        "neverShowedUp": false,
-       "paid": false,
-       "damagedProduct": false
+       "paid": "0",
+       "damagedProduct": false,
+       "fidelityUsed": 0,
+       "paySession": '',
     },
     {
        "id": "2",
-       "customer_id": "1",
+       "customer_id": "61e9347bb84d9adb248a1a37",
        "simpleHWman_id": "2",
        "products": [
           {
@@ -71,7 +80,7 @@ export const RENTALS: Rental[] = [
        ],
        "dateStart": "2021-11-05",
        "rejected": false,
-       "neverApproved": false,
+       "closed": "0",
        "dateEnd": "2022-05-02",
        "price": [{
          "base": 13,
@@ -110,17 +119,19 @@ export const RENTALS: Rental[] = [
        "notes": [
           {
              "note": "",
-             "simpleHwMan_id": "0"
+             "simpleHWman_id": "0"
           }
        ],
        "neverShowedUp": false,
-       "paid": false,
-       "damagedProduct": false
+       "paid": "0",
+       "damagedProduct": false,
+       "fidelityUsed": 0,
+       "paySession": '',
     },
     {
        "id": "3",
        "simpleHWman_id": "2",
-       "customer_id": "1",
+       "customer_id": "61e9347bb84d9adb248a1a37",
        "products": [
           {
              "listing": "61e048080589f874231c1a85",
@@ -129,7 +140,7 @@ export const RENTALS: Rental[] = [
        ],
        "dateStart": "2021-10-01",
        "rejected": false,
-       "neverApproved": false,
+       "closed": "0",
        "dateEnd": "2022-08-02",
        "price": [{
          "base": 12,
@@ -168,17 +179,19 @@ export const RENTALS: Rental[] = [
        "notes": [
           {
              "note": "",
-             "simpleHwMan_id": "0"
+             "simpleHWman_id": "0"
           }
        ],
        "neverShowedUp": false,
-       "paid": false,
-       "damagedProduct": false
+       "paid": "0",
+       "damagedProduct": false,
+       "fidelityUsed": 0,
+       "paySession": '',
     },
     {
        "id": "4",
        "simpleHWman_id": "1",
-       "customer_id": "3",
+       "customer_id": "61e93a7771a0712cf42532ca",
        "products": [
           {
              "listing": "61e048080589f874231c1a85",
@@ -187,7 +200,7 @@ export const RENTALS: Rental[] = [
        ],
        "dateStart": "2021-05-02",
        "rejected": false,
-       "neverApproved": false,
+       "closed": "0",
        "dateEnd": "2021-09-02",
        "price": [{
          "base": 12,
@@ -226,17 +239,19 @@ export const RENTALS: Rental[] = [
        "notes": [
           {
              "note": "",
-             "simpleHwMan_id": "0"
+             "simpleHWman_id": "0"
           }
        ],
        "neverShowedUp": false,
-       "paid": false,
-       "damagedProduct": false
+       "paid": "0",
+       "damagedProduct": false,
+       "fidelityUsed": 0,
+       "paySession": '',
     },
     {
        "id": "5",
        "simpleHWman_id": "3",
-       "customer_id": "2",
+       "customer_id": "61e93a7771a0712cf42532ca",
        "products": [
           {
              "listing": "61e048080589f874231c1a85",
@@ -245,7 +260,7 @@ export const RENTALS: Rental[] = [
        ],
        "dateStart": "2021-07-02",
        "rejected": false,
-       "neverApproved": false,
+       "closed": "0",
        "dateEnd": "2021-09-02",
        "price": [{
          "base": 10,
@@ -284,17 +299,19 @@ export const RENTALS: Rental[] = [
        "notes": [
           {
              "note": "",
-             "simpleHwMan_id": "0"
+             "simpleHWman_id": "0"
           }
        ],
        "neverShowedUp": false,
-       "paid": false,
-       "damagedProduct": false
+       "paid": "0",
+       "damagedProduct": false,
+       "fidelityUsed": 0,
+       "paySession": '',
     },
     {
        "id": "6",
        "simpleHWman_id": "2",
-       "customer_id": "2",
+       "customer_id": "61e93aa471a0712cf42532dd",
        "products": [
           {
              "listing": "61e048080589f874231c1a85",
@@ -303,7 +320,7 @@ export const RENTALS: Rental[] = [
        ],
        "dateStart": "2021-05-02",
        "rejected": false,
-       "neverApproved": false,
+       "closed": "0",
        "dateEnd": "2021-08-02",
        "price": [{
          "base": 15,
@@ -342,12 +359,14 @@ export const RENTALS: Rental[] = [
        "notes": [
           {
              "note": "",
-             "simpleHwMan_id": "0"
+             "simpleHWman_id": "0"
           }
        ],
        "neverShowedUp": false,
-       "paid": false,
-       "damagedProduct": false
+       "paid": "0",
+       "damagedProduct": false,
+       "fidelityUsed": 0,
+       "paySession": '',
     },
     {
        "id": "7",
@@ -361,7 +380,7 @@ export const RENTALS: Rental[] = [
        ],
        "dateStart": "2021-04-02",
        "rejected": false,
-       "neverApproved": false,
+       "closed": "0",
        "dateEnd": "2021-05-02",
        "price": [{
          "base": 18,
@@ -400,16 +419,18 @@ export const RENTALS: Rental[] = [
        "notes": [
           {
              "note": "",
-             "simpleHwMan_id": "0"
+             "simpleHWman_id": "0"
           }
        ],
        "neverShowedUp": false,
-       "paid": false,
-       "damagedProduct": false
+       "paid": "2021-05-02",
+       "damagedProduct": false,
+       "fidelityUsed": 0,
+       "paySession": '',
     },
     {
        "id": "8",
-       "customer_id": "2",
+       "customer_id": "61e93aa471a0712cf42532dd",
        "simpleHWman_id": "1",
        "products": [
           {
@@ -419,7 +440,7 @@ export const RENTALS: Rental[] = [
        ],
        "dateStart": "2021-01-02",
        "rejected": false,
-       "neverApproved": false,
+       "closed": "0",
        "dateEnd": "2021-05-02",
        "price": [{
          "base": 15,
@@ -458,16 +479,18 @@ export const RENTALS: Rental[] = [
        "notes": [
           {
              "note": "",
-             "simpleHwMan_id": "0"
+             "simpleHWman_id": "0"
           }
        ],
        "neverShowedUp": false,
-       "paid": false,
-       "damagedProduct": false
+       "paid": "0",
+       "damagedProduct": false,
+       "fidelityUsed": 0,
+       "paySession": '',
     },
     {
       "id": "9",
-      "customer_id": "2",
+      "customer_id": "61e93c80b816e218a0fedefc",
       "simpleHWman_id": "1",
        "products": [
           {
@@ -477,7 +500,7 @@ export const RENTALS: Rental[] = [
        ], 
        "dateStart": "2021-05-02",
        "rejected": false,
-       "neverApproved": false,
+       "closed": "0",
        "dateEnd": "2021-06-02",
        "price": [{
          "base": 5,
@@ -516,17 +539,19 @@ export const RENTALS: Rental[] = [
        "notes": [
           {
              "note": "",
-             "simpleHwMan_id": "0"
+             "simpleHWman_id": "0"
           }
        ],
        "neverShowedUp": false,
-       "paid": false,
-       "damagedProduct": false
+       "paid": "0",
+       "damagedProduct": false,
+       "fidelityUsed": 0,
+       "paySession": '',
        
     },
     {
     "id": "10",
-    "customer_id": "2",
+    "customer_id": "61e9cd3e9edf47e8205cb787",
     "simpleHWman_id": "1",
      "products": [
         {
@@ -536,7 +561,7 @@ export const RENTALS: Rental[] = [
      ], 
      "dateStart": "2021-05-02",
      "rejected": false,
-     "neverApproved": false,
+     "closed": "0",
      "dateEnd": "2021-06-02",
      "price": [{
       "base": 5,
@@ -575,16 +600,18 @@ export const RENTALS: Rental[] = [
      "notes": [
         {
            "note": "",
-           "simpleHwMan_id": "0"
+           "simpleHWman_id": "0"
         }
      ],
      "neverShowedUp": false,
-     "paid": false,
-     "damagedProduct": false
+     "paid": "0",
+     "damagedProduct": false,
+     "fidelityUsed": 0,
+     "paySession": '',
      
   },
   {"id": "11",
-  "customer_id": "2",
+  "customer_id": "61e9cd3e9edf47e8205cb787",
   "simpleHWman_id": "1",
    "products": [
       {
@@ -594,7 +621,7 @@ export const RENTALS: Rental[] = [
    ], 
    "dateStart": "2021-02-02",
    "rejected": false,
-   "neverApproved": false,
+   "closed": "0",
    "dateEnd": "2021-04-02",
    "price": [{
       "base": 20,
@@ -633,17 +660,19 @@ export const RENTALS: Rental[] = [
    "notes": [
       {
          "note": "",
-         "simpleHwMan_id": "0"
+         "simpleHWman_id": "0"
       }
    ],
    "neverShowedUp": false,
-   "paid": false,
-   "damagedProduct": false
+   "paid": "0",
+   "damagedProduct": false,
+   "fidelityUsed": 0,
+   "paySession": '',
    
 },
 {
    "id": "12",
-  "customer_id": "2",
+  "customer_id": "61e9cd3e9edf47e8205cb787",
   "simpleHWman_id": "1",
    "products": [
       {
@@ -653,7 +682,7 @@ export const RENTALS: Rental[] = [
    ], 
    "dateStart": "2021-05-02",
    "rejected": false,
-   "neverApproved": false,
+   "closed": "0",
    "dateEnd": "2021-09-02",
    "price": [{
       "base": 12,
@@ -692,18 +721,20 @@ export const RENTALS: Rental[] = [
    "notes": [
       {
          "note": "",
-         "simpleHwMan_id": "0"
+         "simpleHWman_id": "0"
       }
    ],
    "neverShowedUp": false,
-   "paid": false,
-   "damagedProduct": false
+   "paid": "0",
+   "damagedProduct": false,
+   "fidelityUsed": 0,
+   "paySession": '',
    
    
 },
 {
    "id": "13",
-  "customer_id": "2",
+  "customer_id": "61e9cd3e9edf47e8205cb787",
   "simpleHWman_id": "1",
    "products": [
       {
@@ -713,7 +744,7 @@ export const RENTALS: Rental[] = [
    ], 
    "dateStart": "2021-03-02",
    "rejected": false,
-   "neverApproved": false,
+   "closed": "0",
    "dateEnd": "2021-05-02",
    "price": [{
       "base": 10,
@@ -752,19 +783,21 @@ export const RENTALS: Rental[] = [
    "notes": [
       {
          "note": "",
-         "simpleHwMan_id": "0"
+         "simpleHWman_id": "0"
       }
    ],
    "neverShowedUp": false,
-   "paid": false,
-   "damagedProduct": false
+   "paid": "0",
+   "damagedProduct": false,
+   "fidelityUsed": 0,
+   "paySession": '',
    
    
 },
 
 {
    "id": "14",
-  "customer_id": "2",
+  "customer_id": "61e9cd3e9edf47e8205cb787",
   "simpleHWman_id": "1",
    "products": [
       {
@@ -774,7 +807,7 @@ export const RENTALS: Rental[] = [
    ], 
    "dateStart": "2021-10-05",
    "rejected": false,
-   "neverApproved": false,
+   "closed": "0",
    "dateEnd": "2022-10-03",
    "price": [{
       "base": 15,
@@ -813,12 +846,15 @@ export const RENTALS: Rental[] = [
    "notes": [
       {
          "note": "",
-         "simpleHwMan_id": "0"
+         "simpleHWman_id": "0"
       }
    ],
    "neverShowedUp": false,
-   "paid": false,
-   "damagedProduct": false
+   "paid": "0",
+   "damagedProduct": false,
+   "fidelityUsed": 0,
+   "paySession": '',
+
    
    
 },

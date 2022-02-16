@@ -60,22 +60,35 @@
         </ng-container>
         <ng-container matColumnDef="rejected">
           <th mat-header-cell *matHeaderCellDef> Rejected </th>
-            <td mat-cell *matCellDef="let element"> {{element.rejected}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.rejected? 'Yes': 'No'}} </td>
          
         </ng-container>
-        <ng-container matColumnDef="neverApproved">
-          <th mat-header-cell *matHeaderCellDef> Never Approved </th>
-            <td mat-cell *matCellDef="let element"> {{element.neverApproved}} </td>
+        <ng-container matColumnDef="closed">
+          <th mat-header-cell *matHeaderCellDef> Closed </th>
+            <td mat-cell *matCellDef="let element"> <div  *ngIf = "element.closed === '0' else other_content1">
+              <p>No</p>
+            </div>
+            <ng-template #other_content1>
+              {{element.closed}}
+            </ng-template>
+               </td>
          
         </ng-container>
         <ng-container matColumnDef="paid">
           <th mat-header-cell *matHeaderCellDef> Paid </th>
-            <td mat-cell *matCellDef="let element"> {{element.paid}} </td>
+            <td mat-cell *matCellDef="let element"> <div  *ngIf = "element.paid === '0' else other_content">
+              <p>No</p> 
+              </div>
+              <ng-template #other_content>
+                {{element.paid}}
+              </ng-template>
+             
+            </td>
          
         </ng-container>
         <ng-container matColumnDef="damagedProduct">
           <th mat-header-cell *matHeaderCellDef> Damaged Product </th>
-            <td mat-cell *matCellDef="let element"> {{element.damagedProduct}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.damagedProduct? 'Yes': 'No'}} </td>
          
         </ng-container>
       

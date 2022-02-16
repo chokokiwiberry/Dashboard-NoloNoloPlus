@@ -13,29 +13,27 @@ export class CustomersComponent implements OnInit {
 showstatistics:boolean = false;
 customers: any;
 rentals: any;
-
+customersparent: any; //dati che vengono passati alla componente figlio 
 chart: any = [];
 
 displayedColumns: string[] = ['id', 'username', 'name', 'surname', 'broken', 'delayed', 'actions'];
 dataSource = new MatTableDataSource();
-
 
   constructor(private serviceLogic : ServiceLogicService) { 
     Chart.register(...registerables);
   }
 
   ngOnInit(): void {
- this.dataSource.data = this.serviceLogic.getCustomers();
+    this.serviceLogic.Loading();
+    this.getCustomers()
+    
   }
   showStatistics(){
     this.showstatistics = !this.showstatistics;
-    this.customers = this.serviceLogic.getCustomers;
     this.rentals = this.serviceLogic.getRentals;
   }
 
-  getCustomers(){
-    return this.serviceLogic.getCustomers();
-  }
+
 
   getRentals(){
     return this.serviceLogic.getRentals();
@@ -46,5 +44,36 @@ showDetails(element: any){
 
 }
 
+
+//per avere i customers e passargli poi gli elementi is tutto ok 
+
+//chiaamate per i customer
+
+getCustomers() {
+  let ans;
+  this.serviceLogic.getCustomers().subscribe(
+    success => {
+      this.serviceLogic.stopLoading();
+      ans = this.serviceLogic.handle(success);
+      if(ans.command === 'logErr'){
+        console.log(ans);
+      }
+      if (ans.command === 'displayErr') {
+        if (ans.msg === 'mustBeLoggedAsSimpleHWMan') {
+          alert('Please login to access to data');
+        }
+      } else {
+        if (typeof ans === 'object') {
+          console.log('sono cust', ans)
+          this.dataSource.data = ans
+        }
+      }
+  
+    }, error =>{
+      this.serviceLogic.handle(error.responseJSON)
+
+    }
+  )
+}
 
 }

@@ -99,7 +99,7 @@ export class AllRentalsComponent implements OnInit, OnDestroy {
               condition: tmpprod.condition,
               starting_date: rentals[i].dateStart,
               ending_date: rentals[i].dateEnd,
-              price: responsedata[i]
+              price: responsedata[i]+'$'
             }
             index = index + 1;
           
