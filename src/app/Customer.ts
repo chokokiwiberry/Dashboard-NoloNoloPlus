@@ -8,7 +8,6 @@ export interface Customer{
     name: string;
     surname: string;
     password: string;
-    rentals: string[];
     notes: notes[];
     broken: number;
     late_Pays: number;

@@ -17,6 +17,7 @@ regged: boolean = false;
     console.log('sono stato ricevuto da mat dialg', this.data);
     this.msg = this.data.msg;
     this.regged = this.data.regged;
+
   }
 
 

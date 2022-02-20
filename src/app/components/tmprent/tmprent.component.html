@@ -1,0 +1,27 @@
+<div id ="loading_cat{{companyname}}"
+style="width: 25%; height: 25%;  margin-top: 20vh; margin-left: 50vh;">
+<img src="../clientUtil/loadingCat.gif" alt="">
+</div>
+
+<div id ="hideshowstats_{{companyname}}">
+ <div width="500" height="500">
+   <h5>Prospects of rental by Revenues</h5>
+     <canvas width="750" height="350" id="canvas_fatturato{{companyname}}">{{chart}}</canvas>
+   </div>
+ 
+ <hr>
+   <div width="500" height="500">
+     <h5>Prospects of rentals by period of time</h5>
+     <canvas width="750" height="350" id="canvas_data{{companyname}}">{{chart1}}</canvas>
+   </div>
+   <hr>
+   <div width="500" height="500">
+     <h5>Prospects of closed rentals</h5>
+     <canvas width="750" height="350" id="canvas_closed{{companyname}}">{{chart2}}</canvas>
+   </div>
+ 
+</div>
+
+<div id ="norents_msg{{companyname}}">
+    <p> There are no available data to create statistics and charts</p>
+</div>

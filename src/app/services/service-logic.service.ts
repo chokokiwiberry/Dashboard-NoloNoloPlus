@@ -3,15 +3,12 @@ import { Observable, Subject } from 'rxjs';
 import { Customer } from '../Customer';
 import { simpleHWman } from '../simpleHWman';
 import { Listing } from '../Listing';
-import { CUSTOMERS } from '../mock-customer';
-import { simpleHWmen } from '../mock-simplehwman';
-import { LISTINGS } from '../mock-listing';
 
-import { RENTALS } from '../mock-rentals';
+
+
 import { Product } from '../Product';
 import { Rental } from '../Rental';
 
-import { COMPANIES } from '../mock-companies';
 import { Company } from '../Company';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -146,44 +143,38 @@ stopLoading(){
 
 LoadingRentals(){
   $('.hideshowstats').css('display', 'none');
-  $('#loading_cat').css('display', 'block');
+  $('#loading_cat_t').css('display', 'block');
 }
 
 stopLoadingRentals(){
   $('.hideshowstats').css('display', 'block');
-  $('#loading_cat').css('display', 'none');
+  $('#loading_cat_t').css('display', 'none');
 }
 //GET CALLS
 
-getEmployees(): simpleHWman[]{
-  return simpleHWmen; // qui invece ci sarà una chiamata http
-}
+// 
 getCustomers(): Observable<any>{
   return this.http.get<any>('/api/customer/all');    // qui invece ci sarà una chiamata http
 }
-
-getRentals(): Rental[]{
-  return RENTALS;
+getRentals1():Observable<any>{
+  return this.http.get<any>('/api/rental/allForCompanies');
 }
+// getRentals(): Rental[]{
+//   return RENTALS;
+// }
 
-
+getEmployees1(): Observable<any>{
+  return this.http.get<any>('/api/employee/all')
+}
 
 getListing():Observable<any>{
   return this.http.get<any>('/api/listing/allForThisSimpleHWMan');
 
 }
 
-getListing1(): Listing[]{
-  return LISTINGS; //qui invece ci sarà una chiamata http
-}
 
 
 
-
-///////forse questa chiamata non verrà mai fatta 
-getCompanies(): Company[]{
-  return COMPANIES; //chiamata http per companies
-}
 
 
 

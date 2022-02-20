@@ -18,7 +18,7 @@ export class RentalsComponent implements OnInit {
   imagePath: any;
 
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['image', 'id', 'category', 'product_name', 'starting_date', 'ending_date', 'price', 'condition', 'rejected', 'closed', 'paid', 'damagedProduct'];
+  displayedColumns: string[] = ['image', 'category', 'product_name', 'starting_date', 'ending_date', 'price', 'condition', 'company', 'rejected', 'paid', 'damagedProduct'];
 
   rentals: any;
 
@@ -33,13 +33,12 @@ export class RentalsComponent implements OnInit {
   ngOnInit(): void {
 
     //received completed rentals of a single employee
-    this.rentals = this.getRentals();
+   // this.rentals = this.getRentals();
 
     //get listings and products 
 
     this.serviceLogic.Loading();
     this.getListing();
-    
 
   
   }
@@ -56,9 +55,16 @@ export class RentalsComponent implements OnInit {
       }
     }
     return -1;
-
   }
-
+  arrayRentals(rentals: any){
+    let tmp = [];
+    for (let i=0; i<rentals.length; i++){
+      for (let j=0; j<rentals[i].length; j++){
+        tmp.push(rentals[i][j])
+      }
+    }
+    return tmp;
+  }
   showRentals(rentals: any, listings: any, responsedata: any) {
     //oggetto prodotto dal server
     //listing con il prodotto
@@ -80,16 +86,15 @@ export class RentalsComponent implements OnInit {
         
 
             this.tmpdatasource[index] = {
-              id_rental: rentals[i].id,
               img: tmpprod.imgs[0],
               name: foundListing.name,
               category: foundListing.type,
               condition: tmpprod.condition,
+              company: rentals[i].companies[0],
               starting_date: rentals[i].dateStart,
               ending_date: rentals[i].dateEnd,
               price: responsedata[i]+'$',
               rejected: rentals[i].rejected,
-              closed: rentals[i].closed,
               paid: rentals[i].paid,
               damagedProduct: rentals[i].damagedProduct
             }
@@ -137,9 +142,52 @@ export class RentalsComponent implements OnInit {
   transform(elementimg: any) {
     return this._sanitizer.bypassSecurityTrustResourceUrl(elementimg);
   }
-  getRentals(){
-    return this.serviceLogic.getRentals();
-  }
+
+
+  asyncGetRentals = async () => {
+
+    try {
+    //  console.log('sono pstdata da service', pstdata);
+      const response = await fetch('/api/rental/allForCompanies', {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      //  body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
+      })
+         const data = await response.json();
+      // enter you logic when the fetch is successful
+      console.log('sono data di fetch', data)
+    //  this.serviceLogic.stopLoadingRentals();
+      let ans = this.serviceLogic.handle(data);
+
+      if (ans.command === 'displayErr'){
+        console.log('Something went wrong')
+      } 
+      if (typeof ans === 'object'){
+        console.log('sono rentals di async', ans)
+        
+    //received completed rentals of a single employee
+         this.rentals = ans;
+         console.log(this.rentals, 'sono async')
+         let tmp = [] as any;
+         tmp = this.arrayRentals(ans);
+         return tmp;
+         if (this.rentals.length > 0){
+          this.serviceLogic.Loading();
+          this.getListing();
+         }
+      
+
+
+      }
+       
+       } catch(error) {
+     // enter your logic for when there is an error (ex. error toast)
+          console.log(error)
+         } 
+    }
   getListing() {
     let ans;
     let responsedata = [] as any;
@@ -159,11 +207,11 @@ export class RentalsComponent implements OnInit {
             console.log('sono qui finalmente e stai funzionando e macarenza prezzemolo');
             console.log(ans, 'sono ans e sto consolando l oggetto ricevuto dal server');
             this.listing = ans;
-            this.rentalsinput = this.getRentals();
+             this.rentalsinput = await this.asyncGetRentals();
 
             
-            responsedata = await this.asyncPostCall(this.rentals)
-            this.showRentals(this.rentals, this.listing, responsedata);
+            responsedata = await this.asyncPostCall(this.rentalsinput)
+            this.showRentals(this.rentalsinput, this.listing, responsedata);
             
 
           }

@@ -15,24 +15,69 @@ export class CustomerItemComponent implements OnInit {
   tmpdatasource = [] as any;
   tmpcust: any;
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['image', 'id', 'category', 'product_name', 'starting_date', 'ending_date', 'price', 'condition'];
+  displayedColumns: string[] = ['image',  'category', 'product_name', 'starting_date', 'ending_date', 'price', 'condition'];
 
   constructor(public serviceLogic: ServiceLogicService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.tmpcust = this.serviceLogic.customer_element;
    // console.log('sono element dal coso schifoso e voglio vedere', this.tmpcust); era per vedere se l'elemento arrivava and is ok
-   this.rentals = this.filterCustomerRentals(this.serviceLogic.getRentals())
-  this.serviceLogic.Loading()
+  // this.rentals = this.filterCustomerRentals(this.serviceLogic.getRentals())
+     this.serviceLogic.Loading()
       this.getListing();
 
+  }
+  asyncGetRentals = async () => {
+
+    try {
+    //  console.log('sono pstdata da service', pstdata);
+      const response = await fetch('/api/rental/allForCompanies', {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      //  body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
+      })
+         const data = await response.json();
+      // enter you logic when the fetch is successful
+      console.log('sono data di fetch', data)
+    //  this.serviceLogic.stopLoadingRentals();
+      let ans = this.serviceLogic.handle(data);
+
+      if (ans.command === 'displayErr'){
+        console.log('Something went wrong')
+      } 
+      if (typeof ans === 'object'){
+
+        console.log('sono rentals di async', ans)
+        let tmp = [] as any;
+        tmp = this.arrayRentals(ans);
+        return tmp;
+      }
+       
+       } catch(error) {
+     // enter your logic for when there is an error (ex. error toast)
+          console.log(error)
+         } 
+    }
+    
+    
+  arrayRentals(rentals: any){
+    let tmp = [];
+    for (let i=0; i<rentals.length; i++){
+      for (let j=0; j<rentals[i].length; j++){
+        tmp.push(rentals[i][j])
+      }
+    }
+    return tmp;
   }
 
   filterCustomerRentals(rentalsdata: any){
     let rents = [] as any;
     let index = 0;
     for (let i=0; i<rentalsdata.length; i++){
-        if (rentalsdata[i].customer_id === this.tmpcust.id){
+        if (rentalsdata[i].customer_id === this.tmpcust._id){
           rents[index] = rentalsdata[i];
           index++;
       }
@@ -78,7 +123,6 @@ export class CustomerItemComponent implements OnInit {
         if (foundListing !== -1) {
           tmpprod = foundListing.products[rentals[i].products[0].product];
             this.tmpdatasource[index] = {
-              id_rental: rentals[i].id,
               img: tmpprod.imgs[0],
               name: foundListing.name,
               category: foundListing.type,
@@ -88,13 +132,20 @@ export class CustomerItemComponent implements OnInit {
               price: responsedata[i]+'$'
             }
             index = index + 1;
-          
-     
         }
-      }
-    
+      } 
+      //significa che non ci sono noleggi fatti dall'utente 
+      if (this.tmpdatasource.length === 0){
+        console.log(this.tmpdatasource.length, 'forse mettere un messaggio che non ci sono noleggi')
+        $('#table_rentals_single_customer').css('display', 'none');
+        $('#message_customer').css('display', 'block')
 
-    this.dataSource = this.tmpdatasource;
+      } else {
+        $('#table_rentals_single_customer').css('display', 'block');
+        $('#message_customer').css('display', 'none');
+        this.dataSource = this.tmpdatasource;
+      }
+  
   }
 
 
@@ -152,8 +203,9 @@ export class CustomerItemComponent implements OnInit {
             this.listing = ans;
 
             //seconda chiamata 
+            this.rentals = await this.asyncGetRentals();
             responsedata = await this.asyncPostCall(this.rentals)
-            this.showRentals(this.rentals, this.listing, responsedata);
+            this.showRentals(this.filterCustomerRentals(this.rentals), this.listing, responsedata);
             console.log(responsedata, 'sono allrentals e sto facendo chiamate due')
 
           }

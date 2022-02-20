@@ -28,13 +28,15 @@ export class InventoryComponent implements OnInit {
   rentalsdata: any;
 
 
+  companies : any;
   constructor(private serviceLogic: ServiceLogicService, private _sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
-    this.rentals = this.getRentals();
+    this.companies = this.serviceLogic.managerObj.companies;
+   // this.rentals = this.getRentals();
     this.serviceLogic.Loading();
     this.getListing();
-
+    
 
   }
 
@@ -56,14 +58,53 @@ export class InventoryComponent implements OnInit {
     this.showstatistics = !this.showstatistics;
   }
 
-  getRentals() {
-    return this.serviceLogic.getRentals();
-  }
+
+  asyncGetRentals = async () => {
+
+    try {
+      const response = await fetch('/api/rental/allForCompanies', {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      //  body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
+      })
+         const data = await response.json();
+      // enter you logic when the fetch is successful
+      console.log('sono data di fetch', data)
+    //  this.serviceLogic.stopLoadingRentals();
+      let ans = this.serviceLogic.handle(data);
+
+      if (ans.command === 'displayErr'){
+        console.log('Something went wrong')
+      } 
+      if (typeof ans === 'object'){
+        console.log('sono rentals di async', ans)
+        
+    //received completed rentals of a single employee
+         this.rentals = ans;
+         console.log(this.rentals, 'sono async')
+         return ans;
+         if (this.rentals.length > 0){
+          this.serviceLogic.Loading();
+          this.getListing();
+         }
+      
+
+
+      }
+       
+       } catch(error) {
+     // enter your logic for when there is an error (ex. error toast)
+          console.log(error)
+         } 
+    }
 
   getListing() {
     let ans;
     this.serviceLogic.getListing().subscribe(
-      success => {
+      async success => {
         this.serviceLogic.stopLoading();
         ans = this.serviceLogic.handle(success);
         if (ans.command === 'displayErr') {
@@ -79,9 +120,18 @@ export class InventoryComponent implements OnInit {
             this.listings = ans;
             this.provatmp = ans;
             this.listingsdata = ans;
-            this.rentalsdata = this.serviceLogic.getRentals();
-            this.myprods = this.showMyProds(this.listings);
-            this.products = this.setCards(this.rentals, this.myprods);
+            this.rentalsdata = this.arrayRentals(await this.asyncGetRentals());
+            if (this.rentalsdata.length > 0){
+              $('#inventory_prods').css('display', 'block');
+              $('#inventory_msg').css('display', 'none');
+              this.myprods = this.showMyProds(this.listings);
+              this.products = this.setCards(this.rentalsdata, this.myprods);
+
+            } else{
+              $('#inventory_prods').css('display', 'none');
+              $('#inventory_msg').css('display', 'block');
+            }
+            
 
 
           }
@@ -92,11 +142,19 @@ export class InventoryComponent implements OnInit {
     )
   }
 
-
+  arrayRentals(rentals: any){
+    let tmp = [];
+    for (let i=0; i<rentals.length; i++){
+      for (let j=0; j<rentals[i].length; j++){
+        tmp.push(rentals[i][j])
+      }
+    }
+    return tmp;
+  }
 
   setCards(rentals: any[], listings: any[]) {
     let countRentals: any[][] = [];
-    countRentals = this.countRentalsForProducts(this.rentals, this.myprods); //perché mancano i rentals ufficiali e 
+    countRentals = this.countRentalsForProducts(rentals, this.myprods); //perché mancano i rentals ufficiali e 
     //bisogna aggiustare un po' gli id quindi rimane un po' in sospeso
 
     //mostrare come immagine il prodotto meno costoso
@@ -120,16 +178,15 @@ export class InventoryComponent implements OnInit {
               description : listings[j].description,
               img: tmpfound.imgs[0],
               condition: tmpfound.condition,
-              nRentals: countRentals[listings[j]._id][rentals[i].products[0].product]
+              nRentals: countRentals[listings[j]._id][rentals[i].products[0].product],
+              company: listings[j].company
             }
             index = index + 1;
           }
         }
       }
     }
-
     return prods;
-
   }
 
   //funzione che mostra il prodotto più economico

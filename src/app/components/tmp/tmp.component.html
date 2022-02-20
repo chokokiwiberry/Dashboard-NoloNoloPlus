@@ -1,0 +1,65 @@
+
+
+<div id="statistics_msg{{companyname}}">
+  <p>There are no available data to create statistics and charts</p>
+</div>
+
+
+  <div id ="hideshowstats{{companyname}}">
+  
+      <h4>Statistics</h4>
+      <div width="500" height="500">
+        <h5><b>Revenues for each category of rented products</b></h5>
+        <div style="border:1px solid black; height: 100px; width:400px">
+          <p>X Axes: Category</p>
+          <p>Y Axes: Revenues of rentals for each category</p>
+        </div>
+        <canvas width="750" height="350" id="canvas_inventory{{companyname}}">{{chart}}</canvas>
+      </div>
+      
+      <hr>
+      
+      <div width="500" height="500">
+        <h5><b>Prospects of rented categories</b></h5>
+        <div style="border:1px solid black; height: 100px; width:400px">
+          <p>X Axes: Category</p>
+          <p>Y Axes: Number for each category</p>
+        </div>
+        <canvas width="750" height="350" id="canvas_inventory_rental{{companyname}}">{{chart1}}</canvas>
+      </div>
+      
+      <hr>
+      
+      <div width="500" height="500">
+        <h5><b>Number of rented products</b></h5>
+        <div style="border:1px solid black; height: 100px; width:400px">
+          <p>Number of rentals for each product </p>
+        </div>
+        <canvas width="750" height="350" id="canvas_inventory_prods{{companyname}}">{{chart2}}</canvas>
+      </div>
+      
+      <hr>
+      
+      <div width="500" height="500">
+        <h5><b>Prospects of rented products </b></h5>
+        <div style="border:1px solid black; height: 100px; width:400px">
+          <p>Revenues for each product</p>
+        </div>
+        <canvas width="750" height="350" id="canvas_inventory_prods_number{{companyname}}">{{chart3}}</canvas>
+      </div>
+      
+      <hr>
+      <div width="500" height="500">
+      <h5><b>Prospects of conditions of products </b></h5>
+      <div style="border:1px solid black; height: 100px; width:400px">
+        <p>Conditions for each product</p>
+      </div>
+      <canvas width="750" height="350" id="canvas_inventory_prods_conditions{{companyname}}">{{chart4}}</canvas>
+      </div>
+    </div>
+  
+
+<div id="loading_cat_t{{companyname}}"
+style="width: 25%; height: 25%;  margin-top: 20vh; margin-left: 50vh;">
+<img src="../clientUtil/loadingCat.gif" alt="">
+</div>

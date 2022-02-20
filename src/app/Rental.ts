@@ -14,7 +14,6 @@ export interface Rental{
     }]
     dateStart: string;
     rejected: boolean;
-    closed: string;
     dateEnd: string;
     price: price[],
     notes: notes[], 
@@ -23,5 +22,6 @@ export interface Rental{
     paySession: any;
     damagedProduct: boolean;
     fidelityUsed: number;
+    companies: string[];
     
 }

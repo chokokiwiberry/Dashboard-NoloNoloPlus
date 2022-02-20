@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { NavigationExtras, Router } from '@angular/router';
-import { simpleHWmen } from 'src/app/mock-simplehwman';
 
 import { ServiceLogicService } from 'src/app/services/service-logic.service';
 
@@ -23,7 +22,7 @@ export class EmployeesComponent {
   companies = [] as any;
   dataSource = new MatTableDataSource();
   companiesDataSrc = new MatTableDataSource();
-  displayedColumns: string[] = ['id', 'username', 'password', 'name', 'surname', 'company', 'role', 'actions'];
+  displayedColumns: string[] = ['id', 'username', 'name', 'surname', 'company', 'role', 'actions'];
   showstatistics: boolean = false;
   navigationExtras!: NavigationExtras;
 
@@ -41,17 +40,97 @@ export class EmployeesComponent {
   myDate = new Date();
 
 
+  //variabili che vengono passate alla componente figlio - per fare le statistiche
+  employeesparent = [] as any;
+  rentalsparent = [] as any;
+
+
   constructor(private serviceLogic: ServiceLogicService, public dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
-    this.tmp = this.serviceLogic.getEmployees();
-    this.rentals = this.serviceLogic.getRentals();
+    this.getEmployees()
+ 
     this.companies = this.serviceLogic.managerObj.companies;
-    this.employees = this.serviceLogic.getEmployees();
     this.dataSource.data = this.setData(this.employees);
   }
 
+  arrayRentals(rentals: any){
+    let tmp = [];
+    for (let i=0; i<rentals.length; i++){
+      for (let j=0; j<rentals[i].length; j++){
+        tmp.push(rentals[i][j])
+      }
+    }
+    return tmp;
+  }
+  asyncGetRentals = async () => {
 
+    try {
+    //  console.log('sono pstdata da service', pstdata);
+      const response = await fetch('/api/rental/allForCompanies', {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      //  body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
+      })
+         const data = await response.json();
+      // enter you logic when the fetch is successful
+      console.log('sono data di fetch', data)
+    //  this.serviceLogic.stopLoadingRentals();
+      let ans = this.serviceLogic.handle(data);
+
+      if (ans.command === 'displayErr'){
+        console.log('Something went wrong')
+      } 
+      if (typeof ans === 'object'){
+        let tmp = [] as  any;
+        tmp = this.arrayRentals(ans);
+        this.rentalsparent = tmp;
+        return tmp;
+        console.log('sono rentals di async', ans)
+
+      }
+       
+       } catch(error) {
+     // enter your logic for when there is an error (ex. error toast)
+          console.log(error)
+         } 
+    }
+
+  getEmployees() {
+    let ans;
+  //  let responsedata;
+    this.serviceLogic.getEmployees1().subscribe(
+      async success => {
+      //  this.serviceLogic.stopLoading();
+        ans = this.serviceLogic.handle(success);
+        if (ans.command === 'displayErr') {
+          if (ans.msg === 'mustBeLoggedAsSimpleHWMan') {
+            alert('Please login to access to data');
+          }
+          if (ans.msg === 'mustHaveCompanies') {
+            alert('Data accessible only to the company members');
+          }
+        } else {
+          if (typeof ans === 'object') {
+            console.log('sono employees', ans)
+            this.employeesparent = ans;
+            this.tmp = ans;
+            this.rentals = await this.asyncGetRentals();
+            this.companies = this.serviceLogic.managerObj.companies;
+            this.employees = ans
+            this.dataSource.data = this.setData(this.employees);
+
+
+          }
+        }
+      }, error => {
+        this.serviceLogic.handle(error.responseJSON)
+      }
+    )
+  }
 
   showStatistics() {
     this.showstatistics = !this.showstatistics;
@@ -107,21 +186,27 @@ export class EmployeesComponent {
 
 
   showDetails(element: any) {
+    console.log('sono stato chiamato da showdetails')
     this.navigationExtras = element;
     this.serviceLogic.employee_item_btn_clicked(element);
     console.log("visualizza di un funzionario completo", this.navigationExtras);
 
-    this.getEmployeeRentals();
     //this.router.navigateByUrl('/employee', {state:this.navigationExtras});
   }
 
 
-  getEmployeeRentals() {
-    if (this.rentals != null) {
-      for (var i = 0; i < this.rentals.length; i = i + 1) {
-        if (this.rentals[i].simpleHWman_id === this.serviceLogic.employee_element.id) {
-          this.tmppastrental.push(this.rentals[i]);
+  getEmployeeRentals(rentals: any) {
+    console.log('sono stato chiamato, getEmployeeRentals')
+    console.log('sono this.rentals', rentals)
+    console.log('sono employee element', this.serviceLogic.employee_element)
+    if (rentals != null) {
+      for (var i = 0; i < rentals.length; i = i + 1) {
+        if (this.serviceLogic.employee_element!== 'undefined'){
+          if (rentals[i].simpleHWman_id === this.serviceLogic.employee_element.id) {
+            this.tmppastrental.push(rentals[i]);
+          }
         }
+     
       }
     }
     this.serviceLogic.employeerentals = this.tmppastrental;
@@ -130,14 +215,9 @@ export class EmployeesComponent {
 
 
 
-  //functions to send data to the child statistics component 
-  getEmployees() {
-    return this.serviceLogic.getEmployees();
-  }
 
-  getRentals() {
-    return this.serviceLogic.getRentals();
-  }
+
+
 
 
 

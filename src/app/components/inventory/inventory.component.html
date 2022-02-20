@@ -1,48 +1,54 @@
 <h5 class ="d-flex justify-content-center">Rented products</h5>
 
+<div id ="inventory_prods">
   
-    <div class="statistics_container d-flex justify-content-end">
-      <button (click)="showStatistics()" class="btn nolonoloYellowBackground">Show Statistics</button>
-    </div>
-    <div class="show_statistics" *ngIf="showstatistics">
-      <app-inventory-statistics [listings]="listingsdata" [rentals] = "rentalsdata"  ></app-inventory-statistics>
-    </div>
-
-  
-  
-  <!---Showing the products-->
-  
-  <div class="container-fluid row">
-    <div class="col" *ngFor="let prod of products; let i = index" style="margin-bottom: 5px;">
-    
-      <div class="card cardsize includer" style="width: 18rem; height: 20rem">
-        <img class="card-img-top resize_img" src="/api/imgs/{{prod.img}}">
-        <div class="card-body">
-          <div *ngIf = "prod.condition === 'New'">
-            <span class="badge badge-newcond">{{prod.condition}}</span>
-          </div>
-          <div *ngIf = "prod.condition === 'Good'">
-            <span class="badge badge-goodcond">{{prod.condition}}</span>
-          </div>
-          <div *ngIf = "prod.condition === 'Decent'">
-            <span class="badge badge-decentcond">{{prod.condition}}</span>
-          </div>
-          <div *ngIf = "prod.condition === 'Damaged'">
-            <span class="badge badge-damagedcond">{{prod.condition}}</span>
-          </div>
-
-          <!---<span class="badge badge-success">prova</span> -->
-          <h5 class="card-title">{{prod.name}}</h5>
-          <p class="card-text">{{prod.idProd}}</p>
-          <p class="card-text">{{prod.category}}</p>
-          <p class="card-text">{{prod.description}}</p>
-          <p class="card-text">Number of rentals: {{prod.nRentals}}</p>
-        </div>
-      </div>
-    </div>
+  <div class="statistics_container d-flex justify-content-end">
+    <button (click)="showStatistics()" class="btn nolonoloYellowBackground">Show Statistics</button>
+  </div>
+  <div class="show_statistics" *ngIf="showstatistics">
+    <app-inventory-statistics [listings]="listingsdata" [rentals] = "rentalsdata"  ></app-inventory-statistics>
   </div>
 
 
+  <div *ngFor="let company of companies;">
+   <h5 class ="d-flex justify-content-center">Products rented in the company: {{company}} </h5>
+    <!---Showing the products-->
+    <div class="container-fluid row">
+      <div class="col" *ngFor="let prod of products; let i = index" style="margin-bottom: 5px;">
+      <div *ngIf ="company === prod.company">
+        <div class="card cardsize includer" style="width: 18rem; height: 20rem">
+          <img class="card-img-top resize_img" src="/api/imgs/{{prod.img}}">
+          <div class="card-body">
+            <div *ngIf = "prod.condition === 'New'">
+              <span class="badge badge-newcond">{{prod.condition}}</span>
+            </div>
+            <div *ngIf = "prod.condition === 'Good'">
+              <span class="badge badge-goodcond">{{prod.condition}}</span>
+            </div>
+            <div *ngIf = "prod.condition === 'Decent'">
+              <span class="badge badge-decentcond">{{prod.condition}}</span>
+            </div>
+            <div *ngIf = "prod.condition === 'Damaged'">
+              <span class="badge badge-damagedcond">{{prod.condition}}</span>
+            </div>
+    
+            <!---<span class="badge badge-success">prova</span> -->
+            <h5 class="card-title">{{prod.name}}</h5>
+            <p class="card-text">{{prod.idProd}}</p>
+            <p class="card-text">{{prod.category}}</p>
+            <p class="card-text">{{prod.description}}</p>
+            <p class="card-text">Number of rentals: {{prod.nRentals}}</p>
+          </div>
+        </div>
+      </div>
+      </div>
+   
+    </div>
+    </div>
+
+</div>
 
 
-
+<div id ="inventory_msg">
+  <p>There are no rented products currently</p>
+</div>

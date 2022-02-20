@@ -1,36 +1,86 @@
-
-  <div  class="nolonoloBackgroundNavSecond sidebar">
-    <div class ="logo">
+<div class="nolonoloBackgroundNavSecond sidebar">
+    <div class="logo">
         <app-logo></app-logo>
     </div>
-  
+
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
-       
-        <div class="middlebtn">  <button  class="btn btn_sidebar nolonoloYellowBackground"(click)="showAccount()">
-            Companies
-        </button> </div>
-        <div class="middlebtn"> <button class="btn btn_sidebar nolonoloYellowBackground"(click)="showEmployees()">
-            Employees
-        </button> </div>
-        <div class="middlebtn">  <button class ="btn btn_sidebar nolonoloYellowBackground" (click)="showCustomers()">
-            Customers
-        </button></div>
-        <div class="middlebtn">   <button class ="btn btn_sidebar nolonoloYellowBackground" (click)="showInventory()">
-            Inventory
-        </button> </div>
-        <div class="middlebtn">   <button class ="btn btn_sidebar nolonoloYellowBackground" (click)="showRentals()">
-            Rentals
-        </button> </div>
-        <hr style="background-color: white; opacity: 0.4">
-        <div class="middlebtn">   <button class ="btn btn_sidebar nolonoloYellowBackground" (click)="goToBakOffice()">
-            Backoffice
-        </button> </div>
-        <div class="middlebtn">   <button class ="btn btn_sidebar nolonoloYellowBackground" (click)="Logout()">
-           Logout
-        </button> </div>
 
+      
+        <li class="middlebtn"> <button id ="companies_btn" class="btn btn_sidebar nolonoloYellowBackground" (click)="showAccount()">
+                <div class="align-text-item">
+                    <div class="align-content">
+                        <img id="company_icon_img" class="icon-sidebar" src="assets/icons/black/company_black.png" width="30" height="30"
+                            alt="company_icon">
+                        Companies
+                    </div>
+                </div>
+            </button> </li>
+
+        <li class="middlebtn"> <button id ="employees_btn" class="btn btn_sidebar nolonoloYellowBackground" (click)="showEmployees()">
+                <div class="align-text-item">
+                    <div class="align-content">
+                        <img  id="employees_icon_img" class="icon-sidebar" src="assets/icons/black/employees_black.png" width="30" height="30"
+                            alt="employees_icon">
+                        Employees
+                    </div>
+
+                </div>
+
+            </button> </li>
+        <li class="middlebtn"> <button id ="customers_btn" class="btn btn_sidebar nolonoloYellowBackground" (click)="showCustomers()">
+                <div class="align-text-item">
+                    <div class="align-content">
+                        <img id="customers_icon_img" class="icon-sidebar" src="assets/icons/black/customer_black.png" width="30" height="30"
+                            alt="customers_icon">
+                        Clients
+                    </div>
+                </div>
+
+            </button></li>
+        <li class="middlebtn"> <button id ="inventory_btn" class="btn btn_sidebar nolonoloYellowBackground" (click)="showInventory()">
+                <div class="align-text-item">
+                    <div class="align-content">
+                        <img id="inventory_icon_img" class="icon-sidebar" src="assets/icons/black/inventory_black.png" width="30" height="30"
+                            alt="inventory_icon">
+                        Inventory
+                    </div>
+
+                </div>
+
+            </button> </li>
+        <li class="middlebtn"> <button id ="rentals_btn" class="btn btn_sidebar nolonoloYellowBackground" (click)="showRentals()">
+                <div class="align-text-item">
+                    <div class="align-content">
+                        <img id="rentals_icon_img" class="icon-sidebar" src="assets/icons/black/rentals_black.png" width="30" height="30"
+                            alt="rentals_icon">
+                        Rentals
+                    </div>
+                </div>
+
+            </button> </li>
+        
+        <li class="middlebtn"> <button id ="backoffice_btn" class="btn btn_sidebar nolonoloYellowBackground" (click)="goToBakOffice()">
+                <div class="align-text-item">
+                    <div class="align-content">
+                        <img id="backoffice_icon_img" class="icon-sidebar" src="assets/icons/black/backoffice_black.png" width="30" height="30"
+                            alt="backoffice_icon">
+                        Backoffice
+                    </div>
+                </div>
+            </button> </li>
+        <li class="middlebtn"> <button id="logout_btn" class="btn btn_sidebar nolonoloYellowBackground" (click)="Logout()">
+                <div class="align-text-item">
+                    <div class="align-content">
+                        <img id="logout_icon_img" class="icon-sidebar" src="assets/icons/black/logout_black.png" width="30" height="30"
+                            alt="logout_icon">
+
+                        Logout
+                    </div>
+                </div>
+            </button> </li>
     </ul>
+
     <hr>
-   
+
 </div>

@@ -38,6 +38,8 @@ import { CompanyHandlerComponent } from './components/company-handler/company-ha
 import { AllRentalsComponent } from './components/all-rentals/all-rentals.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { CustomerItemComponent } from './components/customer-item/customer-item.component';
+import { TmpComponent } from './components/tmp/tmp.component';
+import { TmprentComponent } from './components/tmprent/tmprent.component';
 
 
 
@@ -67,6 +69,8 @@ const appRoutes: Routes = [
     AllRentalsComponent,
     ModalComponent,
     CustomerItemComponent,
+    TmpComponent,
+    TmprentComponent,
   ],
   imports: [
     BrowserModule,

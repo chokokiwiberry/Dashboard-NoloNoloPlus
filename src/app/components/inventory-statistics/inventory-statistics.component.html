@@ -1,57 +1,6 @@
-<div id ="loading_cat"
-style="width: 25%; height: 25%;  margin-top: 20vh; margin-left: 50vh;">
-<img src="../clientUtil/loadingCat.gif" alt="">
-</div>
-<div class ="hideshowstats">
+
 <div style="align-items: center;">
- <h4>Statistics</h4>
-  <div width="500" height="500">
-    <h5><b>Revenues for each category of rented products</b></h5>
-    <div style="border:1px solid black; height: 100px; width:400px">
-      <p>X Axes: Category</p>
-      <p>Y Axes: Revenues of rentals for each category</p>
-    </div>
-    <canvas width="750" height="350" id="canvas_inventory">{{chart}}</canvas>
+  <div *ngFor = "let company of companies">
+    <h4 class="d-flex justify-content-center"><b>You are looking at the charts for the company: {{company}}</b> </h4>
+    <app-tmp class ="hidetmp" id={{company}} [listings] ="listingsdata" [rentals] ="rentalsdata"  [companyname]="company"></app-tmp>
   </div>
-  
-  <hr>
-  
-  <div width="500" height="500">
-    <h5><b>Prospects of rented categories</b></h5>
-    <div style="border:1px solid black; height: 100px; width:400px">
-      <p>X Axes: Category</p>
-      <p>Y Axes: Number for each category</p>
-    </div>
-    <canvas width="750" height="350" id="canvas_inventory_rental">{{chart1}}</canvas>
-  </div>
-  
-  <hr>
-  
-  <div width="500" height="500">
-    <h5><b>Number of rented products</b></h5>
-    <div style="border:1px solid black; height: 100px; width:400px">
-      <p>Number of rentals for each product </p>
-    </div>
-    <canvas width="750" height="350" id="canvas_inventory_prods">{{chart2}}</canvas>
-  </div>
-  
-  <hr>
-
-  <div width="500" height="500">
-    <h5><b>Prospects of rented products </b></h5>
-    <div style="border:1px solid black; height: 100px; width:400px">
-      <p>Revenues for each product</p>
-    </div>
-    <canvas width="750" height="350" id="canvas_inventory_prods_number">{{chart3}}</canvas>
-  </div>
-
- <hr>
- <div width="500" height="500">
-  <h5><b>Prospects of conditions of products </b></h5>
-  <div style="border:1px solid black; height: 100px; width:400px">
-    <p>Conditions for each product</p>
-  </div>
-  <canvas width="800" height="350" id="canvas_inventory_prods_conditions">{{chart4}}</canvas>
-</div> 
-</div>
-</div>

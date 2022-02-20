@@ -9,6 +9,9 @@ export interface Product{
     }
     condition: string;
     disabled: boolean;
-    maintenance: null;
+    maintenance: {
+        dateStart: string;
+        dateEnd: string
+    }
     _id: string
 }

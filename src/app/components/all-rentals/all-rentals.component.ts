@@ -25,32 +25,81 @@ export class AllRentalsComponent implements OnInit, OnDestroy {
   listing: any;
 
   tmpdatasource = [] as any;
+
+
+  employeesrentals = [] as any;
+
+ 
   private ngUnsubscribe = new Subject();
   constructor(public serviceLogic: ServiceLogicService, private _sanitizer: DomSanitizer, public dialog: MatDialog) { }
 
   ngOnInit(): void {
 
+
+    this.serviceLogic.Loading();
+    this.asyncGetRentals();
+  }
+
+
+  asyncGetRentals = async () => {
+
+    try {
+    //  console.log('sono pstdata da service', pstdata);
+      const response = await fetch('/api/rental/allForCompanies', {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      //  body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
+      })
+         const data = await response.json();
+      // enter you logic when the fetch is successful
+      console.log('sono data di fetch', data)
+    //  this.serviceLogic.stopLoadingRentals();
+      let ans = this.serviceLogic.handle(data);
+
+      if (ans.command === 'displayErr'){
+        console.log('Something went wrong')
+      } 
+      if (typeof ans === 'object'){
+        console.log('sono rentals di async', ans)
+        
     //received completed rentals of a single employee
-    this.rentals = this.serviceLogic.employeerentals;
+         this.rentals = this.getEmployeeRentals(ans);
+         console.log(this.rentals, 'sono async')
+         if (this.rentals.length > 0){
+          this.serviceLogic.Loading();
+          this.getListing();
+         } else{
+          $('#employee-item-rentals').css('display', 'none');
+          $('#message_employee_item').css('display', 'block')
+         } 
+      
 
-    //get listings and products 
 
-    if (this.serviceLogic.employeerentals != null) {
-      if (this.serviceLogic.employeerentals.length > 0) {
-        this.boolrentals = true;
       }
-    } else {
-      this.boolrentals = false;
+       
+       } catch(error) {
+     // enter your logic for when there is an error (ex. error toast)
+          console.log(error)
+         } 
     }
 
-    if (this.boolrentals) {
-      this.serviceLogic.Loading();
-      this.getListing();
-    } else {
-      //messaggio che non sono presenti
-      this.openDialog('There are no rentals managed by this employee', false)
-      console.log('messaggio, non ci sono robe da visualizzare');
+  
+  getEmployeeRentals(rentals: any) {
+    let employeesrentals = [] as any; 
+    if (rentals != null) {
+      for (var i = 0; i < rentals.length; i = i + 1) { 
+        for (let j=0; j< rentals[i].length; j++){
+          if (rentals[i][j].simpleHWman_id === this.serviceLogic.employee_element._id) {
+        
+            employeesrentals.push(rentals[i][j]);
+          }
+        }
+      }
     }
+    return employeesrentals;
   }
 
   //restituisce il listing dell'oggetto rentato
@@ -92,7 +141,7 @@ export class AllRentalsComponent implements OnInit, OnDestroy {
         if (foundListing !== -1) {
           tmpprod = foundListing.products[rentals[i].products[0].product];
             this.tmpdatasource[index] = {
-              id_rental: rentals[i].id,
+              id_rental: rentals[i]._id,
               img: tmpprod.imgs[0],
               name: foundListing.name,
               category: foundListing.type,
@@ -106,9 +155,14 @@ export class AllRentalsComponent implements OnInit, OnDestroy {
      
         }
       }
-    
+      if (this.tmpdatasource.length !==0){
+        $('#employee-item-rentals').css('display', 'block');
+        $('#message_employee_item').css('display', 'none');
+        this.dataSource = this.tmpdatasource
 
-    this.dataSource = this.tmpdatasource;
+      }
+
+;
   }
 
 

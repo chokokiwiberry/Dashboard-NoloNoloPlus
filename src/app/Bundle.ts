@@ -1,16 +1,12 @@
 import { Listing } from "./Listing";
+import { modifiers } from "./Modifiers";
 
 export interface Bundle{
     id: string,
     products: Listing[],
     price: {
         base: number,
-        modifiers: [{
-            reason: string,
-            sign: string,
-            quantity: number,
-            apply: string,
-        }]
-        fidelity: number
+        modifiers: modifiers[],
+        expiresOn: string,
     }
 }

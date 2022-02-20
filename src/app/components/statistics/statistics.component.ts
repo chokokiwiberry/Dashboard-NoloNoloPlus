@@ -11,6 +11,8 @@ import { ServiceLogicService } from 'src/app/services/service-logic.service';
   styleUrls: ['./statistics.component.css']
 })
 export class StatisticsComponent implements OnInit {
+  @Input() employeesdata!: any;
+  @Input() rentalsdata! : any;
   chart: any = [];
 
   chart1: any = [];
@@ -40,6 +42,11 @@ export class StatisticsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.setEmployeeCharts();
+
+  }
+
+  setEmployeeCharts(){
     this.chart = new Chart('canvas_emp1', {
       type: 'bar',
 
@@ -59,6 +66,7 @@ export class StatisticsComponent implements OnInit {
 
       },
       options: {
+        responsive: false,
         hover: {
           // Overrides the global setting
           mode: 'index'
@@ -109,7 +117,7 @@ export class StatisticsComponent implements OnInit {
 
   }
   getRentals(){
-    return  this.serviceLogic.getRentals();
+    return  this.employeesdata;
   }
 
   setOptions(){
@@ -131,10 +139,10 @@ export class StatisticsComponent implements OnInit {
     console.log('setData', tmp);
     return tmp;
   }
-  getEmployees(){
+ /* getEmployees(){
     return this.serviceLogic.getEmployees();
 
-  }
+  } */
 
   checkSameCompanies(employee: any, manager: any) {
     for (let i = 0; i < employee.companies.length; i = i + 1) {
@@ -148,7 +156,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   getLabels() {
-    let tmp = this.setData(this.getEmployees());
+    let tmp = this.setData(this.employeesdata);
     if (tmp != null) {
       for (var i = 0; i <tmp.length; i = i + 1) {
         this.labels.push(tmp[i].username);
@@ -162,7 +170,7 @@ export class StatisticsComponent implements OnInit {
     var data;
     var datasets;
 
-    let tmp = this.setData(this.getEmployees());
+    let tmp = this.setData(this.employeesdata);
     this.rentals = this.getRentals();
 
     //inizializzazione 
@@ -171,10 +179,10 @@ export class StatisticsComponent implements OnInit {
     }
 
     for (var i = 0; i < tmp.length; i = i + 1) {
-      for (var j = 0; j < this.rentals.length; j = j + 1) {
-        if (tmp[i].id === this.rentals[j].simpleHWman_id) {
+      for (var j = 0; j < this.rentalsdata.length; j = j + 1) {
+        if (tmp[i]._id === this.rentalsdata[j].simpleHWman_id) {
           this.counters[i] = this.counters[i] + 1;
-          console.log('emp', this.counters[tmp[i].id]);
+          console.log('emp', this.counters[tmp[i]._id]);
         }
       }
     }
@@ -191,7 +199,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   settingColors() {
-    let tmp = this.setData(this.getEmployees());
+    let tmp = this.setData(this.employeesdata);
 
     for (var i = 0; i < tmp.length; i = i + 1) {
       this.colors[i] = 0;

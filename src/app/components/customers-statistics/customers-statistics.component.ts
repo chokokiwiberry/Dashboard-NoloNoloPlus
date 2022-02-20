@@ -38,12 +38,12 @@ export class CustomersStatisticsComponent implements OnInit {
   ngOnInit(): void {
 
     this.serviceLogic.LoadingRentals();
-
+    console.log('sono rentalsdata customer statistics', this.rentalsdata)
     this.asyncPostCall(this.rentalsdata)
-    
+
     let chartCustomersRentals = new CustomerRentals(this.customersdata, this.rentalsdata);
     chartCustomersRentals.RentalsForEachCustomerChart()
- 
+
   }
 
   //classe che gestisce il numero dei noleggi per ogni cliente
@@ -53,8 +53,8 @@ export class CustomersStatisticsComponent implements OnInit {
   asyncPostCall = async (rentals: any) => {
     let chartCustomersRevenues = new CustomerRevenues(this.customersdata, this.serviceLogic, this.rentalsdata);
     let pstdata = [] as any;
-    for (let i = 0; i<rentals.length; i++){
-       pstdata[i] = {priceObj: rentals[i].price[0], dateStart :rentals[i].dateStart, dateEnd:rentals[i].dateEnd}
+    for (let i = 0; i < rentals.length; i++) {
+      pstdata[i] = { priceObj: rentals[i].price[0], dateStart: rentals[i].dateStart, dateEnd: rentals[i].dateEnd }
     }
     try {
       console.log('sono pstdata da service', pstdata);
@@ -66,22 +66,22 @@ export class CustomersStatisticsComponent implements OnInit {
         },
         body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
       })
-         const data = await response.json();
+      const data = await response.json();
       // enter you logic when the fetch is successful
       this.serviceLogic.stopLoadingRentals();
       let ans = this.serviceLogic.handle(data);
-      if (ans.command === 'displayErr'){
+      if (ans.command === 'displayErr') {
         console.log('Something went wrong')
-      } 
-      if (typeof ans === 'object'){
+      }
+      if (typeof ans === 'object') {
         chartCustomersRevenues.RevenuesForEachCustomerChart(ans);
       }
-       
-       } catch(error) {
-     // enter your logic for when there is an error (ex. error toast)
-          console.log(error)
-         } 
+
+    } catch (error) {
+      // enter your logic for when there is an error (ex. error toast)
+      console.log(error)
     }
+  }
 
 
 
@@ -208,8 +208,6 @@ export class CustomerRevenues {
       }
     }
 
-    console.log('calcolo di rental', tmp);
-    console.log('result', result)
     return result;
   }
 }
@@ -282,33 +280,33 @@ export class CustomerRentals {
         maintainAspectRatio: false,
         scales: {
           yAxes: {
-              title: {
-                  display: true,
-                  text: 'Number of reantals for each customer',
-                  font: {
-                      size: 15
-                  }
-              },
-              ticks: {
-                  precision: 0
+            title: {
+              display: true,
+              text: 'Number of reantals for each customer',
+              font: {
+                size: 15
               }
+            },
+            ticks: {
+              precision: 0
+            }
           },
           xAxes: {
-              title: {
-                  display: true,
-                  text: 'Customers',
-                  font: {
-                      size: 15
-                  }
+            title: {
+              display: true,
+              text: 'Customers',
+              font: {
+                size: 15
               }
+            }
           }
-      }
+        }
       },
 
     });
   }
 
-  
+
   //give a setting to the chart 
   settingData() {
     var data;
@@ -335,9 +333,9 @@ export class CustomerRentals {
 
     //incrocio i dati
     for (var i = 0; i < this.customersdata.length; i = i + 1) {
-      for (var j=0; j<this.rentalsdata.length; j++){
-        if (this.customersdata[i]._id === this.rentalsdata[j].customer_id){
-          this.counters[i] =  this.counters[i] + 1
+      for (var j = 0; j < this.rentalsdata.length; j++) {
+        if (this.customersdata[i]._id === this.rentalsdata[j].customer_id) {
+          this.counters[i] = this.counters[i] + 1
         }
       }
     }

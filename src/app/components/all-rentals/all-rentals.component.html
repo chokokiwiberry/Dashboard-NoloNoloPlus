@@ -1,5 +1,5 @@
 <div id ="employee-item-rentals">
-  <div *ngIf="boolrentals">
+
 
 
     <table mat-table [dataSource]="dataSource" class ="table_completed_rentals">
@@ -54,11 +54,11 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
 
-</div>
+
 </div>
 
-<div id ="absent_rentals">
-  
+<div id ="message_employee_item">
+  This employee has not managed any rentals
 </div>
 
 
