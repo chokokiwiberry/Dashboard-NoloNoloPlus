@@ -29,7 +29,6 @@ export class TmprentComponent implements AfterViewInit {
   ngAfterViewInit(): void {
       
     let tmprent = this.filterRentals(this.companyname, this.rentals);
-    console.log('sono tmprent', tmprent)
     if (tmprent.length === 0) {
       //non carico
       $('#norents_msg' + this.companyname).css('display', 'block')
@@ -87,7 +86,6 @@ export class TmprentComponent implements AfterViewInit {
       pstdata[i] = { priceObj: rentals[i].price[0], dateStart: rentals[i].dateStart, dateEnd: rentals[i].dateEnd }
     }
     try {
-      console.log('sono pstdata da service', pstdata);
       const response = await fetch('/api/price/calcAll', {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         headers: {
@@ -98,7 +96,6 @@ export class TmprentComponent implements AfterViewInit {
       })
       const data = await response.json();
       // enter you logic when the fetch is successful
-      // this.serviceLogic.stopLoadingRentals();
 
       $('#norents_msg' + this.companyname).css('display', 'none')
       $('#hideshowstats_' + this.companyname).css('display', 'block')
@@ -278,7 +275,6 @@ export class RevenuesRentals {
   closedRentals(rentals: any) {
     let closedRentals = { Paid: 0, NeverShowedUp: 0, Damaged: 0 }
     let currentdate = new Date().toISOString().slice(0, 10);
-    console.log('sono date di closed rentals', currentdate)
 
     for (let i = 0; i < rentals.length; i++) {
       //se la data odierna è maggiore della data di conclusione, il noleggio è concluso

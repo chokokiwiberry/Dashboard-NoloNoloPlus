@@ -14,10 +14,10 @@ export class CustomersComponent implements OnInit {
   customers: any;
   rentals: any;
   customersparent: any; //dati che vengono passati alla componente figlio 
-  rentalsparent: any; 
+  rentalsparent: any;
   chart: any = [];
 
-  displayedColumns: string[] = [ 'username', 'name', 'surname', 'broken', 'delayed', 'actions'];
+  displayedColumns: string[] = ['username', 'name', 'surname', 'broken', 'delayed', 'actions'];
   dataSource = new MatTableDataSource();
 
   constructor(private serviceLogic: ServiceLogicService) {
@@ -31,48 +31,48 @@ export class CustomersComponent implements OnInit {
   }
   showStatistics() {
     this.showstatistics = !this.showstatistics;
-   // this.rentals = this.serviceLogic.getRentals;
+    // this.rentals = this.serviceLogic.getRentals;
   }
 
   asyncGetRentals = async () => {
 
     try {
-    //  console.log('sono pstdata da service', pstdata);
+      //  console.log('sono pstdata da service', pstdata);
       const response = await fetch('/api/rental/allForCompanies', {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         headers: {
           'Content-Type': 'application/json'
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-      //  body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
+        //  body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
       })
-         const data = await response.json();
+      const data = await response.json();
       // enter you logic when the fetch is successful
-      console.log('sono data di fetch', data)
-    //  this.serviceLogic.stopLoadingRentals();
+
+      this.serviceLogic.stopLoading();
       let ans = this.serviceLogic.handle(data);
 
-      if (ans.command === 'displayErr'){
+      if (ans.command === 'displayErr') {
         console.log('Something went wrong')
-      } 
-      if (typeof ans === 'object'){
-
-        console.log('sono rentals di async', ans)
-        this.rentalsparent = this.arrayRentals(ans);
-
       }
-       
-       } catch(error) {
-     // enter your logic for when there is an error (ex. error toast)
-          console.log(error)
-         } 
+      if (typeof ans === 'object') {
+
+        let tmp = [] as any;
+        tmp = this.arrayRentals(ans);
+        return tmp;
+      }
+
+    } catch (error) {
+      // enter your logic for when there is an error (ex. error toast)
+      console.log(error)
     }
-    
-    
-  arrayRentals(rentals: any){
+  }
+
+
+  arrayRentals(rentals: any) {
     let tmp = [];
-    for (let i=0; i<rentals.length; i++){
-      for (let j=0; j<rentals[i].length; j++){
+    for (let i = 0; i < rentals.length; i++) {
+      for (let j = 0; j < rentals[i].length; j++) {
         tmp.push(rentals[i][j])
       }
     }
@@ -94,8 +94,8 @@ export class CustomersComponent implements OnInit {
   getCustomers() {
     let ans;
     this.serviceLogic.getCustomers().subscribe(
-      success => {
-        this.serviceLogic.stopLoading();
+      async success => {
+        //  this.serviceLogic.stopLoading();
         ans = this.serviceLogic.handle(success);
         if (ans.command === 'logErr') {
           console.log(ans);
@@ -108,6 +108,7 @@ export class CustomersComponent implements OnInit {
           if (typeof ans === 'object') {
             this.dataSource.data = ans
             this.customersparent = ans
+            this.rentalsparent = await this.asyncGetRentals();
           }
         }
 

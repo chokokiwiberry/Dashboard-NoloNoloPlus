@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ServiceLogicService } from 'src/app/services/service-logic.service';
@@ -9,7 +9,7 @@ import { ModalComponent } from '../modal/modal.component';
   templateUrl: './customer-item.component.html',
   styleUrls: ['./customer-item.component.css']
 })
-export class CustomerItemComponent implements OnInit {
+export class CustomerItemComponent implements AfterViewInit {
   rentals = [] as any;
   listing: any;
   tmpdatasource = [] as any;
@@ -19,30 +19,26 @@ export class CustomerItemComponent implements OnInit {
 
   constructor(public serviceLogic: ServiceLogicService, public dialog: MatDialog) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+      
     this.tmpcust = this.serviceLogic.customer_element;
-   // console.log('sono element dal coso schifoso e voglio vedere', this.tmpcust); era per vedere se l'elemento arrivava and is ok
-  // this.rentals = this.filterCustomerRentals(this.serviceLogic.getRentals())
-     this.serviceLogic.Loading()
+
+     this.serviceLogic.LoadingRentals()
       this.getListing();
 
   }
   asyncGetRentals = async () => {
 
     try {
-    //  console.log('sono pstdata da service', pstdata);
       const response = await fetch('/api/rental/allForCompanies', {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         headers: {
           'Content-Type': 'application/json'
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-      //  body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
       })
          const data = await response.json();
       // enter you logic when the fetch is successful
-      console.log('sono data di fetch', data)
-    //  this.serviceLogic.stopLoadingRentals();
       let ans = this.serviceLogic.handle(data);
 
       if (ans.command === 'displayErr'){
@@ -129,7 +125,7 @@ export class CustomerItemComponent implements OnInit {
               condition: tmpprod.condition,
               starting_date: rentals[i].dateStart,
               ending_date: rentals[i].dateEnd,
-              price: responsedata[i]+'$'
+              price: this.serviceLogic.truncateByDecimalPlace(responsedata[i], 2)+'$'
             }
             index = index + 1;
         }
@@ -137,8 +133,7 @@ export class CustomerItemComponent implements OnInit {
       //significa che non ci sono noleggi fatti dall'utente 
       if (this.tmpdatasource.length === 0){
         console.log(this.tmpdatasource.length, 'forse mettere un messaggio che non ci sono noleggi')
-        $('#table_rentals_single_customer').css('display', 'none');
-        $('#message_customer').css('display', 'block')
+
 
       } else {
         $('#table_rentals_single_customer').css('display', 'block');
@@ -166,7 +161,8 @@ export class CustomerItemComponent implements OnInit {
       })
       const data = await response.json();
       // enter you logic when the fetch is successful
-      // this.serviceLogic.stopLoadingRentals();
+
+      this.serviceLogic.stopLoadingRentals();
       let ans = this.serviceLogic.handle(data);
       if (ans.command === 'displayErr') {
         console.log('Something went wrong')
@@ -189,7 +185,7 @@ export class CustomerItemComponent implements OnInit {
     let tmpans;
     this.serviceLogic.getListing().subscribe(
       async success => {
-        this.serviceLogic.stopLoading();
+        //this.serviceLogic.stopLoading();
         ans = this.serviceLogic.handle(success);
         if (ans.command === 'displayErr') {
           if (ans.msg === 'mustBeLoggedAsSimpleHWMan') {
@@ -205,8 +201,14 @@ export class CustomerItemComponent implements OnInit {
             //seconda chiamata 
             this.rentals = await this.asyncGetRentals();
             responsedata = await this.asyncPostCall(this.rentals)
-            this.showRentals(this.filterCustomerRentals(this.rentals), this.listing, responsedata);
-            console.log(responsedata, 'sono allrentals e sto facendo chiamate due')
+            if (this.filterCustomerRentals(this.rentals).lenght === 0){
+              $('#table_rentals_single_customer').css('display', 'none');
+              $('#message_customer').css('display', 'block')
+
+            } else{
+              this.showRentals(this.filterCustomerRentals(this.rentals), this.listing, responsedata);
+            }
+          
 
           }
         }

@@ -21,23 +21,13 @@ export class EmployeesComponent {
   tmp = [] as any;
   companies = [] as any;
   dataSource = new MatTableDataSource();
-  companiesDataSrc = new MatTableDataSource();
-  displayedColumns: string[] = ['id', 'username', 'name', 'surname', 'company', 'role', 'actions'];
+  displayedColumns: string[] = ['username', 'name', 'surname', 'company', 'role', 'actions'];
   showstatistics: boolean = false;
   navigationExtras!: NavigationExtras;
 
   rentals = [] as any;
 
-  tmpfuturerental = [] as any;
-  tmpcurrentrental = [] as any;
   tmppastrental = [] as any;
-
-
-  tmp1 = [] as any;
-
-
-
-  myDate = new Date();
 
 
   //variabili che vengono passate alla componente figlio - per fare le statistiche
@@ -48,16 +38,15 @@ export class EmployeesComponent {
   constructor(private serviceLogic: ServiceLogicService, public dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
+    this.serviceLogic.Loading();
     this.getEmployees()
- 
-    this.companies = this.serviceLogic.managerObj.companies;
-    this.dataSource.data = this.setData(this.employees);
+
   }
 
-  arrayRentals(rentals: any){
+  arrayRentals(rentals: any) {
     let tmp = [];
-    for (let i=0; i<rentals.length; i++){
-      for (let j=0; j<rentals[i].length; j++){
+    for (let i = 0; i < rentals.length; i++) {
+      for (let j = 0; j < rentals[i].length; j++) {
         tmp.push(rentals[i][j])
       }
     }
@@ -66,45 +55,45 @@ export class EmployeesComponent {
   asyncGetRentals = async () => {
 
     try {
-    //  console.log('sono pstdata da service', pstdata);
+      //  console.log('sono pstdata da service', pstdata);
       const response = await fetch('/api/rental/allForCompanies', {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         headers: {
           'Content-Type': 'application/json'
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-      //  body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
+        //  body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
       })
-         const data = await response.json();
+      const data = await response.json();
       // enter you logic when the fetch is successful
-      console.log('sono data di fetch', data)
-    //  this.serviceLogic.stopLoadingRentals();
+      //  this.serviceLogic.stopLoadingRentals();
+      this.serviceLogic.stopLoading();
       let ans = this.serviceLogic.handle(data);
 
-      if (ans.command === 'displayErr'){
+      if (ans.command === 'displayErr') {
         console.log('Something went wrong')
-      } 
-      if (typeof ans === 'object'){
-        let tmp = [] as  any;
+      }
+      if (typeof ans === 'object') {
+        let tmp = [] as any;
         tmp = this.arrayRentals(ans);
         this.rentalsparent = tmp;
         return tmp;
         console.log('sono rentals di async', ans)
 
       }
-       
-       } catch(error) {
-     // enter your logic for when there is an error (ex. error toast)
-          console.log(error)
-         } 
+
+    } catch (error) {
+      // enter your logic for when there is an error (ex. error toast)
+      console.log(error)
     }
+  }
 
   getEmployees() {
     let ans;
-  //  let responsedata;
+    //  let responsedata;
     this.serviceLogic.getEmployees1().subscribe(
       async success => {
-      //  this.serviceLogic.stopLoading();
+        //  this.serviceLogic.stopLoading();
         ans = this.serviceLogic.handle(success);
         if (ans.command === 'displayErr') {
           if (ans.msg === 'mustBeLoggedAsSimpleHWMan') {
@@ -186,12 +175,9 @@ export class EmployeesComponent {
 
 
   showDetails(element: any) {
-    console.log('sono stato chiamato da showdetails')
     this.navigationExtras = element;
     this.serviceLogic.employee_item_btn_clicked(element);
-    console.log("visualizza di un funzionario completo", this.navigationExtras);
 
-    //this.router.navigateByUrl('/employee', {state:this.navigationExtras});
   }
 
 
@@ -201,12 +187,12 @@ export class EmployeesComponent {
     console.log('sono employee element', this.serviceLogic.employee_element)
     if (rentals != null) {
       for (var i = 0; i < rentals.length; i = i + 1) {
-        if (this.serviceLogic.employee_element!== 'undefined'){
+        if (this.serviceLogic.employee_element !== 'undefined') {
           if (rentals[i].simpleHWman_id === this.serviceLogic.employee_element.id) {
             this.tmppastrental.push(rentals[i]);
           }
         }
-     
+
       }
     }
     this.serviceLogic.employeerentals = this.tmppastrental;

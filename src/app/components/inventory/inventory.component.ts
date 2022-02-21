@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ServiceLogicService } from 'src/app/services/service-logic.service';
 
@@ -7,7 +7,7 @@ import { ServiceLogicService } from 'src/app/services/service-logic.service';
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css']
 })
-export class InventoryComponent implements OnInit {
+export class InventoryComponent implements AfterViewInit {
   //inizializzazione delle variabli
 
   showstatistics: boolean = false;
@@ -31,7 +31,8 @@ export class InventoryComponent implements OnInit {
   companies : any;
   constructor(private serviceLogic: ServiceLogicService, private _sanitizer: DomSanitizer) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+      
     this.companies = this.serviceLogic.managerObj.companies;
    // this.rentals = this.getRentals();
     this.serviceLogic.Loading();
@@ -68,12 +69,10 @@ export class InventoryComponent implements OnInit {
           'Content-Type': 'application/json'
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-      //  body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
       })
          const data = await response.json();
       // enter you logic when the fetch is successful
-      console.log('sono data di fetch', data)
-    //  this.serviceLogic.stopLoadingRentals();
+
       let ans = this.serviceLogic.handle(data);
 
       if (ans.command === 'displayErr'){
@@ -86,13 +85,6 @@ export class InventoryComponent implements OnInit {
          this.rentals = ans;
          console.log(this.rentals, 'sono async')
          return ans;
-         if (this.rentals.length > 0){
-          this.serviceLogic.Loading();
-          this.getListing();
-         }
-      
-
-
       }
        
        } catch(error) {
@@ -200,7 +192,6 @@ export class InventoryComponent implements OnInit {
 
 
     //inizializzazione della matrice
-    console.log(listings.length);
     for (let i = 0; i < listings.length; i = i + 1) {
       countRentals[listings[i]._id] = [];
 

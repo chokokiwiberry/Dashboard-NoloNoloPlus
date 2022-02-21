@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 
 import { Chart, registerables } from 'chart.js';
 
@@ -16,7 +16,7 @@ const httpOptionsJson = {
 })
 
 
-export class CustomersStatisticsComponent implements OnInit {
+export class CustomersStatisticsComponent implements AfterViewInit {
   //dati riceuvti dalle componenti genitori
   @Input() customersdata!: any[];
   @Input() rentalsdata!: any[];
@@ -35,29 +35,24 @@ export class CustomersStatisticsComponent implements OnInit {
     Chart.register(...registerables);
   }
 
-  ngOnInit(): void {
-
+  ngAfterViewInit(): void {
     this.serviceLogic.LoadingRentals();
-    console.log('sono rentalsdata customer statistics', this.rentalsdata)
     this.asyncPostCall(this.rentalsdata)
-
-    let chartCustomersRentals = new CustomerRentals(this.customersdata, this.rentalsdata);
-    chartCustomersRentals.RentalsForEachCustomerChart()
 
   }
 
-  //classe che gestisce il numero dei noleggi per ogni cliente
 
 
 
   asyncPostCall = async (rentals: any) => {
     let chartCustomersRevenues = new CustomerRevenues(this.customersdata, this.serviceLogic, this.rentalsdata);
+    let chartCustomersRentals = new CustomerRentals(this.customersdata, this.rentalsdata);
+
     let pstdata = [] as any;
     for (let i = 0; i < rentals.length; i++) {
       pstdata[i] = { priceObj: rentals[i].price[0], dateStart: rentals[i].dateStart, dateEnd: rentals[i].dateEnd }
     }
     try {
-      console.log('sono pstdata da service', pstdata);
       const response = await fetch('/api/price/calcAll', {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         headers: {
@@ -75,6 +70,8 @@ export class CustomersStatisticsComponent implements OnInit {
       }
       if (typeof ans === 'object') {
         chartCustomersRevenues.RevenuesForEachCustomerChart(ans);
+        chartCustomersRentals.RentalsForEachCustomerChart();
+
       }
 
     } catch (error) {
@@ -82,13 +79,6 @@ export class CustomersStatisticsComponent implements OnInit {
       console.log(error)
     }
   }
-
-
-
-
-
-
-
 
 
 }
@@ -169,7 +159,7 @@ export class CustomerRevenues {
         plugins: {
           legend: {
             position: "right",
-            align: "center",
+            align: "end",
             labels: {
               usePointStyle: false,
             },
@@ -177,7 +167,7 @@ export class CustomerRevenues {
           },
           title: {
             text: "Revenues for each customer",
-            position: 'top',
+            position: 'left',
             display: true
           }
         },

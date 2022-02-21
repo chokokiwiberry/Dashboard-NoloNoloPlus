@@ -18,7 +18,7 @@ export class AllRentalsComponent implements OnInit, OnDestroy {
   imagePath: any;
 
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['image', 'id', 'category', 'product_name', 'starting_date', 'ending_date', 'price', 'condition'];
+  displayedColumns: string[] = ['image', 'category', 'product_name', 'starting_date', 'ending_date', 'price', 'condition'];
 
   rentals: any;
 
@@ -36,7 +36,7 @@ export class AllRentalsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
 
-    this.serviceLogic.Loading();
+    this.serviceLogic.LoadingRentals();
     this.asyncGetRentals();
   }
 
@@ -141,14 +141,13 @@ export class AllRentalsComponent implements OnInit, OnDestroy {
         if (foundListing !== -1) {
           tmpprod = foundListing.products[rentals[i].products[0].product];
             this.tmpdatasource[index] = {
-              id_rental: rentals[i]._id,
               img: tmpprod.imgs[0],
               name: foundListing.name,
               category: foundListing.type,
               condition: tmpprod.condition,
               starting_date: rentals[i].dateStart,
               ending_date: rentals[i].dateEnd,
-              price: responsedata[i]+'$'
+              price: this.serviceLogic.truncateByDecimalPlace(responsedata[i],2)+'$'
             }
             index = index + 1;
           
@@ -172,7 +171,6 @@ export class AllRentalsComponent implements OnInit, OnDestroy {
       pstdata[i] = { priceObj: rentals[i].price[0], dateStart: rentals[i].dateStart, dateEnd: rentals[i].dateEnd }
     }
     try {
-      console.log('sono pstdata da service', pstdata);
       const response = await fetch('/api/price/calcAll', {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         headers: {
@@ -184,6 +182,7 @@ export class AllRentalsComponent implements OnInit, OnDestroy {
       const data = await response.json();
       // enter you logic when the fetch is successful
       // this.serviceLogic.stopLoadingRentals();
+      this.serviceLogic.stopLoading();
       let ans = this.serviceLogic.handle(data);
       if (ans.command === 'displayErr') {
         console.log('Something went wrong')
@@ -206,7 +205,7 @@ export class AllRentalsComponent implements OnInit, OnDestroy {
     let tmpans;
     this.serviceLogic.getListing().subscribe(
       async success => {
-        this.serviceLogic.stopLoading();
+        //this.serviceLogic.stopLoading();
         ans = this.serviceLogic.handle(success);
         if (ans.command === 'displayErr') {
           if (ans.msg === 'mustBeLoggedAsSimpleHWMan') {

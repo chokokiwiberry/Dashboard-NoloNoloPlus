@@ -11,6 +11,7 @@ export class CompanyHandlerComponent implements OnInit {
   constructor(private serviceLogic: ServiceLogicService) { }
 
   ngOnInit(): void {
+
   }
 
   Add(){

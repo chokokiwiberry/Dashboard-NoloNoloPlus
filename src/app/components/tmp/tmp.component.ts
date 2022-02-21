@@ -535,11 +535,7 @@ export class Prods{
   
   
             },
-            title: {
-              text: "Number of rentals for each category",
-              position: 'top',
-              display: true
-            }
+        
           },
           maintainAspectRatio: false,
           
@@ -582,11 +578,7 @@ export class Prods{
               },
   
             },
-            title: {
-              text: "Revenues for the rented products",
-              position: 'top',
-              display: true
-            }
+         
           },
           maintainAspectRatio: false,
   
@@ -598,11 +590,6 @@ export class Prods{
 
     setChart_conditions() {
       let labelscond =  ['New', 'Good', 'Decent', 'Damaged']
-      let tmp = this.productConditions();
-      let newarr = [] as any;
-      let tmp2 = [] as any;
-      newarr = tmp.new
-      console.log(newarr, 'vediamo')
 
       this.chart4 = new Chart('canvas_inventory_prods_conditions'+this.name, {
         type: 'bar',
@@ -617,7 +604,6 @@ export class Prods{
               label: 'Number of products for each condition',
               backgroundColor: this.colors.settingColors(this.productConditions()),
 
-            
             },
           ],
   
@@ -715,7 +701,6 @@ export class Prods{
     }
 
     return countConditions;
-    //console.log('prodcond', countConditions)
 
   }
   
@@ -757,8 +742,8 @@ export class Prods{
                 countRentals[listings[i]._id][j] =
                 {
                   xAxes: {
-                    xListings: listings[i]._id,
-                    xProducts: j,
+                    Listings: listings[i]._id,
+                    Products: j,
                   },
                   yAxes: counts[listings[i]._id][j]
                 }
@@ -826,7 +811,6 @@ export class Prods{
         }
       }
     }
-    console.log(JSON.parse(JSON.stringify(countRentals)), ' countrentals obj');
     return countRentals;
 
   }
@@ -857,8 +841,8 @@ export class Prods{
                 countRentals[listings[i]._id][j] =
                 {
                   xAxes: {
-                    xListings: listings[i]._id,
-                    xProducts: j,
+                    Listings: listings[i]._id,
+                    Products: j,
                   },
                   yAxes: counts[listings[i]._id][j]
                 }

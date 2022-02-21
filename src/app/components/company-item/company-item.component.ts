@@ -15,6 +15,7 @@ export class CompanyItemComponent implements OnInit {
   constructor(private serviceLogic: ServiceLogicService) { }
 
   ngOnInit(): void {
+    
     this.mycompanies = this.showMyCompanies();
   }
 

@@ -93,7 +93,7 @@ export class RentalsComponent implements OnInit {
               company: rentals[i].companies[0],
               starting_date: rentals[i].dateStart,
               ending_date: rentals[i].dateEnd,
-              price: responsedata[i]+'$',
+              price: this.serviceLogic.truncateByDecimalPlace(responsedata[i],2)+'$',
               rejected: rentals[i].rejected,
               paid: rentals[i].paid,
               damagedProduct: rentals[i].damagedProduct

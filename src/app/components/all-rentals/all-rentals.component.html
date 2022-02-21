@@ -4,18 +4,14 @@
 
     <table mat-table [dataSource]="dataSource" class ="table_completed_rentals">
       
-        <!-- Position Column -->
+        <!-- image Column -->
         <ng-container matColumnDef="image">
             <th mat-header-cell *matHeaderCellDef> Image </th>
             <td mat-cell *matCellDef="let element"> 
               <img class ="resize_img_rental"  src="/api/imgs/{{element.img}}">
             </td>
           </ng-container>
-        <!-- id Column -->
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef> Id </th>
-          <td mat-cell *matCellDef="let element"> {{element.id_rental}} </td>
-        </ng-container>
+     
         <ng-container matColumnDef="category">
           <th mat-header-cell *matHeaderCellDef> Category </th>
           <td mat-cell *matCellDef="let element"> {{element.category}} </td>

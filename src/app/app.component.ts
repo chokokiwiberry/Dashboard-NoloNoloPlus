@@ -31,15 +31,12 @@ export class AppComponent implements AfterViewInit {
         }
         if(ans === 'notLogged'){
           //login/register
-          console.log('non sei loggato');
           $('#div_logreg').css('display', 'block');
         }
         if (typeof ans === 'object'){
           //show dashboard
           $('#div_dash').css('display', 'block');
           this.serviceLogic.managerObj = ans;
-          console.log('sei loggato');
-          console.log(this.serviceLogic.managerObj, 'sono oggetto man obj dopo tutto')
         }
       },
         err => {

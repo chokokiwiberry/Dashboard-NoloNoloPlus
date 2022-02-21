@@ -3,12 +3,8 @@ import { Observable, Subject } from 'rxjs';
 import { Customer } from '../Customer';
 import { simpleHWman } from '../simpleHWman';
 import { Listing } from '../Listing';
-
-
-
 import { Product } from '../Product';
 import { Rental } from '../Rental';
-
 import { Company } from '../Company';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -143,13 +139,18 @@ stopLoading(){
 
 LoadingRentals(){
   $('.hideshowstats').css('display', 'none');
-  $('#loading_cat_t').css('display', 'block');
+  $('#loading_cat').css('display', 'block');
 }
 
 stopLoadingRentals(){
   $('.hideshowstats').css('display', 'block');
-  $('#loading_cat_t').css('display', 'none');
+  $('#loading_cat').css('display', 'none');
 }
+
+
+//funzione per arrotondare le cifre decimali dei prezzi
+truncateByDecimalPlace = (value: any, numDecimalPlaces: any) =>
+  Math.trunc(value * Math.pow(10, numDecimalPlaces)) / Math.pow(10, numDecimalPlaces)
 //GET CALLS
 
 // 
@@ -159,9 +160,7 @@ getCustomers(): Observable<any>{
 getRentals1():Observable<any>{
   return this.http.get<any>('/api/rental/allForCompanies');
 }
-// getRentals(): Rental[]{
-//   return RENTALS;
-// }
+
 
 getEmployees1(): Observable<any>{
   return this.http.get<any>('/api/employee/all')
@@ -200,46 +199,6 @@ handle(stuff: any){
           return null;
           break;
   }
-}
-
-async calculatePrice(rental: any) {
-  // Default options are marked with *
-  let pstdata = {priceObj: rental.price, dateStart:rental.dateStart, dateEnd:rental.dateEnd}
-  const response = await fetch('/api/price/calc', {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    headers: {
-      'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
-  });  
-  return response.json(); // parses JSON response into native JavaScript objects
-}
-
-///////LOGIN STUFF
-allCalc(rentals: any): Observable<any>{
-  let pstdata = [] as any;
-  for (let i = 0; i<rentals.length; i++){
-     pstdata[i] = {priceObj: rentals[i].price[0], dateStart :rentals[i].dateStart, dateEnd:rentals[i].dateEnd}
-  }
-  return this.http.post<any>('/api/manager/login', pstdata, httpOptionsJson);
-}
-
-async allCalc1(rentals: any){
-  let pstdata = [] as any;
-  for (let i = 0; i<rentals.length; i++){
-     pstdata[i] = {priceObj: rentals[i].price[0], dateStart :rentals[i].dateStart, dateEnd:rentals[i].dateEnd}
-  }
-  console.log('sono pstdata da service', pstdata);
-  const response = await fetch('/api/price/calcAll', {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    headers: {
-      'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: JSON.stringify(pstdata) // body data type must match "Content-Type" header
-  });  
-  return response.json();
 }
 
 

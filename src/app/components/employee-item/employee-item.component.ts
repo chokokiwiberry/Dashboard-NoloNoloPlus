@@ -21,8 +21,7 @@ panelOpenState = false;
 
   ngOnInit(): void {
     this.employee = this.serviceLogic.employee_element;
-    console.log('sono stato cliccato da show details di employees e sono employee item', this.employee );
-  //  this.rentals = this.serviceLogic.getRentals();
+
   }
 
 

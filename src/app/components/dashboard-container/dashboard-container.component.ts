@@ -20,7 +20,6 @@ export class DashboardContainerComponent implements OnInit {
 
   ngOnInit(): void {
     this.serviceLogic.employee_observable.subscribe(() => {
-      console.log(this.serviceLogic.employees_toggle, "sono in employee");
       if (this.serviceLogic.employees_toggle) {
         if (this.showcustomers || this.showinventory || this.showrentals || this.showemployeeitem || this.showcompanies || this.showcustomeritem) {
           this.showcustomers = false;
@@ -36,7 +35,6 @@ export class DashboardContainerComponent implements OnInit {
 
     //show the customers
     this.serviceLogic.customers_observable.subscribe(() => {
-      console.log(this.serviceLogic.customers_toggle, "sono customers invece");
       if (this.serviceLogic.customers_toggle) {
         if (this.showemployees || this.showinventory || this.showrentals || this.showemployeeitem || this.showcompanies || this.showcustomeritem) {
           this.showemployees = false;
@@ -53,7 +51,6 @@ export class DashboardContainerComponent implements OnInit {
 
     //show the inventory
     this.serviceLogic.inventory_observable.subscribe(() => {
-      console.log(this.serviceLogic.inventory_toggle, "sono inventory gneee");
       if (this.serviceLogic.inventory_toggle) {
         if (this.showemployees || this.showcustomers || this.showrentals || this.showemployeeitem || this.showcompanies || this.showcustomeritem) {
           this.showemployees = false;
@@ -70,7 +67,6 @@ export class DashboardContainerComponent implements OnInit {
 
     //show the rentals
     this.serviceLogic.rental_observable.subscribe(() => {
-      console.log(this.serviceLogic.rental_toggle, "sono rentals zazam ");
       if (this.serviceLogic.rental_toggle) {
         if (this.showemployees || this.showcustomers || this.showinventory || this.showemployeeitem || this.showcompanies || this.showcustomeritem) {
           this.showemployees = false;
@@ -88,9 +84,7 @@ export class DashboardContainerComponent implements OnInit {
 
     //show single employee item
     this.serviceLogic.employee_item_observable.subscribe(() => {
-      console.log(this.serviceLogic.employee_item_toggle, "sono in employee item");
       if (this.serviceLogic.employee_item_toggle) {
-        console.log('sono employee item di dashboard')
         if (this.showemployees || this.showcustomers || this.showinventory || this.showcompanies || this.showrentals || this.showcustomeritem)
         this.showemployees = false;
         this.showcustomers = false;
@@ -100,7 +94,6 @@ export class DashboardContainerComponent implements OnInit {
         this.showcustomeritem = false;
 
       }
-      console.log('sto andando avanti')
       this.showemployeeitem = true;
     })
 
