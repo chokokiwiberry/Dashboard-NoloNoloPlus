@@ -19,11 +19,12 @@ export class CustomerItemComponent implements AfterViewInit {
 
   constructor(public serviceLogic: ServiceLogicService, public dialog: MatDialog) { }
 
-  ngAfterViewInit(): void {
-      
+  ngOnInit():void{
     this.tmpcust = this.serviceLogic.customer_element;
+  }
+  ngAfterViewInit(): void {
 
-     this.serviceLogic.LoadingRentals()
+     this.serviceLogic.Loading()
       this.getListing();
 
   }
@@ -162,7 +163,7 @@ export class CustomerItemComponent implements AfterViewInit {
       const data = await response.json();
       // enter you logic when the fetch is successful
 
-      this.serviceLogic.stopLoadingRentals();
+      this.serviceLogic.stopLoading();
       let ans = this.serviceLogic.handle(data);
       if (ans.command === 'displayErr') {
         console.log('Something went wrong')

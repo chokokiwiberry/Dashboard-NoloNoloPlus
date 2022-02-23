@@ -83,9 +83,7 @@ export class CustomersComponent implements OnInit {
 
   showDetails(element: any) {
     this.serviceLogic.customer_item_btn_clicked(element);
-
   }
-
 
   //per avere i customers e passargli poi gli elementi is tutto ok 
 
